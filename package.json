@@ -1,0 +1,29 @@
+{
+  "name": "reyah",
+  "version": "0.0.1",
+  "description": "Reyah JavaScript library for web and Node.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "gendoc": "./node_modules/.bin/esdoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.reyah.ga:reyah/libraries/reyah-node.git"
+  },
+  "keywords": [
+    "reyah"
+  ],
+  "author": "Arthur Knoepflin <arthur@knoepflin.eu> (arthur.knoepflin.eu)",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "esdoc-typescript-plugin": "^1.0.1"
+  }
+}
