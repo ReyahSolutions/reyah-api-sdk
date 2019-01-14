@@ -1,14 +1,14 @@
 import constants from "./contants";
 import * as path from "path";
-import { promises } from "fs";
+import axios from "axios";
+import { WrongCredentials } from "./errors/auth";
 
-function query(route: string, method: ("GET" | "POST"), data?: Object) {
-    return fetch(path.join(constants.route.soteria, constants.version.soteria, route), {
-        method: method,
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+function query(route: string, method: ("GET" | "POST"), data?: Object) : Promise<any> {
+    return axios({
+        url: path.join(constants.route.soteria, constants.version.soteria, route),
+        method,
+        data,
+        responseType: 'json'
     });
 }
 
@@ -26,11 +26,19 @@ export default class Auth {
      * @param {string} mail - Users mail
      * @param {string} password - Users password
      * @returns {Promise<Token>} Fetch promise
+     * @throws {WrongCredentials} Wrong credentials provided
+     * @throws {Error} Unknown error occured
      */
-    async login(mail: string, password: string): Promise<Token> {
-        const resp = await query("/login", "POST", {email: mail, password: password, scope: ["READ", "WRITE"]})
-        const {access_token, refresh_token} = await resp.json();
+    public async login(mail: string, password: string): Promise<Token> {
+        let resp;
+        try {
+            resp = await query("/login", "POST", {email: mail, password: password, scope: ["READ", "WRITE"]});
+        } catch (e) {
+            if (e.response.status === 401)
+                throw new WrongCredentials("Invalid username or password");
+            throw new Error("Unkown error occured");
+        }
+        const {access_token, refresh_token} = resp.data;
         return {access_token, refresh_token};
-        // return query("/login", "POST", {email: mail, password: password, scope: ["READ", "WRITE"]});
     }
 }
