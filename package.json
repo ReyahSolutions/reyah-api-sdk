@@ -2,12 +2,13 @@
   "name": "reyah-api-sdk",
   "version": "1.0.0",
   "description": "Reyah API software development kit for developers written in TypeScript",
-  "main": "./dist/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "start": "node dist/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "gendoc": "typedoc ./src"
+    "gendoc": "typedoc src"
   },
   "author": "bastien@reyah.eu",
   "license": "ISC",
