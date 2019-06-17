@@ -1,5 +1,5 @@
 # Reyah
-Reyah javascript library for web and Node.js
+Reyah javascript library for web and Node.js written in TypeScript
 
 ## Compile
 This project use typescript
@@ -10,7 +10,7 @@ npm run build
 ```
 
 ## Docs
-The documentation is generated with esdoc.
+The documentation is generated with Typedoc.
 
 ```bash
 npm i --only=dev
