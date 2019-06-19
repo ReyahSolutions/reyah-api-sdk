@@ -8,6 +8,6 @@ import { ReyahServiceRequest } from "../types/core";
 export const reyahServiceRequest = AxiosServiceRequest as ReyahServiceRequest;
 export const reyahError = ReyahErrorAxios;
 export default {
-    "reyahServiceRequest": reyahServiceRequest,
-    "reyahError": reyahError
+    reyahServiceRequest,
+    reyahError
 };
