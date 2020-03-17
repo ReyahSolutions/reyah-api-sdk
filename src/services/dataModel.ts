@@ -1,69 +1,25 @@
-import { Service } from "../types/reyah";
-import * as DataModel from "../types/dataModel";
-import { reyahError, reyahServiceRequest } from "../core/core";
-import { ReyahRequestConfiguration, ReyahRequestResponse } from "../types/core";
-import config from "../../reyah";
-import { ServiceUnavailable } from "../types/errors";
-
-/**
- * Data model management service
- */
-
-const DATA_MODEL_PROTOCOL = config.dataModel.DATA_MODEL_PROTOCOL;
-const DATA_MODEL_HOSTNAME = config.dataModel.DATA_MODEL_HOSTNAME;
-const DATA_MODEL_PORT = config.dataModel.DATA_MODEL_PORT;
-const DATA_MODEL_VERSION = config.dataModel.DATA_MODEL_VERSION;
-
-/**
- * Meta request configuration
- */
-class MetaRequestConfiguration implements ReyahRequestConfiguration {
-    readonly protocol: string = DATA_MODEL_PROTOCOL;
-    readonly hostname: string = DATA_MODEL_HOSTNAME;
-    readonly port: string = DATA_MODEL_PORT;
-
-    /**
-     * Request configuration base path
-     * @return A path
-     */
-    get basePath(): string {
-        return `${this.protocol}://${this.hostname}:${this.port}`;
-    }
-}
-
-/**
- * Data model service request configuration
- */
-class ServiceRequestConfiguration extends MetaRequestConfiguration {
-    readonly version: string = DATA_MODEL_VERSION;
-
-    /**
-     * Request configuration base path
-     * @return A path
-     */
-    get basePath(): string {
-        return `${super.basePath}/${this.version}`;
-    }
-}
+import { dispatchError, Service } from '..';
+import * as DataModel from '../types/dataModel';
+import { reyahServiceRequest } from '../core/core';
+import { ReyahError } from '../types/reyah';
 
 /**
  * Data model service controller
  */
 export class DataModelService implements Service {
-    private serviceRequestConfiguration: ReyahRequestConfiguration = new ServiceRequestConfiguration();
-    private metaRequestConfiguration: ReyahRequestConfiguration = new MetaRequestConfiguration();
+    readonly subpath = '/datamodel';
 
     /**
      * Remote service status
      * @return whether the service is alive or not
      */
     public async alive(): Promise<boolean> {
-        const subpath: string = "/healthz";
+        const subpath: string = `${this.subpath}/health`;
         try {
-            await reyahServiceRequest.get(this.metaRequestConfiguration, subpath);
+            await reyahServiceRequest.get(subpath, false);
             return true;
         } catch (err) {
-            throw new ServiceUnavailable();
+            throw dispatchError(err);
         }
     }
 
@@ -72,12 +28,12 @@ export class DataModelService implements Service {
      * @return Available data model in tabular form
      */
     public async fields(): Promise<DataModel.DataModel[]> {
+        const subpath: string = `${this.subpath}/fields`;
         try {
-            const subpath: string = "/fields";
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data.fields as DataModel.DataModel[];
-        } catch(err) {
-            throw new reyahError(err);
+        } catch (err) {
+            throw new ReyahError(err);
         }
     }
 
@@ -87,12 +43,12 @@ export class DataModelService implements Service {
      * @return A promise of the result of the data model retrieving transaction
      */
     public async retrieve(uuid: string): Promise<DataModel.DataModel> {
+        const subpath: string = `${this.subpath}/models/${uuid}`;
         try {
-            const subpath: string = `/models/${uuid}`;
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as DataModel.DataModel;
-        } catch(err) {
-            throw new reyahError(err);
+        } catch (err) {
+            throw dispatchError(err);
         }
     }
 
@@ -101,12 +57,12 @@ export class DataModelService implements Service {
      * @return A promise of the result of the data model retrieving transaction
      */
     public async retrieveAll(): Promise<DataModel.DataModel[]> {
-        const subpath: string = "/models";
+        const subpath: string = `${this.subpath}/models`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data.models as DataModel.DataModel[];
         } catch (err) {
-            throw new reyahError(err);
+            throw new ReyahError(err);
         }
     }
 
@@ -116,12 +72,12 @@ export class DataModelService implements Service {
      * @return A promise of the result of the data model creation transaction
      */
     public async create(model: DataModel.DataModel): Promise<DataModel.DataModel> {
-        const subpath: string = "/models";
+        const subpath: string = `${this.subpath}/models`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.post(this.serviceRequestConfiguration, subpath, model);
+            const resp = await reyahServiceRequest.post(subpath, model, true);
             return resp.data as DataModel.DataModel;
         } catch (err) {
-            throw new reyahError(err);
+            throw new ReyahError(err);
         }
     }
 
@@ -131,12 +87,12 @@ export class DataModelService implements Service {
      * @return A promise of the result of the data model patching transaction
      */
     public async patch(model: DataModel.DataModel): Promise<DataModel.DataModel> {
-        const subpath: string = `/models/${model.uuid}`;
+        const subpath: string = `${this.subpath}/models/${model.uuid}`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.patch(this.serviceRequestConfiguration, subpath, model);
+            const resp = await reyahServiceRequest.patch(subpath, model, true);
             return resp.data as DataModel.DataModel;
         } catch (err) {
-            throw new reyahError(err);
+            throw new ReyahError(err);
         }
     }
 
@@ -146,13 +102,12 @@ export class DataModelService implements Service {
      * @return A promise of the result of the data model deletion transaction
      */
     public async delete(uuid: string): Promise<boolean> {
-        const subpath: string = `/models/${uuid}`;
+        const subpath: string = `${this.subpath}/models/${uuid}`;
         try {
-            await reyahServiceRequest.delete(this.serviceRequestConfiguration, subpath);
+            await reyahServiceRequest.delete(subpath, true);
             return true;
-
         } catch (err) {
-            throw new reyahError(err);
+            throw new ReyahError(err);
         }
     }
 }

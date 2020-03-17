@@ -1,68 +1,24 @@
-import { Service } from "../types/reyah";
-import * as DocumentModel from "../types/documentModel";
-import { reyahServiceRequest, reyahError } from "../core/core";
-import { ReyahRequestConfiguration, ReyahRequestResponse } from "../types/core";
-import config from "../../reyah";
-
-/**
- * Document model management service
- */
-
-const DOCUMENT_MODEL_PROTOCOL = config.documentModel.DOCUMENT_MODEL_PROTOCOL;
-const DOCUMENT_MODEL_HOSTNAME = config.documentModel.DOCUMENT_MODEL_HOSTNAME;
-const DOCUMENT_MODEL_PORT = config.documentModel.DOCUMENT_MODEL_PORT;
-const DOCUMENT_MODEL_VERSION = config.documentModel.DOCUMENT_MODEL_VERSION;
-
-/**
- * Meta request configuration
- */
-class MetaRequestConfiguration implements ReyahRequestConfiguration {
-    readonly protocol: string = DOCUMENT_MODEL_PROTOCOL;
-    readonly hostname: string = DOCUMENT_MODEL_HOSTNAME;
-    readonly port: string = DOCUMENT_MODEL_PORT;
-
-    /**
-     * Request configuration base path
-     * @return A path
-     */
-    get basePath(): string {
-        return `${this.protocol}://${this.hostname}:${this.port}`;
-    }
-}
-
-/**
- * Document model service request configuration
- */
-class ServiceRequestConfiguration extends MetaRequestConfiguration {
-    readonly version: string = DOCUMENT_MODEL_VERSION;
-
-    /**
-     * Request configuration base path
-     * @return A path
-     */
-    get basePath(): string {
-        return `${super.basePath}/${this.version}`;
-    }
-}
+import { dispatchError, ReyahRequestResponse, Service } from '..';
+import * as DocumentModel from '../types/documentModel';
+import { reyahServiceRequest } from '../core/core';
 
 /**
  * Document model service controller
  */
 export class DocumentModelService implements Service {
-    private serviceRequestConfiguration: ReyahRequestConfiguration = new ServiceRequestConfiguration();
-    private metaRequestConfiguration: ReyahRequestConfiguration = new MetaRequestConfiguration();
+    readonly subpath = '/document';
 
     /**
      * Remote service status
      * @return whether the service is alive or not
      */
     public async alive(): Promise<boolean> {
-        const subpath: string = "/healthz";
+        const subpath: string = `${this.subpath}/health`;
         try {
-            await reyahServiceRequest.get(this.metaRequestConfiguration, subpath);
+            await reyahServiceRequest.get(subpath, false);
             return true;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -72,12 +28,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the document model retrieving transaction
      */
     public async retrieve(uuid: string): Promise<DocumentModel.DocumentModel> {
-        const subpath: string = `/models/${uuid}`;
+        const subpath: string = `${this.subpath}/models/${uuid}`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as DocumentModel.DocumentModel;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -86,12 +42,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the document model retrieving transaction
      */
     public async retrieveAll(): Promise<DocumentModel.DocumentModel[]> {
-        const subpath: string = "/models";
+        const subpath: string = `${this.subpath}/models`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as DocumentModel.DocumentModel[];
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -101,12 +57,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the document model creation transaction
      */
     public async create(model: DocumentModel.DocumentModel): Promise<DocumentModel.DocumentModel> {
-        const subpath: string = "/models";
+        const subpath: string = `${this.subpath}/models`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.post(this.serviceRequestConfiguration, subpath, model);
+            const resp = await reyahServiceRequest.post(subpath, model, true);
             return resp.data as DocumentModel.DocumentModel;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -116,12 +72,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the document model patching transaction
      */
     public async patch(model: DocumentModel.DocumentModel): Promise<DocumentModel.DocumentModel> {
-        const subpath: string = `/models/${model.uuid}`;
+        const subpath: string = `${this.subpath}/models/${model.uuid}`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.patch(this.serviceRequestConfiguration, subpath, model);
+            const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, model, true);
             return resp.data as DocumentModel.DocumentModel;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -131,12 +87,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the document model deletion transaction
      */
     public async delete(uuid: string): Promise<boolean> {
-        const subpath: string = `/models/${uuid}`;
+        const subpath: string = `${this.subpath}/models/${uuid}`;
         try {
-            await reyahServiceRequest.delete(this.serviceRequestConfiguration, subpath);
+            await reyahServiceRequest.delete(subpath, true);
             return true;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -146,12 +102,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the preview file retrieving transaction
      */
     public async previewUrl(uuid: string): Promise<DocumentModel.PreviewURL> {
-        const subpath: string = `/models/${uuid}/preview`;
+        const subpath: string = `${this.subpath}/models/${uuid}/preview`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp: ReyahRequestResponse = await reyahServiceRequest.get(subpath, true);
             return resp.data as DocumentModel.PreviewURL;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -161,12 +117,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the preview file setting transaction
      */
     public async setPreview(request: DocumentModel.UuidWithContentType): Promise<DocumentModel.PreviewURL> {
-        const subpath: string = `/models/${request.uuid}/preview`;
+        const subpath: string = `${this.subpath}/models/${request.uuid}/preview`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.patch(this.serviceRequestConfiguration, subpath, request);
+            const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, request, true);
             return resp.data as DocumentModel.PreviewURL;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -176,12 +132,12 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the preview file deletion transaction
      */
     public async deletePreview(uuid: string): Promise<boolean> {
-        const subpath: string = `/models/${uuid}/preview`;
+        const subpath: string = `${this.subpath}/models/${uuid}/preview`;
         try {
-            await reyahServiceRequest.delete(this.serviceRequestConfiguration, subpath);
+            await reyahServiceRequest.delete(subpath, true);
             return true;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 }

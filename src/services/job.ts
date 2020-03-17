@@ -1,68 +1,25 @@
-import * as Job from "../types/job";
-import { Service } from "../types/reyah";
-import { reyahServiceRequest, reyahError } from "../core/core";
-import { ReyahRequestConfiguration, ReyahRequestResponse } from "../types/core";
-import config from "../../reyah";
-
-/**
- * job management service
- */
-
-const JOB_MODEL_PROTOCOL = config.job.JOB_MODEL_PROTOCOL;
-const JOB_MODEL_HOSTNAME = config.job.JOB_MODEL_HOSTNAME;
-const JOB_MODEL_PORT = config.job.JOB_MODEL_PORT;
-const JOB_MODEL_VERSION = config.job.JOB_MODEL_VERSION;
-
-/**
- * Meta request configuration
- */
-class MetaRequestConfiguration implements ReyahRequestConfiguration {
-    readonly protocol: string = JOB_MODEL_PROTOCOL;
-    readonly hostname: string = JOB_MODEL_HOSTNAME;
-    readonly port: string = JOB_MODEL_PORT;
-
-    /**
-     * Request configuration base path
-     * @return A path
-     */
-    get basePath(): string {
-        return `${this.protocol}://${this.hostname}:${this.port}`;
-    }
-}
-
-/**
- * Job service request configuration
- */
-class ServiceRequestConfiguration extends MetaRequestConfiguration {
-    readonly version: string = JOB_MODEL_VERSION;
-
-    /**
-     * Request configuration base path
-     * @return A path
-     */
-    get basePath(): string {
-        return `${super.basePath}/${this.version}`;
-    }
-}
+import * as Job from '../types/job';
+import { Service } from '../types/reyah';
+import { reyahServiceRequest } from '../core/core';
+import { dispatchError } from '..';
 
 /**
  * Job service controller
  */
 export class JobService implements Service {
-    private serviceRequestConfiguration: ReyahRequestConfiguration = new ServiceRequestConfiguration();
-    private metaRequestConfiguration: ReyahRequestConfiguration = new MetaRequestConfiguration();
+    readonly subpath = '/job';
 
     /**
      * Remote service status
      * @return whether the service is alive or not
      */
     public async alive(): Promise<boolean> {
-        const subpath: string = "/healthz";
+        const subpath: string = `${this.subpath}/health`;
         try {
-            await reyahServiceRequest.get(this.metaRequestConfiguration, subpath);
+            await reyahServiceRequest.get(subpath, false);
             return true;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -72,12 +29,12 @@ export class JobService implements Service {
      * @return A promise of the result of the extraction job retrieving transaction
      */
     public async retrieveExtractionJob(uuid: string): Promise<Job.Job> {
-        const subpath: string = `/extraction/jobs/${uuid}`;
+        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as Job.Job;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -86,12 +43,12 @@ export class JobService implements Service {
      * @return A promise of the result of the extraction job retrieving transaction
      */
     public async retrieveAllExtractionJob(): Promise<Job.Job[]> {
-        const subpath: string = "/extraction/jobs";
+        const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data.jobs as Job.Job[];
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -101,12 +58,12 @@ export class JobService implements Service {
      * @return A promise of the result of the extraction job output retrieving transaction
      */
     public async retrieveExtractionJobOutput(uuid: string): Promise<Job.JobField[]> {
-        const subpath: string = `/extraction/jobs/${uuid}/output`;
+        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/output`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as Job.JobField[];
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -116,12 +73,12 @@ export class JobService implements Service {
      * @return A promise of the result of the extraction job creation transaction
      */
     public async createExtractionJob(job: Job.CreateJob): Promise<Job.NewJob> {
-        const subpath: string = "/extraction/jobs";
+        const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.post(this.serviceRequestConfiguration, subpath, job);
+            const resp = await reyahServiceRequest.post(subpath, job, true);
             return resp.data as Job.NewJob;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -131,12 +88,12 @@ export class JobService implements Service {
      * @return A promise of the result of the rendering job retrieving transaction
      */
     public async retrieveRenderJob(uuid: string): Promise<Job.Job> {
-        const subpath: string = `/extraction/jobs/${uuid}`;
+        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as Job.Job;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -145,12 +102,12 @@ export class JobService implements Service {
      * @return A promise of the result of the rendering job retrieving transaction
      */
     public async retrieveAllRenderJob(): Promise<Job.Job[]> {
-        const subpath: string = "/rendering/jobs";
+        const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as Job.Job[];
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -160,12 +117,12 @@ export class JobService implements Service {
      * @return A promise of the result of the rendering job output retrieving transaction
      */
     public async retrieveRenderJobOutput(uuid: string): Promise<Job.Document> {
-        const subpath: string = `/extraction/jobs/${uuid}/output`;
+        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/output`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.get(this.serviceRequestConfiguration, subpath);
+            const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as Job.Document;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 
@@ -175,12 +132,12 @@ export class JobService implements Service {
      * @return A promise of the result of the rendering job creation transaction
      */
     public async createRenderJob(job: Job.CreateJob): Promise<Job.NewJob> {
-        const subpath: string = "/extraction/jobs";
+        const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
-            const resp: ReyahRequestResponse = await reyahServiceRequest.post(this.serviceRequestConfiguration, subpath, job);
+            const resp = await reyahServiceRequest.post(subpath, job, true);
             return resp.data as Job.NewJob;
         } catch (err) {
-            throw new reyahError(err);
+            throw dispatchError(err);
         }
     }
 }

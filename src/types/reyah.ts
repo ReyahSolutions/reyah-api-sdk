@@ -1,8 +1,17 @@
-import { ReyahRequestConfiguration } from "./core";
+import * as Core from './core';
+import { ReyahErrorResponse, ReyahRequestError } from './core';
 
 /**
  * Reyah SDK related types
  */
+
+export type Protocol = 'http' | 'https';
+export interface IConfig {
+    api_protocol: Protocol
+    api_hostname: string
+    auth_protocol: Protocol
+    auth_hostname: string
+}
 
 /**
  * Standard Reyah error
@@ -12,22 +21,19 @@ export class ReyahError extends Error {
     message: string;
     stack?: string;
     code?: number;
-    error?: string;
-    request?: ReyahRequestConfiguration;
+    body?: ReyahErrorResponse;
+    request?: Core.ReyahRequestConfiguration;
+    response?: Core.ReyahRequestResponse;
 
-    /**
-     * Standard printing function
-     */
-    public print(): void {
-        console.log(`Name: ${this.name}\nMessage: ${this.message}\nStack: ${this.stack}\nCode: ${this.code}\nError: ${this.error}`);
-        console.log(this.request);
-    }
-
-    constructor(message: string, original: Error) {
-        super(message);
+    constructor(e: ReyahRequestError) {
+        super(e.message);
         this.name = ReyahError.name;
-        this.message = message;
-        this.stack = original.stack;
+        this.message = e.message;
+        this.stack = e.stack;
+        this.code = e.code;
+        this.body = e.body;
+        this.request = e.request;
+        this.response = e.response;
         Object.setPrototypeOf(this, ReyahError.prototype);
     }
 }
