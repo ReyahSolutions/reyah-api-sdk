@@ -72,7 +72,7 @@ export class DocumentModelService implements Service {
      * @return A promise of the result of the document model patching transaction
      */
     public async patch(model: DocumentModel.DocumentModel): Promise<DocumentModel.DocumentModel> {
-        const subpath: string = `${this.subpath}/models/${model.uuid}`;
+        const subpath: string = `${this.subpath}/models/${model.id}`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, model, true);
             return resp.data as DocumentModel.DocumentModel;
@@ -116,7 +116,7 @@ export class DocumentModelService implements Service {
      * @param request Information of the preview file of the document model
      * @return A promise of the result of the preview file setting transaction
      */
-    public async setPreview(request: DocumentModel.UuidWithContentType): Promise<DocumentModel.PreviewURL> {
+    public async setPreview(request: DocumentModel.UuidWithContentTypeRequest): Promise<DocumentModel.PreviewURL> {
         const subpath: string = `${this.subpath}/models/${request.uuid}/preview`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, request, true);

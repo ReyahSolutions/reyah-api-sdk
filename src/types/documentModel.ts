@@ -1,11 +1,11 @@
 /**
- * Data Document service types
+ * Document model service type definitions.
  */
 
 /**
- * Data model data field
+ * Represents a single field of a document model.
  */
-export interface DataFields {
+export interface DocumentModelField {
     name: string;
     description: string;
     x: number;
@@ -15,30 +15,30 @@ export interface DataFields {
 }
 
 /**
- * Document model
+ * Represents a document model.
  */
 export interface DocumentModel {
-    uuid?: string;
-    user_uuid: string;
+    id?: string;
+    user_id: string; // <- What is this thing even doing here ?
+    datamodel_id: string;
     name: string;
-    description: string;
-    data_fields: DataFields[];
-    preview_file?: string;
+    description?: string;
+    fields: DocumentModelField[];
     attached_preview?: boolean;
     created_at?: Date;
     updated_at?: Date;
 }
 
 /**
- * Request to define the preview file
+ * Represents the request payload for asking to upload a preview file.
  */
-export interface UuidWithContentType {
+export interface UuidWithContentTypeRequest {
     uuid: string;
     contentType: string;
 }
 
 /**
- * File recovery response format
+ * Represents the URL of a preview image.
  */
 export interface PreviewURL {
     url: string;
