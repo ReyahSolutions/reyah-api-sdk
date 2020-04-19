@@ -45,7 +45,7 @@ export class DocumentModelService implements Service {
         const subpath: string = `${this.subpath}/models`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DocumentModel.DocumentModel[];
+            return resp.data.models as DocumentModel.DocumentModel[];
         } catch (err) {
             throw dispatchError(err);
         }
