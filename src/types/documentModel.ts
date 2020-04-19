@@ -19,7 +19,7 @@ export interface DocumentModelField {
  */
 export interface DocumentModel {
     id?: string;
-    user_id: string; // <- What is this thing even doing here ?
+    user_id?: string;
     datamodel_id: string;
     name: string;
     description?: string;
