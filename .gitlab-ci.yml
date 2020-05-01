@@ -1,0 +1,44 @@
+# https://git.reyah.ga/reyah/deployments/npm-cli-login
+image: arthurknoep/npm-cli-login:latest
+
+stages:
+  - build
+  - publish
+
+default:
+  before_script:
+    - npm-cli-login
+    - yarn config set registry "$NPM_REGISTRY"
+    - yarn install
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - dist
+    expire_in: 1h
+  cache:
+    paths:
+      - node_modules/
+      - .yarn
+  script:
+    - yarn build
+
+publish:
+  stage: publish
+  cache:
+    paths:
+      - node_modules/
+      - .yarn
+  only:
+    refs:
+      - master
+  script:
+    - yarn build
+    - yarn publish --non-interactive
+
+
+cache:
+  paths:
+    - node_modules/
+
