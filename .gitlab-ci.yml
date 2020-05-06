@@ -36,6 +36,13 @@ publish test version:
     - branch=`echo $CI_COMMIT_BRANCH | tr '/' '-'`
     - yarn publish --new-version="$version-$CI_COMMIT_SHORT_SHA" --tag="$branch" --no-git-tag-version
 
+test:
+  stage: publish
+  only:
+    refs:
+      - merge_requests
+  script:
+    - env
 
 remove tag:
   stage: publish
