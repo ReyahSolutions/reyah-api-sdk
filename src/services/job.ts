@@ -2,6 +2,7 @@ import * as Job from '../types/job';
 import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
 import { dispatchError } from '..';
+import * as Status from '../types/status';
 
 /**
  * Job service controller
@@ -13,11 +14,11 @@ export class JobService implements Service {
      * Remote service status
      * @return whether the service is alive or not
      */
-    public async alive(): Promise<boolean> {
+    public async alive(): Promise<Status.ServiceStatus> {
         const subpath: string = `${this.subpath}/health`;
         try {
-            await reyahServiceRequest.get(subpath, false);
-            return true;
+            const resp = await reyahServiceRequest.get(subpath, false);
+            return resp.data as Status.ServiceStatus;
         } catch (err) {
             throw dispatchError(err);
         }
@@ -61,7 +62,7 @@ export class JobService implements Service {
         const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.JobField[];
+            return resp.data.fields as Job.JobField[];
         } catch (err) {
             throw dispatchError(err);
         }
@@ -105,7 +106,7 @@ export class JobService implements Service {
         const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.Job[];
+            return resp.data.jobs as Job.Job[];
         } catch (err) {
             throw dispatchError(err);
         }
@@ -117,7 +118,7 @@ export class JobService implements Service {
      * @return A promise of the result of the rendering job output retrieving transaction
      */
     public async retrieveRenderJobOutput(uuid: string): Promise<Job.Document> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/output`;
+        const subpath: string = `${this.subpath}/rendering/jobs/${uuid}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data as Job.Document;
@@ -132,7 +133,7 @@ export class JobService implements Service {
      * @return A promise of the result of the rendering job creation transaction
      */
     public async createRenderJob(job: Job.CreateJob): Promise<Job.NewJob> {
-        const subpath: string = `${this.subpath}/extraction/jobs`;
+        const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
             return resp.data as Job.NewJob;

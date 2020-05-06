@@ -54,7 +54,7 @@ export interface ReyahServiceRequest {
      * @param useAuth Use auth indicates whether this request should an auth mechanism
      * @return A promise
      */
-    post(subpath: string, data: object, useAuth: boolean): Promise<ReyahRequestResponse>;
+    post(subpath: string, data: object | undefined, useAuth: boolean): Promise<ReyahRequestResponse>;
 
     /**
      * Prepare an HTTP PUT request based on information provided in the parameter
@@ -63,7 +63,7 @@ export interface ReyahServiceRequest {
      * @param useAuth Use auth indicates whether this request should an auth mechanism
      * @return A promise
      */
-    put(subpath: string, data: object, useAuth: boolean): Promise<ReyahRequestResponse>;
+    put(subpath: string, data: object | undefined, useAuth: boolean): Promise<ReyahRequestResponse>;
 
     /**
      * Prepare an HTTP PATCH request based on information provided in the parameter
@@ -72,7 +72,7 @@ export interface ReyahServiceRequest {
      * @param useAuth Use auth indicates whether this request should an auth mechanism
      * @return A promise
      */
-    patch(subpath: string, data: object, useAuth: boolean): Promise<ReyahRequestResponse>;
+    patch(subpath: string, data: object | undefined, useAuth: boolean): Promise<ReyahRequestResponse>;
 
     /**
      * Prepare an HTTP DELETE request based on information provided in the parameter

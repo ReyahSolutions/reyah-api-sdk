@@ -1,5 +1,6 @@
 import * as Core from './core';
 import { ReyahErrorResponse, ReyahRequestError } from './core';
+import * as Status from './status';
 
 /**
  * Reyah SDK related types
@@ -42,5 +43,5 @@ export class ReyahError extends Error {
  * Minimum requirements for reyah service implementations
  */
 export interface Service {
-    alive(): Promise<boolean>;
+    alive(): Promise<Status.ServiceStatus>;
 }

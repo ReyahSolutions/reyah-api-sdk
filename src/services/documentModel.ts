@@ -1,6 +1,9 @@
-import { dispatchError, ReyahRequestResponse, Service } from '..';
+import {
+    dispatchError, Filter, ReyahRequestResponse, Service,
+} from '..';
 import * as DocumentModel from '../types/documentModel';
 import { reyahServiceRequest } from '../core/core';
+import * as Status from '../types/status';
 
 /**
  * Document model service controller
@@ -12,11 +15,11 @@ export class DocumentModelService implements Service {
      * Remote service status
      * @return whether the service is alive or not
      */
-    public async alive(): Promise<boolean> {
+    public async alive(): Promise<Status.ServiceStatus> {
         const subpath: string = `${this.subpath}/health`;
         try {
-            await reyahServiceRequest.get(subpath, false);
-            return true;
+            const resp = await reyahServiceRequest.get(subpath, false);
+            return resp.data as Status.ServiceStatus;
         } catch (err) {
             throw dispatchError(err);
         }
@@ -41,8 +44,13 @@ export class DocumentModelService implements Service {
      * Retrieves all document models of an user
      * @return A promise of the result of the document model retrieving transaction
      */
-    public async retrieveAll(): Promise<DocumentModel.DocumentModel[]> {
-        const subpath: string = `${this.subpath}/models`;
+    public async retrieveAll(filter?: Filter): Promise<DocumentModel.DocumentModel[]> {
+        let subpath: string = `${this.subpath}/models`;
+        if (filter) {
+            const qs = new URLSearchParams();
+            qs.append('only', filter.only.join(','));
+            subpath += `?${qs.toString()}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data.models as DocumentModel.DocumentModel[];

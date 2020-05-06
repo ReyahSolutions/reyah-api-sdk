@@ -15,18 +15,33 @@ export interface Property {
  * Data model field
  */
 export interface Field {
+    field_id?: number;
+    user_id?: string;
     kind: string;
-    type: string;
     name: string;
     description: string;
-    properties: Property[];
+    properties?: Property[];
+    datatypes?: number[];
+    created_at?: Date;
+    updated_at?: Date;
 }
 
 /**
  * Data model
  */
 export interface DataModel {
-    uuid?: string;
-    name?: string;
+    model_id?: number;
+    user_id?: string;
+    name: string;
+    description?: string;
     fields?: Field[];
+    created_at?: Date;
+    updated_at?: Date;
+}
+
+export interface DataModelRequest {
+    model_id?: number;
+    name: string;
+    description?: string;
+    fields?: number[];
 }

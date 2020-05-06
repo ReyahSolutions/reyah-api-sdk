@@ -6,12 +6,12 @@
  * Status of a job
  */
 export enum JobStatus {
-    NONE = 1,
-    WAITING_FOR_RECEIVING,
-    WAITING_FOR_PROCESSING,
-    PROCESSING,
-    SUCCEEDED,
-    FAILED,
+    NONE = 'NONE',
+    WAITING_FOR_RECEIVING = 'WAITING_FOR_RECEIVING',
+    WAITING_FOR_PROCESSING = 'WAITING_FOR_PROCESSING',
+    PROCESSING = 'PROCESSING',
+    SUCCEEDED = 'SUCCEEDED',
+    FAILED = 'FAILED',
 }
 
 /**
@@ -26,26 +26,37 @@ export interface Document {
  * Job
  */
 export interface Job {
-    uuid: string;
-    model_uuid: string;
+    id: number;
+    document_id: number;
     status: JobStatus;
     created_at: Date;
     updated_at: Date;
 }
 
 /**
+ * DatatypeMatch
+ */
+export interface DatatypeMatch {
+    name: string;
+    match: boolean;
+    capture: string[];
+}
+
+/**
  * Job jobField
  */
 export interface JobField {
+    field_id: number;
     name: string;
-    value: string[];
+    values: string[];
+    datatypes_matches: {[index: number]: DatatypeMatch};
 }
 
 /**
  * Job creation request
  */
 export interface CreateJob {
-    model_uuid: string;
+    document_id: number;
     content_type: string;
     fields?: JobField[];
 }
@@ -54,5 +65,5 @@ export interface CreateJob {
  * Job creation response
  */
 export interface NewJob extends Document {
-    uuid: string;
+    id: number;
 }

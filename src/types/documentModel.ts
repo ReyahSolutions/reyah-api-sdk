@@ -7,11 +7,13 @@
  */
 export interface DocumentModelField {
     name: string;
-    description: string;
+    description?: string;
     x: number;
     y: number;
     width: number;
     height: number;
+    created_at?: Date;
+    updated_at?: Date;
 }
 
 /**
