@@ -36,26 +36,6 @@ publish test version:
     - branch=`echo $CI_COMMIT_BRANCH | tr '/' '-'`
     - yarn publish --new-version="$version-$CI_COMMIT_SHORT_SHA" --tag="$branch" --no-git-tag-version
 
-test:
-  stage: publish
-  only:
-    refs:
-      - merge_requests
-  script:
-    - env
-
-remove tag:
-  stage: publish
-  cache:
-    paths:
-      - node_modules/
-      - .yarn
-  rules:
-    - if: $CI_MERGE_REQUEST_ID && $CI_COMMIT_BRANCH == 'master'
-  script:
-    - branch=`echo $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME |  tr '/' '-'`
-    - package_name=`npm run env | grep npm_package_name= | sed -e "s/npm_package_name=//g"`
-    - yarn tag remove $package_name $branch
 
 publish:
   stage: publish
@@ -69,7 +49,6 @@ publish:
     refs:
       - master
   script:
-    - env
     - yarn publish --non-interactive
 
 
