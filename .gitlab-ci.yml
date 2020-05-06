@@ -23,9 +23,19 @@ build:
   script:
     - yarn install
     - yarn build
+
+publish test version:
+  stage: publish
+  needs:
+    - build
+  except:
+    refs:
+      - master
+  script:
     - version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
     - branch=`echo $CI_COMMIT_BRANCH | tr '/' '-'`
     - yarn publish --new-version="$version-$CI_COMMIT_SHORT_SHA" --tag="$branch" --no-git-tag-version
+
 
 remove tag:
   stage: publish
@@ -33,18 +43,18 @@ remove tag:
     paths:
       - node_modules/
       - .yarn
-  only:
-    refs:
-      - merge_requests
-    variables:
-      - $CI_MERGE_REQUEST_EVENT_TYPE == 'merged_result'
+  rules:
+    - if: $CI_MERGE_REQUEST_ID && $CI_COMMIT_BRANCH == 'master'
   script:
+    - echo $CI_MERGE_REQUEST_EVENT_TYPE
     - branch=`echo $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME |  tr '/' '-'`
     - package_name=`npm run env | grep npm_package_name= | sed -e "s/npm_package_name=//g"`
     - yarn tag remove $package_name $branch
 
 publish:
   stage: publish
+  needs:
+    - build
   cache:
     paths:
       - node_modules/
@@ -53,8 +63,6 @@ publish:
     refs:
       - master
   script:
-    - yarn install
-    - yarn build
     - yarn publish --non-interactive
 
 
