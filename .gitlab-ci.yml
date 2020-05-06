@@ -46,7 +46,6 @@ remove tag:
   rules:
     - if: $CI_MERGE_REQUEST_ID && $CI_COMMIT_BRANCH == 'master'
   script:
-    - echo $CI_MERGE_REQUEST_EVENT_TYPE
     - branch=`echo $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME |  tr '/' '-'`
     - package_name=`npm run env | grep npm_package_name= | sed -e "s/npm_package_name=//g"`
     - yarn tag remove $package_name $branch
@@ -63,6 +62,7 @@ publish:
     refs:
       - master
   script:
+    - env
     - yarn publish --non-interactive
 
 
