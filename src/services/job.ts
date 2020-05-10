@@ -54,6 +54,21 @@ export class JobService implements Service {
     }
 
     /**
+     * Retrieves input of an extraction job of an user
+     * @param uuid Extraction job uuid
+     * @return A promise of the result of the extraction job input retrieving transaction
+     */
+    public async retrieveExtractionJobInput(uuid: string): Promise<Job.Document> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/input`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return resp.data as Job.Document;
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
      * Retrieves output of an extraction job of an user
      * @param uuid Extraction job uuid
      * @return A promise of the result of the extraction job output retrieving transaction
@@ -107,6 +122,21 @@ export class JobService implements Service {
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return resp.data.jobs as Job.Job[];
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieves input of an rendering job of an user
+     * @param uuid Rendering job uuid
+     * @return A promise of the result of the rendering job input retrieving transaction
+     */
+    public async retrieveRenderJobInput(uuid: string): Promise<Job.Document> {
+        const subpath: string = `${this.subpath}/rendering/jobs/${uuid}/input`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return resp.data as Job.Document;
         } catch (err) {
             throw dispatchError(err);
         }

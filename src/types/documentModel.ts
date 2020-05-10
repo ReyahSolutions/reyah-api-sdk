@@ -6,6 +6,7 @@
  * Represents a single field of a document model.
  */
 export interface DocumentModelField {
+    id?: number;
     name: string;
     description?: string;
     x: number;
