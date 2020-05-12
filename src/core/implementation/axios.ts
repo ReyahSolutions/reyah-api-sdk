@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, Method } from 'axios';
 import * as Core from '../../types/core';
-import { ReyahRequestConfiguration, ReyahRequestError } from '../../types/core';
+import { newReyahErrorResponse, ReyahRequestConfiguration, ReyahRequestError } from '../../types/core';
 
 /**
  * Low-level controller for HTTP requests from the SDK implementing Axios as controller
@@ -45,7 +45,7 @@ export class Axios implements Core.ReyahRequest {
                 const code = e.response?.status || 0;
                 const data = e.response?.data;
                 const msg: string | undefined = e.response?.data?.error?.message;
-                throw new ReyahRequestError(code, this.getConfig(), e.response, data, msg);
+                throw new ReyahRequestError(code, this.getConfig(), e.response, newReyahErrorResponse(data), msg);
             }
             throw new ReyahRequestError(0, this.getConfig());
         }

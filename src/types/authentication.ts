@@ -26,7 +26,7 @@ export class AuthenticationException extends Error {
 
     constructor(message: string) {
         super(message);
-        this.name = AuthenticationException.name;
+        this.name = 'AuthenticationException';
         this.isAuthError = true;
         Object.setPrototypeOf(this, AuthenticationException.prototype);
     }
@@ -37,7 +37,7 @@ export class NoAuthProvidedException extends AuthenticationException {
 
     constructor() {
         super('No authentication mechanism provided, use Reyah.auth.getInstance().useAuthProvider()');
-        this.name = NoAuthProvidedException.name;
+        this.name = 'NoAuthProvidedException';
         Object.setPrototypeOf(this, NoAuthProvidedException.prototype);
     }
 }
@@ -47,7 +47,7 @@ export class NotAuthenticatedException extends AuthenticationException {
 
     constructor() {
         super('The user is not authenticated on the API');
-        this.name = NotAuthenticatedException.name;
+        this.name = 'NotAuthenticatedException';
         Object.setPrototypeOf(this, NotAuthenticatedException.prototype);
     }
 }
@@ -57,7 +57,7 @@ export class CannotRefreshSessionException extends AuthenticationException {
 
     constructor() {
         super('The current session cannot be refreshed');
-        this.name = CannotRefreshSessionException.name;
+        this.name = 'CannotRefreshSessionException';
         Object.setPrototypeOf(this, CannotRefreshSessionException.prototype);
     }
 }

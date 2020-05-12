@@ -11,7 +11,7 @@ export class ServiceUnavailable extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = ServiceUnavailable.name;
+        this.name = 'ServiceUnavailable';
         Object.setPrototypeOf(this, ServiceUnavailable.prototype);
     }
 }
@@ -24,7 +24,7 @@ export class UnknownException extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = UnknownException.name;
+        this.name = 'UnknownException';
         Object.setPrototypeOf(this, UnknownException.prototype);
     }
 }
@@ -38,7 +38,7 @@ export class InvalidRequestException extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = InvalidRequestException.name;
+        this.name = 'InvalidRequestException';
         Object.setPrototypeOf(this, InvalidRequestException.prototype);
     }
 }
@@ -52,7 +52,7 @@ export class NotFoundException extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = NotFoundException.name;
+        this.name = 'NotFoundException';
         Object.setPrototypeOf(this, NotFoundException.prototype);
     }
 }
@@ -66,7 +66,7 @@ export class TooManyRequestsException extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = TooManyRequestsException.name;
+        this.name = 'TooManyRequestsException';
         Object.setPrototypeOf(this, TooManyRequestsException.prototype);
     }
 }
@@ -80,7 +80,7 @@ export class UnauthorizedException extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = UnauthorizedException.name;
+        this.name = 'UnauthorizedException';
         Object.setPrototypeOf(this, UnknownException.prototype);
     }
 }
@@ -94,7 +94,7 @@ export class ForbiddenException extends ReyahError {
 
     constructor(err: ReyahRequestError) {
         super(err);
-        this.name = ForbiddenException.name;
+        this.name = 'ForbiddenException';
         Object.setPrototypeOf(this, ForbiddenException.prototype);
     }
 }

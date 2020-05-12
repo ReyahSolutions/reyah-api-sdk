@@ -21,6 +21,7 @@ export class ReyahError extends Error {
     name: string;
     message: string;
     stack?: string;
+    reyaherr: string;
     code?: number;
     body?: ReyahErrorResponse;
     request?: Core.ReyahRequestConfiguration;
@@ -28,9 +29,10 @@ export class ReyahError extends Error {
 
     constructor(e: ReyahRequestError) {
         super(e.message);
-        this.name = ReyahError.name;
+        this.name = 'ReyahError';
         this.message = e.message;
         this.stack = e.stack;
+        this.reyaherr = e.body?.error.reyah_err || 'UnknownErr';
         this.code = e.code;
         this.body = e.body;
         this.request = e.request;

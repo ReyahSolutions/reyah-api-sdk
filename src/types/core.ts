@@ -95,11 +95,25 @@ export function getUrl(subpath: string): string {
 export interface ReyahErrorResponse {
     error: {
         code: number,
+        reyah_err: string,
         status: string,
         message: string,
         details?: any[]
     }
 }
+
+export function newReyahErrorResponse(obj: any): ReyahErrorResponse {
+    return {
+        error: {
+            code: parseInt(obj.error?.code, 10) || 0,
+            reyah_err: obj.error?.reyah_err || 'UnknownErr',
+            status: obj.error?.status || '',
+            message: obj.error?.message || 'An unexpected error happened',
+            details: obj.error?.details || [],
+        },
+    };
+}
+
 
 export class ReyahRequestError extends Error {
     name: string;
@@ -111,7 +125,7 @@ export class ReyahRequestError extends Error {
 
     constructor(code: number, request: ReyahRequestConfiguration, response?: ReyahRequestResponse, body?: ReyahErrorResponse, message?: string) {
         super(message || 'An error happened while requesting the API');
-        this.name = ReyahRequestError.name;
+        this.name = 'ReyahRequestError';
         this.code = code;
         this.request = request;
         this.response = response;
