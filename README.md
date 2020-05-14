@@ -2,17 +2,17 @@
 Reyah javascript library for web and Node.js written in TypeScript
 
 ## Compile
-This project use typescript
+This project uses typescript
 
 ```bash
-npm i
-npm run build
+yarn install
+yarn build
 ```
 
 ## Docs
 The documentation is generated with Typedoc.
 
 ```bash
-npm i --only=dev
-npm run gendoc
+yarn install
+yarn gendoc
 ```
