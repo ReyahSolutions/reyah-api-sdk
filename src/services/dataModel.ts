@@ -118,6 +118,21 @@ export class DataModelService implements Service {
     }
 
     /**
+     * Retrieves all document models linked to the current data model
+     * @param modelId The data model id to query
+     * @return A promise of the result of the retrieving transaction
+     */
+    public async retrieveDataModelLinksFromDataModel(modelId: number): Promise<DataModel.DataModelLinks> {
+        const subpath: string = `${this.subpath}/models/${modelId}/links`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return resp.data as DataModel.DataModelLinks;
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
      * Retrieves a data field
      * @param fieldId The ID of the field to retrieve
      * @return A promise of the result of the retrieving transaction
@@ -186,6 +201,21 @@ export class DataModelService implements Service {
         try {
             await reyahServiceRequest.delete(subpath, true);
             return true;
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieves all data models linked to the current field
+     * @param fieldId The field id to query
+     * @return A promise of the result of the retrieving transaction
+     */
+    public async retrieveDataFieldLinksFromDataField(fieldId: number): Promise<DataModel.DataFieldLinks> {
+        const subpath: string = `${this.subpath}/fields/${fieldId}/links`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return resp.data as DataModel.DataFieldLinks;
         } catch (err) {
             throw dispatchError(err);
         }

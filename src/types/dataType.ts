@@ -14,3 +14,7 @@ export interface DataType {
     created_at?: Date;
     updated_at?: Date;
 }
+
+export interface DataTypeLinks {
+    data_fields: number[],
+}

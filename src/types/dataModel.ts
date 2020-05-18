@@ -45,3 +45,21 @@ export interface DataModelRequest {
     description?: string;
     fields?: number[];
 }
+
+export interface FieldLink {
+    datamodel_field_id: number,
+    document_field_id: number[],
+}
+
+export interface DocumentLink {
+    document_id?: number,
+    fields: FieldLink[],
+}
+
+export interface DataModelLinks {
+    document_links: DocumentLink[],
+}
+
+export interface DataFieldLinks {
+    model_ids: number[],
+}

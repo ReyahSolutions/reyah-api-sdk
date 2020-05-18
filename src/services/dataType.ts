@@ -102,6 +102,21 @@ export class DataTypeService implements Service {
             throw new ReyahError(err);
         }
     }
+
+    /**
+     * Retrieves all data fields linked to the current data type
+     * @param id The data type id to query
+     * @return A promise of the result of the retrieving transaction
+     */
+    public async retrieveDataTypeLinksFromDataType(dataTypeId: number): Promise<DataType.DataTypeLinks> {
+        const subpath: string = `${this.subpath}/types/${dataTypeId}/links`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return resp.data as DataType.DataTypeLinks;
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
 }
 
 export const dataType = new DataTypeService();
