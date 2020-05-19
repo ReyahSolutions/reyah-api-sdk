@@ -57,8 +57,8 @@ export class ProfileService implements Service {
      * Create a user invitation
      * @return A promise of the user invitation creation transaction
      */
-    public async createInvite(): Promise<Profile.Invitation> {
-        const subpath: string = `${this.public_subpath}/register/invite`;
+    public async createInvitation(): Promise<Profile.Invitation> {
+        const subpath: string = `${this.public_subpath}/register/invitation`;
         try {
             const resp = await reyahServiceRequest.post(subpath, undefined, true);
             return resp.data as Profile.Invitation;
@@ -68,14 +68,14 @@ export class ProfileService implements Service {
     }
 
     /**
-     * List all user invitation
-     * @return A promise of the user invitation list transaction
+     * List all user invitations
+     * @return A promise of the user invitations list transaction
      */
-    public async listInvite(): Promise<Profile.Invitation[]> {
-        const subpath: string = `${this.public_subpath}/register/invite`;
+    public async listInvitations(): Promise<Profile.Invitation[]> {
+        const subpath: string = `${this.public_subpath}/register/invitation`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.invites as Profile.Invitation[];
+            return resp.data.invitations as Profile.Invitation[];
         } catch (err) {
             throw dispatchError(err);
         }
