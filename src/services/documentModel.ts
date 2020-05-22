@@ -4,6 +4,8 @@ import {
 import * as DocumentModel from '../types/documentModel';
 import { reyahServiceRequest } from '../core/core';
 import * as Status from '../types/status';
+import newServiceStatus from '../constructor/status';
+import { newDocumentModel, newDocumentModels, newPreviewUrl } from '../constructor/documentModel';
 
 /**
  * Document model service controller
@@ -19,7 +21,7 @@ export class DocumentModelService implements Service {
         const subpath: string = `${this.subpath}/health`;
         try {
             const resp = await reyahServiceRequest.get(subpath, false);
-            return resp.data as Status.ServiceStatus;
+            return newServiceStatus(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -27,14 +29,14 @@ export class DocumentModelService implements Service {
 
     /**
      * Retrieves a document model of an user
-     * @param uuid Document model uuid
+     * @param id Document model id
      * @return A promise of the result of the document model retrieving transaction
      */
-    public async retrieve(uuid: string): Promise<DocumentModel.DocumentModel> {
-        const subpath: string = `${this.subpath}/models/${uuid}`;
+    public async retrieve(id: number): Promise<DocumentModel.DocumentModel> {
+        const subpath: string = `${this.subpath}/models/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DocumentModel.DocumentModel;
+            return newDocumentModel(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -53,7 +55,7 @@ export class DocumentModelService implements Service {
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.models as DocumentModel.DocumentModel[];
+            return newDocumentModels(resp.data.models);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -68,7 +70,7 @@ export class DocumentModelService implements Service {
         const subpath: string = `${this.subpath}/models`;
         try {
             const resp = await reyahServiceRequest.post(subpath, model, true);
-            return resp.data as DocumentModel.DocumentModel;
+            return newDocumentModel(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -83,7 +85,7 @@ export class DocumentModelService implements Service {
         const subpath: string = `${this.subpath}/models/${model.id}`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, model, true);
-            return resp.data as DocumentModel.DocumentModel;
+            return newDocumentModel(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -91,11 +93,11 @@ export class DocumentModelService implements Service {
 
     /**
      * Deletes an existing model
-     * @param uuid The document model uuid to delete
+     * @param id The document model id to delete
      * @return A promise of the result of the document model deletion transaction
      */
-    public async delete(uuid: string): Promise<boolean> {
-        const subpath: string = `${this.subpath}/models/${uuid}`;
+    public async delete(id: number): Promise<boolean> {
+        const subpath: string = `${this.subpath}/models/${id}`;
         try {
             await reyahServiceRequest.delete(subpath, true);
             return true;
@@ -106,14 +108,14 @@ export class DocumentModelService implements Service {
 
     /**
      * Retrieves the preview file associated to a document model
-     * @param uuid The document model uuid
+     * @param id The document model id
      * @return A promise of the result of the preview file retrieving transaction
      */
-    public async previewUrl(uuid: string): Promise<DocumentModel.PreviewURL> {
-        const subpath: string = `${this.subpath}/models/${uuid}/preview`;
+    public async previewUrl(id: number): Promise<DocumentModel.PreviewURL> {
+        const subpath: string = `${this.subpath}/models/${id}/preview`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DocumentModel.PreviewURL;
+            return newPreviewUrl(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -124,11 +126,11 @@ export class DocumentModelService implements Service {
      * @param request Information of the preview file of the document model
      * @return A promise of the result of the preview file setting transaction
      */
-    public async setPreview(request: DocumentModel.UuidWithContentTypeRequest): Promise<DocumentModel.PreviewURL> {
-        const subpath: string = `${this.subpath}/models/${request.uuid}/preview`;
+    public async setPreview(request: DocumentModel.IdWithContentTypeRequest): Promise<DocumentModel.PreviewURL> {
+        const subpath: string = `${this.subpath}/models/${request.id}/preview`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, request, true);
-            return resp.data as DocumentModel.PreviewURL;
+            return newPreviewUrl(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -136,11 +138,11 @@ export class DocumentModelService implements Service {
 
     /**
      * Deletes the preview file associated to a document model
-     * @param uuid The document model uuid
+     * @param id The document model id
      * @return A promise of the result of the preview file deletion transaction
      */
-    public async deletePreview(uuid: string): Promise<boolean> {
-        const subpath: string = `${this.subpath}/models/${uuid}/preview`;
+    public async deletePreview(id: number): Promise<boolean> {
+        const subpath: string = `${this.subpath}/models/${id}/preview`;
         try {
             await reyahServiceRequest.delete(subpath, true);
             return true;

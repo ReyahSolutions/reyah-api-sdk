@@ -55,7 +55,7 @@ export interface JobField {
 /**
  * Job creation request
  */
-export interface CreateJob {
+export interface CreateJobRequest {
     document_id: number;
     content_type: string;
     fields?: JobField[];
@@ -64,6 +64,6 @@ export interface CreateJob {
 /**
  * Job creation response
  */
-export interface NewJob extends Document {
+export interface CreatedJob extends Document {
     id: number;
 }

@@ -3,6 +3,15 @@ import * as DataModel from '../types/dataModel';
 import { reyahServiceRequest } from '../core/core';
 import { ReyahError } from '../types/reyah';
 import * as Status from '../types/status';
+import newServiceStatus from '../constructor/status';
+import {
+    newDataFieldLinks,
+    newDataModel,
+    newDataModelLinks,
+    newDataModels,
+    newField,
+    newFields,
+} from '../constructor/dataModel';
 
 /**
  * Data model service controller
@@ -18,7 +27,7 @@ export class DataModelService implements Service {
         const subpath: string = `${this.subpath}/health`;
         try {
             const resp = await reyahServiceRequest.get(subpath, false);
-            return resp.data as Status.ServiceStatus;
+            return newServiceStatus(resp.data);
         } catch (err) {
             throw new ReyahError(err);
         }
@@ -43,11 +52,11 @@ export class DataModelService implements Service {
      * @param modelId The data model id
      * @return A promise of the result of the data model retrieving transaction
      */
-    public async retrieve(modelId: string): Promise<DataModel.DataModel> {
+    public async retrieve(modelId: number): Promise<DataModel.DataModel> {
         const subpath: string = `${this.subpath}/models/${modelId}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DataModel.DataModel;
+            return newDataModel(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -66,7 +75,7 @@ export class DataModelService implements Service {
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.models as DataModel.DataModel[];
+            return newDataModels(resp.data.models);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -77,11 +86,11 @@ export class DataModelService implements Service {
      * @param model The model to create
      * @return A promise of the result of the data model creation transaction
      */
-    public async create(model: DataModel.DataModelRequest): Promise<DataModel.DataModel> {
+    public async create(model: DataModel.CreateDataModelRequest): Promise<DataModel.DataModel> {
         const subpath: string = `${this.subpath}/models`;
         try {
             const resp = await reyahServiceRequest.post(subpath, model, true);
-            return resp.data as DataModel.DataModel;
+            return newDataModel(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -92,11 +101,11 @@ export class DataModelService implements Service {
      * @param model The modified model to patch
      * @return A promise of the result of the data model patching transaction
      */
-    public async patch(model: DataModel.DataModelRequest): Promise<DataModel.DataModel> {
+    public async patch(model: DataModel.UpdateDataModelRequest): Promise<DataModel.DataModel> {
         const subpath: string = `${this.subpath}/models/${model.model_id}`;
         try {
             const resp = await reyahServiceRequest.patch(subpath, model, true);
-            return resp.data as DataModel.DataModel;
+            return newDataModel(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -126,7 +135,7 @@ export class DataModelService implements Service {
         const subpath: string = `${this.subpath}/models/${modelId}/links`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DataModel.DataModelLinks;
+            return newDataModelLinks(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -137,11 +146,11 @@ export class DataModelService implements Service {
      * @param fieldId The ID of the field to retrieve
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveField(fieldId: string): Promise<DataModel.Field> {
+    public async retrieveField(fieldId: number): Promise<DataModel.Field> {
         const subpath: string = `${this.subpath}/fields/${fieldId}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DataModel.Field;
+            return newField(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -155,7 +164,7 @@ export class DataModelService implements Service {
         const subpath: string = `${this.subpath}/fields`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.fields as DataModel.Field[];
+            return newFields(resp.data.fields);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -166,11 +175,11 @@ export class DataModelService implements Service {
      * @param field The field to create
      * @return A promise of the result of the data field creation transaction
      */
-    public async createField(field: DataModel.Field): Promise<DataModel.Field> {
+    public async createField(field: DataModel.CreateFieldRequest): Promise<DataModel.Field> {
         const subpath: string = `${this.subpath}/fields`;
         try {
             const resp = await reyahServiceRequest.post(subpath, field, true);
-            return resp.data as DataModel.Field;
+            return newField(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -181,11 +190,11 @@ export class DataModelService implements Service {
      * @param field The data field to patch
      * @return A promise of the result of the data field patching transaction
      */
-    public async patchField(field: DataModel.Field): Promise<DataModel.Field> {
+    public async patchField(field: DataModel.UpdateFieldRequest): Promise<DataModel.Field> {
         const subpath: string = `${this.subpath}/fields/${field.field_id}`;
         try {
             const resp = await reyahServiceRequest.patch(subpath, field, true);
-            return resp.data as DataModel.Field;
+            return newField(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -215,7 +224,7 @@ export class DataModelService implements Service {
         const subpath: string = `${this.subpath}/fields/${fieldId}/links`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DataModel.DataFieldLinks;
+            return newDataFieldLinks(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

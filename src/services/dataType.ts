@@ -3,6 +3,8 @@ import { reyahServiceRequest } from '../core/core';
 import * as DataType from '../types/dataType';
 import * as Status from '../types/status';
 import { Filter } from '../types/filter';
+import newServiceStatus from '../constructor/status';
+import { newDataType, newDataTypeLinks, newDataTypes } from '../constructor/dataType';
 
 /**
  * Data type service controller
@@ -18,7 +20,7 @@ export class DataTypeService implements Service {
         const subpath: string = `${this.subpath}/health`;
         try {
             const resp = await reyahServiceRequest.get(subpath, false);
-            return resp.data as Status.ServiceStatus;
+            return newServiceStatus(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -33,7 +35,7 @@ export class DataTypeService implements Service {
         const subpath: string = `${this.subpath}/types/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DataType.DataType;
+            return newDataType(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -52,7 +54,7 @@ export class DataTypeService implements Service {
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.data_types as DataType.DataType[];
+            return newDataTypes(resp.data.data_types);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -63,11 +65,11 @@ export class DataTypeService implements Service {
      * @param type The type to create
      * @return A promise of the result of the data type creation transaction
      */
-    public async create(type: DataType.DataType): Promise<DataType.DataType> {
+    public async create(type: DataType.CreateDataTypeRequest): Promise<DataType.DataType> {
         const subpath: string = `${this.subpath}/types`;
         try {
             const resp = await reyahServiceRequest.post(subpath, type, true);
-            return resp.data as DataType.DataType;
+            return newDataType(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -78,11 +80,11 @@ export class DataTypeService implements Service {
      * @param type The modified type to patch
      * @return A promise of the result of the data type patching transaction
      */
-    public async patch(type: DataType.DataType): Promise<DataType.DataType> {
+    public async patch(type: DataType.UpdateDataTypeRequest): Promise<DataType.DataType> {
         const subpath: string = `${this.subpath}/types/${type.id}`;
         try {
             const resp = await reyahServiceRequest.patch(subpath, type, true);
-            return resp.data as DataType.DataType;
+            return newDataType(resp.data);
         } catch (err) {
             throw new ReyahError(err);
         }
@@ -105,14 +107,14 @@ export class DataTypeService implements Service {
 
     /**
      * Retrieves all data fields linked to the current data type
-     * @param id The data type id to query
+     * @param dataTypeId The data type id to query
      * @return A promise of the result of the retrieving transaction
      */
     public async retrieveDataTypeLinksFromDataType(dataTypeId: number): Promise<DataType.DataTypeLinks> {
         const subpath: string = `${this.subpath}/types/${dataTypeId}/links`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as DataType.DataTypeLinks;
+            return newDataTypeLinks(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

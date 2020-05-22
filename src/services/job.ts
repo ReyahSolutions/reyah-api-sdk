@@ -3,6 +3,13 @@ import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
 import { dispatchError } from '..';
 import * as Status from '../types/status';
+import newServiceStatus from '../constructor/status';
+import {
+    newCreatedJob,
+    newDocument,
+    newJob, newJobFields,
+    newJobs,
+} from '../constructor/job';
 
 /**
  * Job service controller
@@ -18,7 +25,7 @@ export class JobService implements Service {
         const subpath: string = `${this.subpath}/health`;
         try {
             const resp = await reyahServiceRequest.get(subpath, false);
-            return resp.data as Status.ServiceStatus;
+            return newServiceStatus(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -26,14 +33,14 @@ export class JobService implements Service {
 
     /**
      * Retrieves an extraction job of an user
-     * @param uuid Extraction job uuid
+     * @param id Extraction job id
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveExtractionJob(uuid: string): Promise<Job.Job> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}`;
+    public async retrieveExtractionJob(id: number): Promise<Job.Job> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.Job;
+            return newJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -47,7 +54,7 @@ export class JobService implements Service {
         const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.jobs as Job.Job[];
+            return newJobs(resp.data.jobs);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -55,14 +62,14 @@ export class JobService implements Service {
 
     /**
      * Retrieves input of an extraction job of an user
-     * @param uuid Extraction job uuid
+     * @param id Extraction job id
      * @return A promise of the result of the extraction job input retrieving transaction
      */
-    public async retrieveExtractionJobInput(uuid: string): Promise<Job.Document> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/input`;
+    public async retrieveExtractionJobInput(id: number): Promise<Job.Document> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/input`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.Document;
+            return newDocument(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -70,14 +77,14 @@ export class JobService implements Service {
 
     /**
      * Retrieves output of an extraction job of an user
-     * @param uuid Extraction job uuid
+     * @param id Extraction job id
      * @return A promise of the result of the extraction job output retrieving transaction
      */
-    public async retrieveExtractionJobOutput(uuid: string): Promise<Job.JobField[]> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}/output`;
+    public async retrieveExtractionJobOutput(id: number): Promise<Job.JobField[]> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.fields as Job.JobField[];
+            return newJobFields(resp.data.fields);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -88,11 +95,11 @@ export class JobService implements Service {
      * @param job Extraction job to create
      * @return A promise of the result of the extraction job creation transaction
      */
-    public async createExtractionJob(job: Job.CreateJob): Promise<Job.NewJob> {
+    public async createExtractionJob(job: Job.CreateJobRequest): Promise<Job.CreatedJob> {
         const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
-            return resp.data as Job.NewJob;
+            return newCreatedJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -100,14 +107,14 @@ export class JobService implements Service {
 
     /**
      * Retrieves a rendering job of an user
-     * @param uuid Rendering job uuid
+     * @param id Rendering job id
      * @return A promise of the result of the rendering job retrieving transaction
      */
-    public async retrieveRenderJob(uuid: string): Promise<Job.Job> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${uuid}`;
+    public async retrieveRenderJob(id: number): Promise<Job.Job> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.Job;
+            return newJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -121,7 +128,7 @@ export class JobService implements Service {
         const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.jobs as Job.Job[];
+            return newJobs(resp.data.jobs);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -129,14 +136,14 @@ export class JobService implements Service {
 
     /**
      * Retrieves input of an rendering job of an user
-     * @param uuid Rendering job uuid
+     * @param id Rendering job id
      * @return A promise of the result of the rendering job input retrieving transaction
      */
-    public async retrieveRenderJobInput(uuid: string): Promise<Job.Document> {
-        const subpath: string = `${this.subpath}/rendering/jobs/${uuid}/input`;
+    public async retrieveRenderJobInput(id: number): Promise<Job.Document> {
+        const subpath: string = `${this.subpath}/rendering/jobs/${id}/input`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.Document;
+            return newDocument(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -144,14 +151,14 @@ export class JobService implements Service {
 
     /**
      * Retrieves output of an rendering job of an user
-     * @param uuid Rendering job uuid
+     * @param id Rendering job id
      * @return A promise of the result of the rendering job output retrieving transaction
      */
-    public async retrieveRenderJobOutput(uuid: string): Promise<Job.Document> {
-        const subpath: string = `${this.subpath}/rendering/jobs/${uuid}/output`;
+    public async retrieveRenderJobOutput(id: number): Promise<Job.Document> {
+        const subpath: string = `${this.subpath}/rendering/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Job.Document;
+            return newDocument(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -162,11 +169,11 @@ export class JobService implements Service {
      * @param job Rendering job to create
      * @return A promise of the result of the rendering job creation transaction
      */
-    public async createRenderJob(job: Job.CreateJob): Promise<Job.NewJob> {
+    public async createRenderJob(job: Job.CreateJobRequest): Promise<Job.CreatedJob> {
         const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
-            return resp.data as Job.NewJob;
+            return newCreatedJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

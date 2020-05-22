@@ -6,13 +6,26 @@
  * Document model
  */
 export interface DataType {
-    id?: number;
-    user_id?: string;
+    id: number;
+    user_id: string;
+    name: string;
+    description: string;
+    validator: string;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface CreateDataTypeRequest {
     name: string;
     description?: string;
     validator: string;
-    created_at?: Date;
-    updated_at?: Date;
+}
+
+export interface UpdateDataTypeRequest {
+    id: number;
+    name: string;
+    description?: string;
+    validator: string;
 }
 
 export interface DataTypeLinks {

@@ -2,6 +2,8 @@ import { dispatchError, Service } from '..';
 import { reyahServiceRequest } from '../core/core';
 import * as Status from '../types/status';
 import * as Profile from '../types/profile';
+import newServiceStatus from '../constructor/status';
+import { newInvitation, newInvitations, newProfile } from '../constructor/profile';
 
 /**
  * Data type service controller
@@ -18,7 +20,7 @@ export class ProfileService implements Service {
         const subpath: string = `${this.public_subpath}/health`;
         try {
             const resp = await reyahServiceRequest.get(subpath, false);
-            return resp.data as Status.ServiceStatus;
+            return newServiceStatus(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -32,7 +34,7 @@ export class ProfileService implements Service {
         const subpath: string = `${this.private_subpath}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data as Profile.Profile;
+            return newProfile(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -47,7 +49,7 @@ export class ProfileService implements Service {
         const subpath: string = `${this.public_subpath}/register`;
         try {
             const resp = await reyahServiceRequest.post(subpath, profile, true);
-            return resp.data as Profile.Profile;
+            return newProfile(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -61,7 +63,7 @@ export class ProfileService implements Service {
         const subpath: string = `${this.public_subpath}/register/invitation`;
         try {
             const resp = await reyahServiceRequest.post(subpath, undefined, true);
-            return resp.data as Profile.Invitation;
+            return newInvitation(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -75,7 +77,7 @@ export class ProfileService implements Service {
         const subpath: string = `${this.public_subpath}/register/invitation`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.invitations as Profile.Invitation[];
+            return newInvitations(resp.data.invitations);
         } catch (err) {
             throw dispatchError(err);
         }
