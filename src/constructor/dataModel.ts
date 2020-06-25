@@ -70,8 +70,8 @@ export function newDataModel(obj: any): DataModel {
     };
 }
 
-export function newDataModels(obj: any): PaginatedDataModels {
-    if (!Array.isArray(obj.fields) || typeof obj.pagination_status !== "object") {
+export function newPaginatedDataModels(obj: any): PaginatedDataModels {
+    if (!Array.isArray(obj.models) || typeof obj.pagination_status !== "object") {
         return {
             models: [],
             pagination_status: {
