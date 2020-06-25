@@ -2,6 +2,8 @@
  * Data Model service types
  */
 
+import { PaginationStatus } from "./pagination";
+
 /**
  * Data model field property
  */
@@ -28,6 +30,11 @@ export interface Field {
     datatypes: number[];
     created_at: Date;
     updated_at: Date;
+}
+
+export interface Fields {
+    fields: Field[],
+    pagination_status: PaginationStatus,
 }
 
 export interface CreateFieldRequest {
@@ -58,6 +65,11 @@ export interface DataModel {
     fields: Field[];
     created_at: Date;
     updated_at: Date;
+}
+
+export interface DataModels {
+    models: DataModel[],
+    pagination_status: PaginationStatus,
 }
 
 export interface CreateDataModelRequest {
