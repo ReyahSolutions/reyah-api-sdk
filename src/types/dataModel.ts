@@ -32,7 +32,7 @@ export interface Field {
     updated_at: Date;
 }
 
-export interface Fields {
+export interface PaginatedFields {
     fields: Field[],
     pagination_status: PaginationStatus,
 }
@@ -67,7 +67,7 @@ export interface DataModel {
     updated_at: Date;
 }
 
-export interface DataModels {
+export interface PaginatedDataModels {
     models: DataModel[],
     pagination_status: PaginationStatus,
 }

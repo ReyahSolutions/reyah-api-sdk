@@ -1,9 +1,11 @@
 /**
- * Data Document service types
+ * Data Types service types
  */
 
+import { PaginationStatus } from "./pagination";
+
 /**
- * Document model
+ * Data Types
  */
 export interface DataType {
     id: number;
@@ -13,6 +15,11 @@ export interface DataType {
     validator: string;
     created_at: Date;
     updated_at: Date;
+}
+
+export interface PaginationDataTypes {
+    data_types: DataType[],
+    pagination_status: PaginationStatus,
 }
 
 export interface CreateDataTypeRequest {

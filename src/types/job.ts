@@ -2,6 +2,8 @@
  * Job service types
  */
 
+import { PaginationStatus } from "./pagination";
+
 /**
  * Status of a job
  */
@@ -31,6 +33,11 @@ export interface Job {
     status: JobStatus;
     created_at: Date;
     updated_at: Date;
+}
+
+export interface PaginatedJobs {
+    jobs: Job[],
+    pagination_status: PaginationStatus,
 }
 
 /**
