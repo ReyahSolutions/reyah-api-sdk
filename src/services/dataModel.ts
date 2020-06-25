@@ -10,7 +10,7 @@ import {
     newDataModelLinks,
     newDataModels,
     newField,
-    newFields,
+    newPaginatedFields,
 } from '../constructor/dataModel';
 
 /**
@@ -160,11 +160,11 @@ export class DataModelService implements Service {
      * Retrieves all data fields
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveAllFields(): Promise<DataModel.Field[]> {
+    public async retrieveAllFields(): Promise<DataModel.PaginatedFields> {
         const subpath: string = `${this.subpath}/fields`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newFields(resp.data.fields);
+            return newPaginatedFields(resp.data.fields);
         } catch (err) {
             throw dispatchError(err);
         }
