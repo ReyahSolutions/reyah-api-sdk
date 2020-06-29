@@ -10,6 +10,7 @@ import {
     newJob, newJobFields,
     newJobs,
 } from '../constructor/job';
+import { Pagination } from '../types/pagination';
 
 /**
  * Job service controller
@@ -50,11 +51,19 @@ export class JobService implements Service {
      * Retrieves all extraction jobs of an user
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveAllExtractionJob(): Promise<Job.Job[]> {
-        const subpath: string = `${this.subpath}/extraction/jobs`;
+    public async retrieveAllExtractionJob(pagination?: Pagination): Promise<Job.PaginatedJobs> {
+        let subpath: string = `${this.subpath}/extraction/jobs`;
+        const qs = new URLSearchParams();
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        if (qs.toString()) {
+            subpath += `?${qs.toString()}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobs(resp.data.jobs);
+            return newJobs(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
