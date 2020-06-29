@@ -6,6 +6,7 @@ import { reyahServiceRequest } from '../core/core';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import { newDocumentModel, newDocumentModels, newPreviewUrl } from '../constructor/documentModel';
+import { Pagination } from '../types/pagination';
 
 /**
  * Document model service controller
@@ -46,16 +47,22 @@ export class DocumentModelService implements Service {
      * Retrieves all document models of an user
      * @return A promise of the result of the document model retrieving transaction
      */
-    public async retrieveAll(filter?: Filter): Promise<DocumentModel.DocumentModel[]> {
+    public async retrieveAll(filter?: Filter, pagination?: Pagination): Promise<DocumentModel.PaginatedDocumentModels> {
         let subpath: string = `${this.subpath}/models`;
+        const qs = new URLSearchParams();
         if (filter) {
-            const qs = new URLSearchParams();
             qs.append('only', filter.only.join(','));
+        }
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        if (qs.toString()) {
             subpath += `?${qs.toString()}`;
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newDocumentModels(resp.data.models);
+            return newDocumentModels(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

@@ -56,7 +56,7 @@ export interface DocumentModel {
     updated_at: Date;
 }
 
-export interface PaginationDocumentModels {
+export interface PaginatedDocumentModels {
     models: DocumentModel[],
     pagination_status: PaginationStatus,
 }
