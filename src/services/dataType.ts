@@ -5,6 +5,7 @@ import * as Status from '../types/status';
 import { Filter } from '../types/filter';
 import newServiceStatus from '../constructor/status';
 import { newDataType, newDataTypeLinks, newDataTypes } from '../constructor/dataType';
+import { Pagination } from '../types/pagination';
 
 /**
  * Data type service controller
@@ -45,16 +46,22 @@ export class DataTypeService implements Service {
      * Retrieves all data types of an user
      * @return A promise of the result of the data type retrieving transaction
      */
-    public async retrieveAll(filter?: Filter): Promise<DataType.DataType[]> {
+    public async retrieveAll(filter?: Filter, pagination?: Pagination): Promise<DataType.PaginatedDataTypes> {
         let subpath: string = `${this.subpath}/types`;
+        const qs = new URLSearchParams();
         if (filter) {
-            const qs = new URLSearchParams();
             qs.append('only', filter.only.join(','));
+        }
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        if (qs.toString()) {
             subpath += `?${qs.toString()}`;
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newDataTypes(resp.data.data_types);
+            return newDataTypes(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

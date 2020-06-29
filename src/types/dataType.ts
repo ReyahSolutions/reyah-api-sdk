@@ -17,7 +17,7 @@ export interface DataType {
     updated_at: Date;
 }
 
-export interface PaginationDataTypes {
+export interface PaginatedDataTypes {
     data_types: DataType[],
     pagination_status: PaginationStatus,
 }
