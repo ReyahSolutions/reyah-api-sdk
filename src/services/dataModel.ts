@@ -167,8 +167,16 @@ export class DataModelService implements Service {
      * Retrieves all data fields
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveAllFields(): Promise<DataModel.PaginatedFields> {
-        const subpath: string = `${this.subpath}/fields`;
+    public async retrieveAllFields(pagination?: Pagination): Promise<DataModel.PaginatedFields> {
+        let subpath: string = `${this.subpath}/fields`;
+        const qs = new URLSearchParams();
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        if (qs.toString()) {
+            subpath += `?${qs.toString()}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newPaginatedFields(resp.data);
