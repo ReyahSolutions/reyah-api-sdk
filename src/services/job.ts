@@ -133,11 +133,19 @@ export class JobService implements Service {
      * Retrieves all rendering jobs of an user
      * @return A promise of the result of the rendering job retrieving transaction
      */
-    public async retrieveAllRenderJob(): Promise<Job.Job[]> {
-        const subpath: string = `${this.subpath}/rendering/jobs`;
+    public async retrieveAllRenderJob(pagination?: Pagination): Promise<Job.PaginatedJobs> {
+        let subpath: string = `${this.subpath}/rendering/jobs`;
+        const qs = new URLSearchParams();
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        if (qs.toString()) {
+            subpath += `?${qs.toString()}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobs(resp.data.jobs);
+            return newJobs(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
