@@ -1,8 +1,10 @@
-import { dispatchError, ReyahError, Service } from '..';
+import {
+    dispatchError, ReyahError, Service, Filter,
+} from '..';
 import { reyahServiceRequest } from '../core/core';
 import * as DataType from '../types/dataType';
 import * as Status from '../types/status';
-import { Filter } from '..';
+
 import newServiceStatus from '../constructor/status';
 import { newDataType, newDataTypeLinks, newDataTypes } from '../constructor/dataType';
 import { Pagination } from '../types/pagination';

@@ -1,7 +1,7 @@
 import * as Job from '../types/job';
-import { Service } from '..';
+import { Service, dispatchError } from '..';
 import { reyahServiceRequest } from '../core/core';
-import { dispatchError } from '..';
+
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {

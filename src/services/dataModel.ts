@@ -1,7 +1,9 @@
-import { dispatchError, Filter, Service } from '..';
+import {
+    dispatchError, Filter, Service, ReyahError,
+} from '..';
 import * as DataModel from '../types/dataModel';
 import { reyahServiceRequest } from '../core/core';
-import { ReyahError } from '..';
+
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
