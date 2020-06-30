@@ -33,7 +33,7 @@ export function newJob(obj: any): Job {
  * Jobs
  */
 export function newJobs(obj: any): PaginatedJobs {
-    if (!Array.isArray(obj.jobs) || typeof obj.pagination_status !== "object") {
+    if (!Array.isArray(obj.jobs) || typeof obj.pagination_status !== 'object') {
         return {
             jobs: [],
             pagination_status: {
@@ -41,8 +41,8 @@ export function newJobs(obj: any): PaginatedJobs {
                 total_pages: 0,
                 total_entries: 0,
                 current_size: 0,
-                current_page: 0
-            }
+                current_page: 0,
+            },
         };
     }
     return {
@@ -53,7 +53,7 @@ export function newJobs(obj: any): PaginatedJobs {
             total_entries: parseInt(obj.pagination_status.total_entries, 10),
             current_size: parseInt(obj.pagination_status.current_size, 10),
             current_page: parseInt(obj.pagination_status.current_page, 10),
-        }
+        },
     };
 }
 

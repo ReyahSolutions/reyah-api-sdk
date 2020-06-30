@@ -2,7 +2,7 @@
  * Data Model service types
  */
 
-import { PaginationStatus } from "./pagination";
+import { PaginationStatus } from './pagination';
 
 /**
  * Data model field property

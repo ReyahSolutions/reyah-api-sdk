@@ -1,6 +1,13 @@
 import {
-    DataFieldLinks, PaginatedFields, PaginatedDataModels,
-    DataModel, DataModelLinks, DocumentLink, Field, FieldLink, Property,
+    DataFieldLinks,
+    DataModel,
+    DataModelLinks,
+    DocumentLink,
+    Field,
+    FieldLink,
+    PaginatedDataModels,
+    PaginatedFields,
+    Property,
 } from '..';
 
 /**
@@ -31,7 +38,7 @@ export function newField(obj: any): Field {
 }
 
 export function newPaginatedFields(obj: any): PaginatedFields {
-    if (!Array.isArray(obj.fields) || typeof obj.pagination_status !== "object") {
+    if (!Array.isArray(obj.fields) || typeof obj.pagination_status !== 'object') {
         return {
             fields: [],
             pagination_status: {
@@ -39,8 +46,8 @@ export function newPaginatedFields(obj: any): PaginatedFields {
                 total_pages: 0,
                 total_entries: 0,
                 current_size: 0,
-                current_page: 0
-            }
+                current_page: 0,
+            },
         };
     }
     return {
@@ -51,8 +58,8 @@ export function newPaginatedFields(obj: any): PaginatedFields {
             total_entries: parseInt(obj.pagination_status.total_entries, 10),
             current_size: parseInt(obj.pagination_status.current_size, 10),
             current_page: parseInt(obj.pagination_status.current_page, 10),
-        }
-    }
+        },
+    };
 }
 
 /**
@@ -71,7 +78,7 @@ export function newDataModel(obj: any): DataModel {
 }
 
 export function newPaginatedDataModels(obj: any): PaginatedDataModels {
-    if (!Array.isArray(obj.models) || typeof obj.pagination_status !== "object") {
+    if (!Array.isArray(obj.models) || typeof obj.pagination_status !== 'object') {
         return {
             models: [],
             pagination_status: {
@@ -79,8 +86,8 @@ export function newPaginatedDataModels(obj: any): PaginatedDataModels {
                 total_pages: 0,
                 total_entries: 0,
                 current_size: 0,
-                current_page: 0
-            }
+                current_page: 0,
+            },
         };
     }
     return {
@@ -91,8 +98,8 @@ export function newPaginatedDataModels(obj: any): PaginatedDataModels {
             total_entries: parseInt(obj.pagination_status.total_entries, 10),
             current_size: parseInt(obj.pagination_status.current_size, 10),
             current_page: parseInt(obj.pagination_status.current_page, 10),
-        }
-    }
+        },
+    };
 }
 
 export function newFieldLink(obj: any): FieldLink {

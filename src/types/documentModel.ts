@@ -2,7 +2,7 @@
  * Document model service type definitions.
  */
 
-import { PaginationStatus } from "./pagination";
+import { PaginationStatus } from './pagination';
 
 /**
  * Represents a single field of a document model.

@@ -5,7 +5,6 @@ import { PaginatedDocumentModels } from '../types/documentModel';
  * Document model service type definitions.
  */
 
-
 /**
  * Represents a single field of a document model.
  */
@@ -49,7 +48,7 @@ export function newDocumentModel(obj: any): DocumentModel {
 }
 
 export function newDocumentModels(obj: any): PaginatedDocumentModels {
-    if (!Array.isArray(obj.models) || typeof obj.pagination_status !== "object") {
+    if (!Array.isArray(obj.models) || typeof obj.pagination_status !== 'object') {
         return {
             models: [],
             pagination_status: {
@@ -57,8 +56,8 @@ export function newDocumentModels(obj: any): PaginatedDocumentModels {
                 total_pages: 0,
                 total_entries: 0,
                 current_size: 0,
-                current_page: 0
-            }
+                current_page: 0,
+            },
         };
     }
     return {
@@ -69,7 +68,7 @@ export function newDocumentModels(obj: any): PaginatedDocumentModels {
             total_entries: parseInt(obj.pagination_status.total_entries, 10),
             current_size: parseInt(obj.pagination_status.current_size, 10),
             current_page: parseInt(obj.pagination_status.current_page, 10),
-        }
+        },
     };
 }
 

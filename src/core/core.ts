@@ -4,7 +4,6 @@ import * as Core from '../types/core';
 import AuthHandler from '../authentication/authentication';
 import { AuthenticationException, Context, NoAuthProvidedException } from '../types/authentication';
 
-
 /**
  * Implementation of [[ReyahServiceRequest]] interface
  */

@@ -2,7 +2,7 @@
  * Job service types
  */
 
-import { PaginationStatus } from "./pagination";
+import { PaginationStatus } from './pagination';
 
 /**
  * Status of a job
