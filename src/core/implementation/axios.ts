@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, Method } from 'axios';
 import * as Core from '../../types/core';
-import { newReyahErrorResponse, ReyahRequestConfiguration, ReyahRequestError } from '../../types/core';
+import { newReyahErrorResponse, ReyahRequestConfiguration, ReyahRequestError } from '../..';
 
 /**
  * Low-level controller for HTTP requests from the SDK implementing Axios as controller

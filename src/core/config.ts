@@ -1,4 +1,4 @@
-import { IConfig } from '../types/reyah';
+import { IConfig } from '..';
 
 export class Config {
     static config: IConfig;

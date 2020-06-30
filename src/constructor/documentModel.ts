@@ -1,5 +1,6 @@
-import { DocumentModelField, DocumentModel, PreviewURL } from '..';
-import { PaginatedDocumentModels } from '../types/documentModel';
+import {
+    DocumentModelField, DocumentModel, PaginatedDocumentModels, PreviewURL,
+} from '..';
 
 /**
  * Document model service type definitions.

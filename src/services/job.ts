@@ -1,5 +1,5 @@
 import * as Job from '../types/job';
-import { Service } from '../types/reyah';
+import { Service } from '..';
 import { reyahServiceRequest } from '../core/core';
 import { dispatchError } from '..';
 import * as Status from '../types/status';

@@ -2,7 +2,7 @@ import { Method } from 'axios';
 import { Axios } from './implementation/axios';
 import * as Core from '../types/core';
 import AuthHandler from '../authentication/authentication';
-import { AuthenticationException, Context, NoAuthProvidedException } from '../types/authentication';
+import { AuthenticationException, Context, NoAuthProvidedException } from '..';
 
 /**
  * Implementation of [[ReyahServiceRequest]] interface
