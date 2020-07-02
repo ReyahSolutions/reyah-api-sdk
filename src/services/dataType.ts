@@ -60,6 +60,7 @@ export class DataTypeService implements Service {
         }
         if (qs.toString()) {
             subpath += `?${qs.toString()}`;
+            console.log(subpath);
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
