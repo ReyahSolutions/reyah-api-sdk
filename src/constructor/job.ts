@@ -1,5 +1,7 @@
 import {
-    CreatedJob, CSVExtractionUrl, DatatypeMatch,
+    CreatedJob,
+    CSVExtractionUrl,
+    DatatypeMatch,
     Document,
     Job,
     JobField,

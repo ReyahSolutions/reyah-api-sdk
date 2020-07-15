@@ -5,9 +5,11 @@ import { dispatchError } from '..';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
-    newCreatedJob, newCSVExtractionUrl,
+    newCreatedJob,
+    newCSVExtractionUrl,
     newDocument,
-    newJob, newJobFields,
+    newJob,
+    newJobFields,
     newJobs,
 } from '../constructor/job';
 
