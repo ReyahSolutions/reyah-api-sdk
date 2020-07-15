@@ -1,9 +1,9 @@
-name: Build and test
-on:
-  push:
-    branches:
-      - '**'
-      - '!master'
+name: Test and publish test version
+on: push
+#  push:
+#    branches:
+#      - '**'
+#      - '!master'
 
 jobs:
   build:
