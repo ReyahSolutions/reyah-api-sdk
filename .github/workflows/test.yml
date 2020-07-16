@@ -61,5 +61,5 @@ jobs:
         run: |
           version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
           branch=`echo ${GITHUB_REF#refs/heads/} | tr '/' '-'`
-          short_sha=`git rev-parse --short=8 HEAD`
+          short_sha=`echo $GITHUB_SHA | cut -c-8`
           echo yarn publish --new-version="$version-$short_sha" --tag="$branch" --no-git-tag-version
