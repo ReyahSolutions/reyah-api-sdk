@@ -28,7 +28,6 @@ jobs:
           name: persistent-data
           path: |
             dist
-            node_modules
 
   deploy:
     name: Deploy
