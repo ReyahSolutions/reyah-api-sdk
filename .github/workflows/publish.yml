@@ -1,9 +1,8 @@
-name: Build and test
+name: Publish
 on:
   push:
     branches:
-      - '**'
-      - '!master'
+      - 'master'
 
 jobs:
   build:
@@ -35,7 +34,7 @@ jobs:
             dist
 
   deploy:
-    name: Publish test version
+    name: Publish
     needs: build
     runs-on: ubuntu-latest
     container:
@@ -58,7 +57,4 @@ jobs:
           name: persistent-data
       - name: Publish
         run: |
-          version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
-          branch=`echo ${GITHUB_REF#refs/heads/} | tr '/' '-'`
-          short_sha=`echo $GITHUB_SHA | cut -c-8`
-          yarn publish --new-version="$version-$short_sha" --tag="$branch" --no-git-tag-version
+          - yarn publish --non-interactive
