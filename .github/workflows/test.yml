@@ -13,10 +13,10 @@ jobs:
     container:
       image: arthurknoep/npm-cli-login:latest
       env:
-        NPM_USER: ${{ secret.NPM_USER }}
-        NPM_EMAIL: ${{ secret.NPM_EMAIL }}
-        NPM_PASS: ${{ secret.NPM_PASS }}
-        NPM_REGISTRY: ${{ secret.NPM_REGISTRY }}
+        NPM_USER: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_PASS: ${{ secrets.NPM_PASS }}
+        NPM_REGISTRY: ${{ secrets.NPM_REGISTRY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -42,10 +42,10 @@ jobs:
     container:
       image: arthurknoep/npm-cli-login:latest
       env:
-        NPM_USER: ${{ secret.NPM_USER }}
-        NPM_EMAIL: ${{ secret.NPM_EMAIL }}
-        NPM_PASS: ${{ secret.NPM_PASS }}
-        NPM_REGISTRY: ${{ secret.NPM_REGISTRY }}
+        NPM_USER: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_PASS: ${{ secrets.NPM_PASS }}
+        NPM_REGISTRY: ${{ secrets.NPM_REGISTRY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
