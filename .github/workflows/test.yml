@@ -10,14 +10,20 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    container:
+      image: arthurknoep/npm-cli-login:latest
+      env:
+        NPM_USER: ${{ secret.NPM_USER }}
+        NPM_EMAIL: ${{ secret.NPM_EMAIL }}
+        NPM_PASS: ${{ secret.NPM_PASS }}
+        NPM_REGISTRY: ${{ secret.NPM_REGISTRY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-          registry-url: 'https://npm.reyah.ga'
+        run: |
+          npm-cli-login
+          yarn config set registry "$NPM_REGISTRY"
       - name: Install dependencies
         run: yarn install
       - name: Build
@@ -33,14 +39,20 @@ jobs:
     name: Publish test version
     needs: build
     runs-on: ubuntu-latest
+    container:
+      image: arthurknoep/npm-cli-login:latest
+      env:
+        NPM_USER: ${{ secret.NPM_USER }}
+        NPM_EMAIL: ${{ secret.NPM_EMAIL }}
+        NPM_PASS: ${{ secret.NPM_PASS }}
+        NPM_REGISTRY: ${{ secret.NPM_REGISTRY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-          registry-url: 'https://npm.reyah.ga'
+        run: |
+          npm-cli-login
+          yarn config set registry "$NPM_REGISTRY"
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
@@ -50,4 +62,4 @@ jobs:
           version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
           branch=`echo ${GITHUB_REF#refs/heads/} | tr '/' '-'`
           short_sha=`git rev-parse --short=8 HEAD`
-          echo yarn publish --new-version="$version-$short_sha" --tag="$branch" --no-git-tag-version
+          yarn publish --new-version="$version-$short_sha" --tag="$branch" --no-git-tag-version
