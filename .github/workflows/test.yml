@@ -30,7 +30,7 @@ jobs:
             dist
 
   deploy:
-    name: Deploy
+    name: Publish test version
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -49,4 +49,4 @@ jobs:
         run: |
           version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
           branch=`echo $CI_COMMIT_BRANCH | tr '/' '-'`
-          yarn publish --new-version="$version-$CI_COMMIT_SHORT_SHA" --tag="$branch" --no-git-tag-version
+          echo yarn publish --new-version="$version-$CI_COMMIT_SHORT_SHA" --tag="$branch" --no-git-tag-version
