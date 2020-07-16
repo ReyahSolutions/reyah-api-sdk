@@ -1,4 +1,4 @@
-name: Test and publish test version
+name: Build and test
 on: push
 #  push:
 #    branches:
@@ -8,6 +8,7 @@ on: push
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
