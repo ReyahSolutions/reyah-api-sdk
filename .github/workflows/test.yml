@@ -49,4 +49,5 @@ jobs:
         run: |
           version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
           branch=`echo $CI_COMMIT_BRANCH | tr '/' '-'`
-          echo yarn publish --new-version="$version-$CI_COMMIT_SHORT_SHA" --tag="$branch" --no-git-tag-version
+          short_sha=`git rev-parse --short=8 HEAD`
+          echo yarn publish --new-version="$version-$short_sha" --tag="$branch" --no-git-tag-version
