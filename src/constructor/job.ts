@@ -86,7 +86,6 @@ export function newCreatedJob(obj: any): CreatedJob {
     };
 }
 
-
 /**
  * Job extraction response
  */
