@@ -57,4 +57,4 @@ jobs:
           name: persistent-data
       - name: Publish
         run: |
-          - yarn publish --non-interactive
+          yarn publish --non-interactive
