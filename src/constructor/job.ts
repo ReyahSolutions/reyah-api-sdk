@@ -1,5 +1,7 @@
 import {
-    CreatedJob, DatatypeMatch,
+    CreatedJob,
+    CSVExtractionUrl,
+    DatatypeMatch,
     Document,
     Job,
     JobField,
@@ -81,5 +83,15 @@ export function newCreatedJob(obj: any): CreatedJob {
         id: parseInt(obj.id, 10),
         expiry: new Date(obj.expiry),
         url: obj.url,
+    };
+}
+
+/**
+ * Job extraction response
+ */
+export function newCSVExtractionUrl(obj: any): CSVExtractionUrl {
+    return {
+        url: obj.url,
+        expiry: new Date(obj.expiry),
     };
 }
