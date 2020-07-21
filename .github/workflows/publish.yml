@@ -29,7 +29,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: persistent-data
+          name: dist
           path: |
             dist
 
@@ -54,7 +54,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: persistent-data
+          name: dist
+          path: dist
       - name: Publish
         run: |
           yarn publish --non-interactive

@@ -30,7 +30,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: persistent-data
+          name: dist
           path: |
             dist
 
@@ -55,7 +55,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: persistent-data
+          name: dist
+          path: dist
       - name: Publish
         run: |
           version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
