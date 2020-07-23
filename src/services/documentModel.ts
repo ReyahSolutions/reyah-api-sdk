@@ -57,8 +57,9 @@ export class DocumentModelService implements Service {
             qs.append('page', pagination.page.toString());
             qs.append('size', pagination.size.toString());
         }
-        if (qs.toString()) {
-            subpath += `?${qs.toString()}`;
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
