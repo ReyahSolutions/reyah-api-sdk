@@ -43,9 +43,10 @@ export interface ReyahServiceRequest {
      * Prepare an HTTP GET request based on information provided in the parameter
      * @param subpath Subpath to attach to the host name to form the full URL
      * @param useAuth Use auth indicates whether this request should an auth mechanism
+     * @param qs An optional query string
      * @return A promise
      */
-    get(subpath: string, useAuth: boolean): Promise<ReyahRequestResponse>;
+    get(subpath: string, useAuth: boolean, qs?: object): Promise<ReyahRequestResponse>;
 
     /**
      * Prepare an HTTP POST request based on information provided in the parameter

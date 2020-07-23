@@ -74,3 +74,37 @@ export interface CreateJobRequest {
 export interface CreatedJob extends Document {
     id: number;
 }
+
+/**
+ * Job extraction type
+ */
+export enum ExtractionType {
+    IDS = 'IDS',
+    DATE = 'DATE',
+}
+
+/**
+ * Job extraction CSV request
+ */
+export interface CSVExtractionRequest {
+    extraction_type: ExtractionType;
+    ids?: number[];
+    start_date?: Date;
+    end_date?: Date;
+    include_datatype: boolean;
+}
+export interface InternalCSVExtractionRequest {
+    extraction_type: ExtractionType;
+    ids?: string;
+    start_date?: string;
+    end_date?: string;
+    include_datatype: boolean;
+}
+
+/**
+ * CSV extraction presigned url
+ */
+export interface CSVExtractionUrl {
+    url: string;
+    expiry: Date;
+}

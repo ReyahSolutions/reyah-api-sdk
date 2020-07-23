@@ -1,14 +1,11 @@
 import * as Job from '../types/job';
-import { Service, dispatchError } from '..';
+import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
-
+import { dispatchError } from '../types/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
-    newCreatedJob,
-    newDocument,
-    newJob, newJobFields,
-    newJobs,
+    newCreatedJob, newCSVExtractionUrl, newDocument, newJob, newJobFields, newJobs,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -191,6 +188,31 @@ export class JobService implements Service {
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
             return newCreatedJob(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Extract multiple jobs into csv file
+     * @param extractionRequest Parameter of the extraction
+     * @return A promise of the result of the extraction
+     */
+    public async exportJobCSV(extractionRequest: Job.CSVExtractionRequest): Promise<Job.CSVExtractionUrl> {
+        const subpath: string = `${this.subpath}/extraction/csv`;
+        try {
+            const request: Job.InternalCSVExtractionRequest = {
+                extraction_type: extractionRequest.extraction_type,
+                include_datatype: extractionRequest.include_datatype,
+            };
+            if (extractionRequest.extraction_type === Job.ExtractionType.IDS) {
+                request.ids = extractionRequest.ids?.join(',');
+            } else if (extractionRequest.extraction_type === Job.ExtractionType.DATE) {
+                request.start_date = extractionRequest.start_date?.toISOString();
+                request.end_date = extractionRequest.end_date?.toISOString();
+            }
+            const resp = await reyahServiceRequest.get(subpath, true, request);
+            return newCSVExtractionUrl(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

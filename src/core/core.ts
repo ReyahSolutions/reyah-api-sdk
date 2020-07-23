@@ -20,7 +20,7 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
         this.retryCount = retryCount;
     }
 
-    private async execute(method: Method, subpath: string, useAuth: boolean, data?: any): Promise<Core.ReyahRequestResponse> {
+    private async execute(method: Method, subpath: string, useAuth: boolean, data?: any, qs?: any): Promise<Core.ReyahRequestResponse> {
         const ctx: Context = {
             tryCount: 0,
             lastError: undefined,
@@ -28,6 +28,15 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
         while (ctx.tryCount < this.retryCount) {
             try {
                 const request = new this.Requester(Core.getUrl(subpath), method, data);
+                if (qs) {
+                    Object.entries(qs).forEach(([k, v]: [string, any]) => {
+                        if (typeof v === 'string') {
+                            request.setQueryString(k, v);
+                        } else {
+                            request.setQueryString(k, v.toString());
+                        }
+                    });
+                }
                 if (useAuth) {
                     await AuthHandler.getInstance().getAuthProvider().applyAuth(request, ctx);
                 }
@@ -56,10 +65,11 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
      * Executes an HTTP GET request based on information provided in the parameter
      * @param subpath Subpath to attach to the host name to form the full URL
      * @param useAuth Use auth indicates whether this request should an auth mechanism
+     * @param qs An optional query string
      * @return A promise
      */
-    public get(subpath: string, useAuth: boolean): Promise<Core.ReyahRequestResponse> {
-        return this.execute('GET', subpath, useAuth);
+    public get(subpath: string, useAuth: boolean, qs?: object): Promise<Core.ReyahRequestResponse> {
+        return this.execute('GET', subpath, useAuth, undefined, qs);
     }
 
     /**

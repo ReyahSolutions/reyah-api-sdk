@@ -1,4 +1,5 @@
 import Job from './services/job';
+import OAuth from './services/oauth';
 import DocumentModel from './services/documentModel';
 import DataModel from './services/dataModel';
 import DataType from './services/dataType';
@@ -14,12 +15,14 @@ export * from './types/documentModel';
 export * from './types/errors';
 export * from './types/filter';
 export * from './types/job';
+export * from './types/oauth';
 export * from './types/profile';
 export * from './types/reyah';
 export * from './types/status';
 
 export const Reyah = {
     Job,
+    OAuth,
     DocumentModel,
     DataModel,
     DataType,

@@ -1,0 +1,61 @@
+name: Publish
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: arthurknoep/npm-cli-login:latest
+      env:
+        NPM_USER: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_PASS: ${{ secrets.NPM_PASS }}
+        NPM_REGISTRY: ${{ secrets.NPM_REGISTRY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node
+        run: |
+          npm-cli-login
+          yarn config set registry "$NPM_REGISTRY"
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            dist
+
+  deploy:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: arthurknoep/npm-cli-login:latest
+      env:
+        NPM_USER: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+        NPM_PASS: ${{ secrets.NPM_PASS }}
+        NPM_REGISTRY: ${{ secrets.NPM_REGISTRY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup node
+        run: |
+          npm-cli-login
+          yarn config set registry "$NPM_REGISTRY"
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Publish
+        run: |
+          yarn publish --non-interactive
