@@ -1,5 +1,8 @@
 import {
-    dispatchError, Filter, ReyahRequestResponse, Service,
+    dispatchError,
+    Filter,
+    ReyahRequestResponse,
+    Service,
 } from '..';
 import * as DocumentModel from '../types/documentModel';
 import { reyahServiceRequest } from '../core/core';

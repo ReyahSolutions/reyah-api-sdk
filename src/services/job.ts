@@ -5,7 +5,12 @@ import { dispatchError } from '../types/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
-    newCreatedJob, newCSVExtractionUrl, newDocument, newJob, newJobFields, newJobs,
+    newCreatedJob,
+    newCSVExtractionUrl,
+    newDocument,
+    newJob,
+    newJobFields,
+    newJobs,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
