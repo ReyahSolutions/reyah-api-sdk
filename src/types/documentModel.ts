@@ -2,6 +2,8 @@
  * Document model service type definitions.
  */
 
+import { PaginationStatus } from './pagination';
+
 /**
  * Represents a single field of a document model.
  */
@@ -52,6 +54,11 @@ export interface DocumentModel {
     attached_preview: boolean;
     created_at: Date;
     updated_at: Date;
+}
+
+export interface PaginatedDocumentModels {
+    models: DocumentModel[],
+    pagination_status: PaginationStatus,
 }
 
 export interface CreateDocumentModelRequest {

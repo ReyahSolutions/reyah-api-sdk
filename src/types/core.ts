@@ -115,7 +115,6 @@ export function newReyahErrorResponse(obj: any): ReyahErrorResponse {
     };
 }
 
-
 export class ReyahRequestError extends Error {
     name: string;
     code: number;

@@ -4,6 +4,7 @@ import {
     DatatypeMatch,
     Document,
     Job,
+    PaginatedJobs,
     JobField,
 } from '..';
 
@@ -33,11 +34,29 @@ export function newJob(obj: any): Job {
 /**
  * Jobs
  */
-export function newJobs(obj: any[]): Job[] {
-    if (!Array.isArray(obj)) {
-        return [];
+export function newJobs(obj: any): PaginatedJobs {
+    if (!Array.isArray(obj.jobs) || typeof obj.pagination_status !== 'object') {
+        return {
+            jobs: [],
+            pagination_status: {
+                page_size: 0,
+                total_pages: 0,
+                total_entries: 0,
+                current_size: 0,
+                current_page: 0,
+            },
+        };
     }
-    return obj.map((elem: any) => newJob(elem));
+    return {
+        jobs: obj.jobs.map((elem: any) => newJob(elem)),
+        pagination_status: {
+            page_size: parseInt(obj.pagination_status.page_size, 10),
+            total_pages: parseInt(obj.pagination_status.total_pages, 10),
+            total_entries: parseInt(obj.pagination_status.total_entries, 10),
+            current_size: parseInt(obj.pagination_status.current_size, 10),
+            current_page: parseInt(obj.pagination_status.current_page, 10),
+        },
+    };
 }
 
 /**

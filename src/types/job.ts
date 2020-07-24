@@ -2,6 +2,8 @@
  * Job service types
  */
 
+import { PaginationStatus } from './pagination';
+
 /**
  * Status of a job
  */
@@ -33,6 +35,11 @@ export interface Job {
     updated_at: Date;
 }
 
+export interface PaginatedJobs {
+    jobs: Job[],
+    pagination_status: PaginationStatus,
+}
+
 /**
  * DatatypeMatch
  */
@@ -49,7 +56,7 @@ export interface JobField {
     field_id: number;
     name: string;
     values: string[];
-    datatypes_matches: { [index: number]: DatatypeMatch };
+    datatypes_matches: {[index: number]: DatatypeMatch};
 }
 
 /**

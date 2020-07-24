@@ -8,10 +8,11 @@ import {
     newDataFieldLinks,
     newDataModel,
     newDataModelLinks,
-    newDataModels,
+    newPaginatedDataModels,
     newField,
-    newFields,
+    newPaginatedFields,
 } from '../constructor/dataModel';
+import { Pagination } from '../types/pagination';
 
 /**
  * Data model service controller
@@ -66,16 +67,23 @@ export class DataModelService implements Service {
      * Retrieves all data models of an user
      * @return A promise of the result of the data model retrieving transaction
      */
-    public async retrieveAll(filter?: Filter): Promise<DataModel.DataModel[]> {
+    public async retrieveAll(filter?: Filter, pagination?: Pagination): Promise<DataModel.PaginatedDataModels> {
         let subpath: string = `${this.subpath}/models`;
+        const qs = new URLSearchParams();
         if (filter) {
-            const qs = new URLSearchParams();
             qs.append('only', filter.only.join(','));
-            subpath += `?${qs.toString()}`;
+        }
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newDataModels(resp.data.models);
+            return newPaginatedDataModels(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -160,11 +168,20 @@ export class DataModelService implements Service {
      * Retrieves all data fields
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveAllFields(): Promise<DataModel.Field[]> {
-        const subpath: string = `${this.subpath}/fields`;
+    public async retrieveAllFields(pagination?: Pagination): Promise<DataModel.PaginatedFields> {
+        let subpath: string = `${this.subpath}/fields`;
+        const qs = new URLSearchParams();
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newFields(resp.data.fields);
+            return newPaginatedFields(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

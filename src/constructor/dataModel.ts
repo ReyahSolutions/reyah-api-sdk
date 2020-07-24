@@ -1,6 +1,13 @@
 import {
     DataFieldLinks,
-    DataModel, DataModelLinks, DocumentLink, Field, FieldLink, Property,
+    DataModel,
+    DataModelLinks,
+    DocumentLink,
+    Field,
+    FieldLink,
+    PaginatedDataModels,
+    PaginatedFields,
+    Property,
 } from '..';
 
 /**
@@ -30,11 +37,29 @@ export function newField(obj: any): Field {
     };
 }
 
-export function newFields(obj: any[]): Field[] {
-    if (!Array.isArray(obj)) {
-        return [];
+export function newPaginatedFields(obj: any): PaginatedFields {
+    if (!Array.isArray(obj.fields) || typeof obj.pagination_status !== 'object') {
+        return {
+            fields: [],
+            pagination_status: {
+                page_size: 0,
+                total_pages: 0,
+                total_entries: 0,
+                current_size: 0,
+                current_page: 0,
+            },
+        };
     }
-    return obj.map((elem: any) => newField(elem));
+    return {
+        fields: obj.fields.map((elem: any) => newField(elem)),
+        pagination_status: {
+            page_size: parseInt(obj.pagination_status.page_size, 10),
+            total_pages: parseInt(obj.pagination_status.total_pages, 10),
+            total_entries: parseInt(obj.pagination_status.total_entries, 10),
+            current_size: parseInt(obj.pagination_status.current_size, 10),
+            current_page: parseInt(obj.pagination_status.current_page, 10),
+        },
+    };
 }
 
 /**
@@ -52,11 +77,29 @@ export function newDataModel(obj: any): DataModel {
     };
 }
 
-export function newDataModels(obj: any[]): DataModel[] {
-    if (!Array.isArray(obj)) {
-        return [];
+export function newPaginatedDataModels(obj: any): PaginatedDataModels {
+    if (!Array.isArray(obj.models) || typeof obj.pagination_status !== 'object') {
+        return {
+            models: [],
+            pagination_status: {
+                page_size: 0,
+                total_pages: 0,
+                total_entries: 0,
+                current_size: 0,
+                current_page: 0,
+            },
+        };
     }
-    return obj.map((elem: any) => newDataModel(elem));
+    return {
+        models: obj.models.map((elem: any) => newDataModel(elem)),
+        pagination_status: {
+            page_size: parseInt(obj.pagination_status.page_size, 10),
+            total_pages: parseInt(obj.pagination_status.total_pages, 10),
+            total_entries: parseInt(obj.pagination_status.total_entries, 10),
+            current_size: parseInt(obj.pagination_status.current_size, 10),
+            current_page: parseInt(obj.pagination_status.current_page, 10),
+        },
+    };
 }
 
 export function newFieldLink(obj: any): FieldLink {

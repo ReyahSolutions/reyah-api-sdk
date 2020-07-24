@@ -1,7 +1,7 @@
 import * as Job from '../types/job';
 import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
-import { dispatchError } from '..';
+import { dispatchError } from '../types/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
@@ -12,6 +12,7 @@ import {
     newJobFields,
     newJobs,
 } from '../constructor/job';
+import { Pagination } from '../types/pagination';
 
 /**
  * Job service controller
@@ -52,11 +53,20 @@ export class JobService implements Service {
      * Retrieves all extraction jobs of an user
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveAllExtractionJob(): Promise<Job.Job[]> {
-        const subpath: string = `${this.subpath}/extraction/jobs`;
+    public async retrieveAllExtractionJob(pagination?: Pagination): Promise<Job.PaginatedJobs> {
+        let subpath: string = `${this.subpath}/extraction/jobs`;
+        const qs = new URLSearchParams();
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobs(resp.data.jobs);
+            return newJobs(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -126,11 +136,20 @@ export class JobService implements Service {
      * Retrieves all rendering jobs of an user
      * @return A promise of the result of the rendering job retrieving transaction
      */
-    public async retrieveAllRenderJob(): Promise<Job.Job[]> {
-        const subpath: string = `${this.subpath}/rendering/jobs`;
+    public async retrieveAllRenderJob(pagination?: Pagination): Promise<Job.PaginatedJobs> {
+        let subpath: string = `${this.subpath}/rendering/jobs`;
+        const qs = new URLSearchParams();
+        if (pagination) {
+            qs.append('page', pagination.page.toString());
+            qs.append('size', pagination.size.toString());
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobs(resp.data.jobs);
+            return newJobs(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

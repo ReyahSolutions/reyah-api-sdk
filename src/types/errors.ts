@@ -4,7 +4,6 @@
 import { ReyahRequestError } from './core';
 import { ReyahError } from './reyah';
 
-
 export class ServiceUnavailable extends ReyahError {
     name: string;
     public static error: string = 'Service Unavailable';
