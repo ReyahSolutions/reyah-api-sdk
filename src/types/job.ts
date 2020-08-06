@@ -21,6 +21,7 @@ export enum JobStatus {
  */
 export interface Document {
     url: string;
+    content_type: string;
     expiry: Date;
 }
 
@@ -107,4 +108,81 @@ export interface InternalCSVExtractionRequest {
 export interface CSVExtractionUrl {
     url: string;
     expiry: Date;
+}
+
+/**
+ * Extraction Batch
+ */
+
+/**
+ * Create extraction batch request
+ */
+export interface CreateExtractionBatchRequest {
+    size: number;
+    document_id: number;
+    content_type?: string;
+    content_types?: string[];
+}
+
+/**
+ * Get extraction batch in CSV
+ */
+export interface CSVExtractionBatchRequest {
+    batch_id: number;
+    include_datatype: boolean;
+}
+export interface InternalCSVExtractionBatchRequest {
+    include_datatype: boolean;
+}
+export interface ExtractionBatchCSV {
+    url: string;
+    expiry: Date;
+    job_success_count: number;
+    job_error_count: number;
+    job_pending_count: number;
+}
+
+/**
+ * Extraction batch(es)
+ */
+export interface Batch {
+    batch_id: number;
+    size: number;
+    job_success_count: number;
+    job_error_count: number;
+    job_pending_count: number;
+    document_id: number;
+    jobs: number[];
+    created_at: Date;
+}
+export interface Batches {
+    batches: Batch[];
+    pagination_status: PaginationStatus,
+}
+
+/**
+ * Extraction batch creation result
+ */
+export interface CreatedBatch {
+    batch_id: number;
+    size: number;
+    document_id: number;
+    jobs: CreatedJob[];
+}
+
+/**
+ * Extraction batch result
+ */
+export interface JobOutputFromBatch {
+    job_id: number;
+    status: JobStatus;
+    fields: JobField[];
+}
+export interface BatchOutput {
+    batch_id: number;
+    job_success_count: number;
+    job_error_count: number;
+    job_pending_count: number;
+    results: JobOutputFromBatch[];
+    pagination_status: PaginationStatus;
 }
