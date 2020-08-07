@@ -116,7 +116,7 @@ export function newCreatedBatch(obj: any): CreatedBatch {
     return {
         batch_id: parseInt(obj.batch_id, 10),
         document_id: parseInt(obj.document_id, 10),
-        jobs: obj.jobs?.map((elem: any) => parseInt(elem, 10)) || [],
+        jobs: obj.jobs?.map((elem: any) => newCreatedJob(elem)) || [],
         size: parseInt(obj.size, 10),
     };
 }
