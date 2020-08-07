@@ -28,6 +28,7 @@ export function newJob(obj: any): Job {
         id: parseInt(obj.id, 10),
         document_id: parseInt(obj.document_id, 10),
         status: obj.status,
+        tags: obj.tags,
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
     };

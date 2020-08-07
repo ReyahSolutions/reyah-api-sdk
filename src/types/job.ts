@@ -32,6 +32,9 @@ export interface Job {
     id: number;
     document_id: number;
     status: JobStatus;
+    tags: {
+        [index: string]: string
+    };
     created_at: Date;
     updated_at: Date;
 }
