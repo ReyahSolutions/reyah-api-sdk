@@ -267,10 +267,10 @@ export class JobService implements Service {
      * retrieveAllExtractionBatch returns all the extraction of the user
      * @return A promise of the result of the extraction batch retrieving transaction
      */
-    public async retrieveAllExtractionBatch(): Promise<Job.Batches> {
+    public async retrieveAllExtractionBatch(pagination?: Pagination): Promise<Job.Batches> {
         const subpath: string = `${this.subpath}/extraction/batch`;
         try {
-            const resp = await reyahServiceRequest.get(subpath, true);
+            const resp = await reyahServiceRequest.get(subpath, true, pagination);
             return newBatches(resp.data);
         } catch (err) {
             throw dispatchError(err);

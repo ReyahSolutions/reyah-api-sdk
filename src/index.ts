@@ -16,6 +16,7 @@ export * from './types/errors';
 export * from './types/filter';
 export * from './types/job';
 export * from './types/oauth';
+export * from './types/pagination';
 export * from './types/profile';
 export * from './types/reyah';
 export * from './types/status';
