@@ -58,7 +58,7 @@ export interface DocumentModel {
 
 export interface PaginatedDocumentModels {
     models: DocumentModel[],
-    pagination_status: PaginationStatus,
+    pagination_status?: PaginationStatus,
 }
 
 export interface CreateDocumentModelRequest {

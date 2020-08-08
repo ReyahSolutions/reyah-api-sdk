@@ -75,7 +75,7 @@ export function newPaginatedDataModels(obj: any): PaginatedDataModels {
     }
     return {
         models: obj.models.map((elem: any) => newDataModel(elem)),
-        pagination_status: newPaginationStatus(obj.pagination_status),
+        pagination_status: (obj.pagination_status === null) ? undefined : newPaginationStatus(obj.pagination_status),
     };
 }
 
