@@ -2,6 +2,7 @@ import * as Job from '../types/job';
 import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
 import { dispatchError } from '../types/errors';
+import { CSVExtractionBatchRequest, InternalCSVExtractionBatchRequest } from '../types/job';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
@@ -11,6 +12,10 @@ import {
     newJob,
     newJobFields,
     newJobs,
+    newCreatedBatch,
+    newBatch,
+    newBatches,
+    newBatchOutput, newExtractionBatchCSV,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -220,6 +225,87 @@ export class JobService implements Service {
             }
             const resp = await reyahServiceRequest.get(subpath, true, request);
             return newCSVExtractionUrl(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Extraction batch
+     */
+    /**
+     * createExtractionBatch creates a new extraction batch
+     * @param createRequest Parameter of the batch
+     * @return A promise of the result of the extraction batch creation
+     */
+    public async createExtractionBatch(createRequest: Job.CreateExtractionBatchRequest): Promise<Job.CreatedBatch> {
+        const subpath: string = `${this.subpath}/extraction/batch`;
+        try {
+            const resp = await reyahServiceRequest.post(subpath, createRequest, true);
+            return newCreatedBatch(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * retrieveExtractionBatch returns an extraction batch specified by its id
+     * @param batchId The id of the extraction batch
+     * @return A promise of the result of the extraction batch retrieving transaction
+     */
+    public async retrieveExtractionBatch(batchId: number): Promise<Job.Batch> {
+        const subpath: string = `${this.subpath}/extraction/batch/${batchId}`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newBatch(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * retrieveAllExtractionBatch returns all the extraction of the user
+     * @return A promise of the result of the extraction batch retrieving transaction
+     */
+    public async retrieveAllExtractionBatch(pagination?: Pagination): Promise<Job.Batches> {
+        const subpath: string = `${this.subpath}/extraction/batch`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true, pagination);
+            return newBatches(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * retrieveExtractionBatchOutput returns the outputs of an extraction batch
+     * @param batchId The id of the extraction batch
+     * @param pagination The pagination status
+     * @return A promise of the result of the extraction batch output retrieving transaction
+     */
+    public async retrieveExtractionBatchOutput(batchId: number, pagination?: Pagination): Promise<Job.BatchOutput> {
+        const subpath: string = `${this.subpath}/extraction/batch/${batchId}/outputs`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true, pagination);
+            return newBatchOutput(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * retrieveExtractionBatchCSV returns the outputs of an extraction batch under a CSV file
+     * @param csvRequest The parameter of the CSV extraction result
+     * @return A promise of the result of the extraction batch CSV exportation retrieving transaction
+     */
+    public async retrieveExtractionBatchCSV(csvRequest: CSVExtractionBatchRequest): Promise<Job.ExtractionBatchCSV> {
+        const subpath: string = `${this.subpath}/extraction/batch/${csvRequest.batch_id}/csv`;
+        try {
+            const request: InternalCSVExtractionBatchRequest = {
+                include_datatype: csvRequest.include_datatype,
+            };
+            const resp = await reyahServiceRequest.get(subpath, true, request);
+            return newExtractionBatchCSV(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

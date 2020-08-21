@@ -1,6 +1,7 @@
 import {
     DocumentModelField, DocumentModel, PaginatedDocumentModels, PreviewURL,
 } from '..';
+import newPaginationStatus from './pagination';
 
 /**
  * Document model service type definitions.
@@ -52,24 +53,12 @@ export function newDocumentModels(obj: any): PaginatedDocumentModels {
     if (!Array.isArray(obj.models) || typeof obj.pagination_status !== 'object') {
         return {
             models: [],
-            pagination_status: {
-                page_size: 0,
-                total_pages: 0,
-                total_entries: 0,
-                current_size: 0,
-                current_page: 0,
-            },
+            pagination_status: newPaginationStatus(),
         };
     }
     return {
         models: obj.models.map((elem: any) => newDocumentModel(elem)),
-        pagination_status: {
-            page_size: parseInt(obj.pagination_status.page_size, 10),
-            total_pages: parseInt(obj.pagination_status.total_pages, 10),
-            total_entries: parseInt(obj.pagination_status.total_entries, 10),
-            current_size: parseInt(obj.pagination_status.current_size, 10),
-            current_page: parseInt(obj.pagination_status.current_page, 10),
-        },
+        pagination_status: (obj.pagination_status === null) ? undefined : newPaginationStatus(obj.pagination_status),
     };
 }
 

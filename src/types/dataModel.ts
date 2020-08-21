@@ -69,7 +69,7 @@ export interface DataModel {
 
 export interface PaginatedDataModels {
     models: DataModel[],
-    pagination_status: PaginationStatus,
+    pagination_status?: PaginationStatus,
 }
 
 export interface CreateDataModelRequest {
