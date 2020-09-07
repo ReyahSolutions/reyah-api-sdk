@@ -27,7 +27,7 @@ export interface Field {
     name: string;
     description: string;
     properties: Property[];
-    datatypes: number[];
+    datatypes: string[];
     created_at: Date;
     updated_at: Date;
 }
@@ -51,7 +51,7 @@ export interface UpdateFieldRequest {
     name: string;
     description?: string;
     properties?: PropertyRequest[];
-    datatypes: number[];
+    datatypes: string[];
 }
 
 /**
