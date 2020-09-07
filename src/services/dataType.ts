@@ -107,7 +107,7 @@ export class DataTypeService implements Service {
      * @param id The data type id to delete
      * @return A promise of the result of the data type deletion transaction
      */
-    public async delete(id: number): Promise<boolean> {
+    public async delete(id: string): Promise<boolean> {
         const subpath: string = `${this.subpath}/types/${id}`;
         try {
             await reyahServiceRequest.delete(subpath, true);
@@ -122,7 +122,7 @@ export class DataTypeService implements Service {
      * @param dataTypeId The data type id to query
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveDataTypeLinksFromDataType(dataTypeId: number): Promise<DataType.DataTypeLinks> {
+    public async retrieveDataTypeLinksFromDataType(dataTypeId: string): Promise<DataType.DataTypeLinks> {
         const subpath: string = `${this.subpath}/types/${dataTypeId}/links`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
