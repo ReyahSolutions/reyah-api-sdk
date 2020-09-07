@@ -12,7 +12,7 @@ export function newDataType(obj: any): DataType {
     return {
         created_at: new Date(obj.created_at),
         description: obj.description,
-        id: parseInt(obj.id, 10),
+        id: obj.id,
         name: obj.name,
         updated_at: new Date(obj.updated_at),
         user_id: obj.user_id,

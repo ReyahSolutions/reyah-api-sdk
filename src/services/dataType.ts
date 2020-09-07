@@ -36,7 +36,7 @@ export class DataTypeService implements Service {
      * @param id Data type id
      * @return A promise of the result of the data type retrieving transaction
      */
-    public async retrieve(id: number): Promise<DataType.DataType> {
+    public async retrieve(id: string): Promise<DataType.DataType> {
         const subpath: string = `${this.subpath}/types/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);

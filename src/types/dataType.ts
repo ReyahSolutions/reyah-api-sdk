@@ -8,7 +8,7 @@ import { PaginationStatus } from './pagination';
  * Data Types
  */
 export interface DataType {
-    id: number;
+    id: string;
     user_id: string;
     name: string;
     description: string;
@@ -29,7 +29,7 @@ export interface CreateDataTypeRequest {
 }
 
 export interface UpdateDataTypeRequest {
-    id: number;
+    id: string;
     name: string;
     description?: string;
     validator: string;

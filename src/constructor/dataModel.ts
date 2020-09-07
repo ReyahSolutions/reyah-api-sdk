@@ -27,7 +27,7 @@ export function newProperty(obj: any): Property {
 export function newField(obj: any): Field {
     return {
         created_at: new Date(obj.created_at),
-        datatypes: obj.datatypes?.map((elem: string) => parseInt(elem, 10)) || [],
+        datatypes: obj.datatypes || [],
         description: obj.description,
         field_id: parseInt(obj.field_id, 10),
         kind: obj.kind,
