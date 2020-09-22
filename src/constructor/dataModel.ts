@@ -29,7 +29,7 @@ export function newField(obj: any): Field {
         created_at: new Date(obj.created_at),
         datatypes: obj.datatypes || [],
         description: obj.description,
-        field_id: parseInt(obj.field_id, 10),
+        field_id: obj.field_id,
         kind: obj.kind,
         name: obj.name,
         properties: obj.properties?.map((elem: any) => newProperty(elem)) || [],
@@ -59,7 +59,7 @@ export function newDataModel(obj: any): DataModel {
         created_at: new Date(obj.created_at),
         description: obj.description,
         fields: obj.fields?.map((elem: any) => newField(elem)) || [],
-        model_id: parseInt(obj.model_id, 10),
+        model_id: obj.model_id,
         name: obj.name,
         updated_at: new Date(obj.updated_at),
         user_id: obj.user_id,
@@ -81,14 +81,14 @@ export function newPaginatedDataModels(obj: any): PaginatedDataModels {
 
 export function newFieldLink(obj: any): FieldLink {
     return {
-        datamodel_field_id: parseInt(obj.datamodel_field_id, 10),
+        datamodel_field_id: obj.datamodel_field_id,
         document_field_id: obj.document_field_id?.map((elem: string) => parseInt(elem, 10)) || [],
     };
 }
 
 export function newDocumentLink(obj: any): DocumentLink {
     return {
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         fields: obj.fields?.map((elem: any) => newFieldLink(elem)) || [],
     };
 }
