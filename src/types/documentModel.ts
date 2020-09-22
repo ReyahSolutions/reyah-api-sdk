@@ -22,7 +22,7 @@ export interface DocumentModelField {
 
 export interface CreateDocumentModelFieldRequest {
     name: string;
-    datamodel_field_id: number;
+    datamodel_field_id: string;
     description?: string;
     x: number;
     y: number;
@@ -33,7 +33,7 @@ export interface CreateDocumentModelFieldRequest {
 export interface UpdateDocumentModelFieldRequest {
     id: number;
     name: string;
-    datamodel_field_id: number;
+    datamodel_field_id: string;
     description?: string;
     x: number;
     y: number;
