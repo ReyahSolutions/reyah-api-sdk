@@ -53,7 +53,7 @@ export class DataModelService implements Service {
      * @param modelId The data model id
      * @return A promise of the result of the data model retrieving transaction
      */
-    public async retrieve(modelId: number): Promise<DataModel.DataModel> {
+    public async retrieve(modelId: string): Promise<DataModel.DataModel> {
         const subpath: string = `${this.subpath}/models/${modelId}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -139,7 +139,7 @@ export class DataModelService implements Service {
      * @param modelId The data model id to query
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveDataModelLinksFromDataModel(modelId: number): Promise<DataModel.DataModelLinks> {
+    public async retrieveDataModelLinksFromDataModel(modelId: string): Promise<DataModel.DataModelLinks> {
         const subpath: string = `${this.subpath}/models/${modelId}/links`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -154,7 +154,7 @@ export class DataModelService implements Service {
      * @param fieldId The ID of the field to retrieve
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveField(fieldId: number): Promise<DataModel.Field> {
+    public async retrieveField(fieldId: string): Promise<DataModel.Field> {
         const subpath: string = `${this.subpath}/fields/${fieldId}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -222,7 +222,7 @@ export class DataModelService implements Service {
      * @param fieldId The data field id to delete
      * @return A promise of the result of the data field deletion transaction
      */
-    public async deleteField(fieldId: number): Promise<boolean> {
+    public async deleteField(fieldId: string): Promise<boolean> {
         const subpath: string = `${this.subpath}/fields/${fieldId}`;
         try {
             await reyahServiceRequest.delete(subpath, true);
@@ -237,7 +237,7 @@ export class DataModelService implements Service {
      * @param fieldId The field id to query
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveDataFieldLinksFromDataField(fieldId: number): Promise<DataModel.DataFieldLinks> {
+    public async retrieveDataFieldLinksFromDataField(fieldId: string): Promise<DataModel.DataFieldLinks> {
         const subpath: string = `${this.subpath}/fields/${fieldId}/links`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
