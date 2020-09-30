@@ -21,7 +21,7 @@ export interface PropertyRequest {
  * Data model field
  */
 export interface Field {
-    field_id: number;
+    field_id: string;
     user_id: string;
     kind: string;
     name: string;
@@ -42,11 +42,11 @@ export interface CreateFieldRequest {
     name: string;
     description?: string;
     properties?: PropertyRequest[];
-    datatypes: number[];
+    datatypes: string[];
 }
 
 export interface UpdateFieldRequest {
-    field_id: number;
+    field_id: string;
     kind: string;
     name: string;
     description?: string;
@@ -58,7 +58,7 @@ export interface UpdateFieldRequest {
  * Data model
  */
 export interface DataModel {
-    model_id: number;
+    model_id: string;
     user_id: string;
     name: string;
     description: string;
@@ -75,23 +75,23 @@ export interface PaginatedDataModels {
 export interface CreateDataModelRequest {
     name: string;
     description?: string;
-    fields: number[];
+    fields: string[];
 }
 
 export interface UpdateDataModelRequest {
-    model_id: number;
+    model_id: string;
     name: string;
     description?: string;
-    fields: number[];
+    fields: string[];
 }
 
 export interface FieldLink {
-    datamodel_field_id: number,
-    document_field_id: number[],
+    datamodel_field_id: string,
+    document_field_id: string[],
 }
 
 export interface DocumentLink {
-    document_id: number,
+    document_id: string,
     fields: FieldLink[],
 }
 
@@ -100,5 +100,5 @@ export interface DataModelLinks {
 }
 
 export interface DataFieldLinks {
-    model_ids: number[],
+    model_ids: string[],
 }

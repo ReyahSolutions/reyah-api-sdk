@@ -77,7 +77,7 @@ export class DocumentModelService implements Service {
      * @param model The model to create
      * @return A promise of the result of the document model creation transaction
      */
-    public async create(model: DocumentModel.DocumentModel): Promise<DocumentModel.DocumentModel> {
+    public async create(model: DocumentModel.CreateDocumentModelRequest): Promise<DocumentModel.DocumentModel> {
         const subpath: string = `${this.subpath}/models`;
         try {
             const resp = await reyahServiceRequest.post(subpath, model, true);
@@ -92,7 +92,7 @@ export class DocumentModelService implements Service {
      * @param model The modified model to patch
      * @return A promise of the result of the document model patching transaction
      */
-    public async patch(model: DocumentModel.DocumentModel): Promise<DocumentModel.DocumentModel> {
+    public async patch(model: DocumentModel.UpdateDocumentModelRequest): Promise<DocumentModel.DocumentModel> {
         const subpath: string = `${this.subpath}/models/${model.id}`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.patch(subpath, model, true);

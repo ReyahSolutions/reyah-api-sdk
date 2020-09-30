@@ -14,7 +14,7 @@ export function newDocumentModelField(obj: any): DocumentModelField {
     return {
         id: parseInt(obj.id, 10),
         name: obj.name,
-        datamodel_field_id: parseInt(obj.datamodel_field_id, 10),
+        datamodel_field_id: obj.datamodel_field_id,
         description: obj.description,
         height: parseFloat(obj.height),
         width: parseFloat(obj.width),
@@ -40,7 +40,7 @@ export function newDocumentModel(obj: any): DocumentModel {
         id: parseInt(obj.id, 10),
         user_id: obj.user_id,
         attached_preview: obj.attached_preview,
-        datamodel_id: parseInt(obj.datamodel_id, 10),
+        datamodel_id: obj.datamodel_id,
         description: obj.description,
         fields: newDocumentModelFields(obj.fields),
         name: obj.name,

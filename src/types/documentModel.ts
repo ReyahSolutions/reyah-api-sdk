@@ -10,7 +10,7 @@ import { PaginationStatus } from './pagination';
 export interface DocumentModelField {
     id: number;
     name: string;
-    datamodel_field_id: number;
+    datamodel_field_id: string;
     description: string;
     x: number;
     y: number;
@@ -22,7 +22,7 @@ export interface DocumentModelField {
 
 export interface CreateDocumentModelFieldRequest {
     name: string;
-    datamodel_field_id: number;
+    datamodel_field_id: string;
     description?: string;
     x: number;
     y: number;
@@ -33,7 +33,7 @@ export interface CreateDocumentModelFieldRequest {
 export interface UpdateDocumentModelFieldRequest {
     id: number;
     name: string;
-    datamodel_field_id: number;
+    datamodel_field_id: string;
     description?: string;
     x: number;
     y: number;
@@ -47,7 +47,7 @@ export interface UpdateDocumentModelFieldRequest {
 export interface DocumentModel {
     id: number;
     user_id: string;
-    datamodel_id: number;
+    datamodel_id: string;
     name: string;
     description: string;
     fields: DocumentModelField[];
@@ -62,7 +62,7 @@ export interface PaginatedDocumentModels {
 }
 
 export interface CreateDocumentModelRequest {
-    datamodel_id: number;
+    datamodel_id: string;
     name: string;
     description?: string;
     fields: DocumentModelField[];
@@ -70,7 +70,7 @@ export interface CreateDocumentModelRequest {
 
 export interface UpdateDocumentModelRequest {
     id: number;
-    datamodel_id: number;
+    datamodel_id: string;
     name: string;
     description?: string;
     fields: DocumentModelField[];
