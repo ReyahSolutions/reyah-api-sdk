@@ -11,17 +11,10 @@ jobs:
     container:
       image: arthurknoep/npm-cli-login:latest
       env:
-        NPM_USER: ${{ secrets.NPM_USER }}
-        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
-        NPM_PASS: ${{ secrets.NPM_PASS }}
-        NPM_REGISTRY: ${{ secrets.NPM_REGISTRY }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup node
-        run: |
-          npm-cli-login
-          yarn config set registry "$NPM_REGISTRY"
       - name: Install dependencies
         run: yarn install
       - name: Build
@@ -40,17 +33,10 @@ jobs:
     container:
       image: arthurknoep/npm-cli-login:latest
       env:
-        NPM_USER: ${{ secrets.NPM_USER }}
-        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
-        NPM_PASS: ${{ secrets.NPM_PASS }}
-        NPM_REGISTRY: ${{ secrets.NPM_REGISTRY }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup node
-        run: |
-          npm-cli-login
-          yarn config set registry "$NPM_REGISTRY"
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
@@ -58,4 +44,4 @@ jobs:
           path: dist
       - name: Publish
         run: |
-          yarn publish --non-interactive
+          npm publish
