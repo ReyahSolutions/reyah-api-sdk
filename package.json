@@ -16,6 +16,9 @@
     "gendoc": "typedoc src"
   },
   "author": "bastien@reyah.eu",
+  "publishConfig": {
+    "access": "public"
+  },
   "private": false,
   "license": "ISC",
   "dependencies": {
