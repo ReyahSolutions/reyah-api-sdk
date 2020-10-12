@@ -16,6 +16,7 @@
     "gendoc": "typedoc src"
   },
   "author": "bastien@reyah.eu",
+  "private": false,
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0"
