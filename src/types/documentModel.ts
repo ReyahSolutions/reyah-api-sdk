@@ -8,7 +8,7 @@ import { PaginationStatus } from './pagination';
  * Represents a single field of a document model.
  */
 export interface DocumentModelField {
-    id: number;
+    id: string;
     name: string;
     datamodel_field_id: string;
     description: string;
@@ -31,7 +31,7 @@ export interface CreateDocumentModelFieldRequest {
 }
 
 export interface UpdateDocumentModelFieldRequest {
-    id: number;
+    id: string;
     name: string;
     datamodel_field_id: string;
     description?: string;
@@ -45,7 +45,7 @@ export interface UpdateDocumentModelFieldRequest {
  * Represents a document model.
  */
 export interface DocumentModel {
-    id: number;
+    id: string;
     user_id: string;
     datamodel_id: string;
     name: string;
@@ -69,7 +69,7 @@ export interface CreateDocumentModelRequest {
 }
 
 export interface UpdateDocumentModelRequest {
-    id: number;
+    id: string;
     datamodel_id: string;
     name: string;
     description?: string;

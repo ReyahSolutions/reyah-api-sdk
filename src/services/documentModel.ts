@@ -36,7 +36,7 @@ export class DocumentModelService implements Service {
      * @param id Document model id
      * @return A promise of the result of the document model retrieving transaction
      */
-    public async retrieve(id: number): Promise<DocumentModel.DocumentModel> {
+    public async retrieve(id: string): Promise<DocumentModel.DocumentModel> {
         const subpath: string = `${this.subpath}/models/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -107,7 +107,7 @@ export class DocumentModelService implements Service {
      * @param id The document model id to delete
      * @return A promise of the result of the document model deletion transaction
      */
-    public async delete(id: number): Promise<boolean> {
+    public async delete(id: string): Promise<boolean> {
         const subpath: string = `${this.subpath}/models/${id}`;
         try {
             await reyahServiceRequest.delete(subpath, true);
@@ -122,7 +122,7 @@ export class DocumentModelService implements Service {
      * @param id The document model id
      * @return A promise of the result of the preview file retrieving transaction
      */
-    public async previewUrl(id: number): Promise<DocumentModel.PreviewURL> {
+    public async previewUrl(id: string): Promise<DocumentModel.PreviewURL> {
         const subpath: string = `${this.subpath}/models/${id}/preview`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.get(subpath, true);
@@ -152,7 +152,7 @@ export class DocumentModelService implements Service {
      * @param id The document model id
      * @return A promise of the result of the preview file deletion transaction
      */
-    public async deletePreview(id: number): Promise<boolean> {
+    public async deletePreview(id: string): Promise<boolean> {
         const subpath: string = `${this.subpath}/models/${id}/preview`;
         try {
             await reyahServiceRequest.delete(subpath, true);

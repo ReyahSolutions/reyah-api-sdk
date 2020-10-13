@@ -30,7 +30,7 @@ export interface Document {
  */
 export interface Job {
     id: number;
-    document_id: number;
+    document_id: string;
     status: JobStatus;
     tags: {
         [index: string]: string
@@ -57,7 +57,7 @@ export interface DatatypeMatch {
  * Job jobField
  */
 export interface JobField {
-    field_id: number;
+    field_id: string;
     name: string;
     values: string[];
     datatypes_matches: {[index: number]: DatatypeMatch};
@@ -67,7 +67,7 @@ export interface JobField {
  * Job creation request
  */
 export interface CreateJobRequest {
-    document_id: number;
+    document_id: string;
     content_type: string;
     fields?: JobField[];
 }
@@ -122,7 +122,7 @@ export interface CSVExtractionUrl {
  */
 export interface CreateExtractionBatchRequest {
     size: number;
-    document_id: number;
+    document_id: string;
     content_type?: string;
     content_types?: string[];
 }
@@ -154,7 +154,7 @@ export interface Batch {
     job_success_count: number;
     job_error_count: number;
     job_pending_count: number;
-    document_id: number;
+    document_id: string;
     jobs: number[];
     created_at: Date;
 }
@@ -169,7 +169,7 @@ export interface Batches {
 export interface CreatedBatch {
     batch_id: number;
     size: number;
-    document_id: number;
+    document_id: string;
     jobs: CreatedJob[];
 }
 

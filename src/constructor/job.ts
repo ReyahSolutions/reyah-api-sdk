@@ -26,7 +26,7 @@ export function newDocument(obj: any): Document {
 export function newJob(obj: any): Job {
     return {
         id: parseInt(obj.id, 10),
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         status: obj.status,
         tags: obj.tags,
         created_at: new Date(obj.created_at),
@@ -71,7 +71,7 @@ export function newDatatypeMatches(obj: any): {[index: number]: DatatypeMatch} {
 
 export function newJobField(obj: any): JobField {
     return {
-        field_id: parseInt(obj.field_id, 10),
+        field_id: obj.field_id,
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
         name: obj.name,
         values: obj.values || [],
@@ -116,7 +116,7 @@ export function newCSVExtractionUrl(obj: any): CSVExtractionUrl {
 export function newCreatedBatch(obj: any): CreatedBatch {
     return {
         batch_id: parseInt(obj.batch_id, 10),
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         jobs: obj.jobs?.map((elem: any) => newCreatedJob(elem)) || [],
         size: parseInt(obj.size, 10),
     };
