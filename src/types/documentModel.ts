@@ -70,7 +70,6 @@ export interface CreateDocumentModelRequest {
 
 export interface UpdateDocumentModelRequest {
     id: string;
-    datamodel_id: string;
     name: string;
     description?: string;
     fields: DocumentModelField[];
