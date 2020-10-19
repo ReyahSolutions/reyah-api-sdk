@@ -10,6 +10,8 @@ import { PaginationStatus } from './pagination';
 export enum JobStatus {
     NONE = 'NONE',
     WAITING_FOR_RECEIVING = 'WAITING_FOR_RECEIVING',
+    WAITING_FOR_CONVERSION = 'WAITING_FOR_CONVERSION',
+    CONVERTING = 'CONVERTING',
     WAITING_FOR_PROCESSING = 'WAITING_FOR_PROCESSING',
     PROCESSING = 'PROCESSING',
     SUCCEEDED = 'SUCCEEDED',
@@ -19,28 +21,44 @@ export enum JobStatus {
 /**
  * Document recovery response format
  */
-export interface Document {
+export interface DocumentWithType {
     url: string;
     content_type: string;
     expiry: Date;
 }
 
+export interface Document {
+    url: string;
+    expiry: Date;
+}
+
 /**
- * Job
+ * Source document information
  */
-export interface Job {
+export interface SourceDocument {
+    name: string;
+    content_type: string;
+    size: number;
+}
+
+/**
+ * Extraction job
+ */
+export interface ExtractionJob {
     id: number;
+    user_id: string;
     document_id: number;
     status: JobStatus;
     tags: {
         [index: string]: string
     };
+    source_document: SourceDocument;
     created_at: Date;
     updated_at: Date;
 }
 
-export interface PaginatedJobs {
-    jobs: Job[],
+export interface PaginatedExtractionJobs {
+    jobs: ExtractionJob[],
     pagination_status: PaginationStatus,
 }
 
@@ -60,7 +78,7 @@ export interface JobField {
     field_id: number;
     name: string;
     values: string[];
-    datatypes_matches: {[index: number]: DatatypeMatch};
+    datatypes_matches: {[index: string]: DatatypeMatch};
 }
 
 /**
@@ -75,8 +93,9 @@ export interface CreateJobRequest {
 /**
  * Job creation response
  */
-export interface CreatedJob extends Document {
+export interface CreatedJob extends DocumentWithType {
     id: number;
+    document_name: number;
 }
 
 /**
@@ -188,4 +207,26 @@ export interface BatchOutput {
     job_pending_count: number;
     results: JobOutputFromBatch[];
     pagination_status: PaginationStatus;
+}
+
+/**
+ * Rendering
+ */
+
+/**
+ * Rendering job
+ */
+
+export interface RenderingJob {
+    id: number;
+    user_id: string;
+    document_id: number;
+    status: JobStatus;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface PaginatedRenderingJobs {
+    jobs: RenderingJob[],
+    pagination_status: PaginationStatus,
 }

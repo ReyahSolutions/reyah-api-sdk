@@ -2,17 +2,25 @@ import {
     CreatedJob,
     CSVExtractionUrl,
     DatatypeMatch,
+    DocumentWithType,
     Document,
-    Job,
-    PaginatedJobs,
-    JobField, CreatedBatch, Batch, Batches, BatchOutput, JobOutputFromBatch, ExtractionBatchCSV,
+    ExtractionJob,
+    PaginatedExtractionJobs,
+    JobField,
+    CreatedBatch,
+    Batch,
+    Batches,
+    BatchOutput,
+    JobOutputFromBatch,
+    ExtractionBatchCSV,
+    SourceDocument, RenderingJob, PaginatedRenderingJobs,
 } from '..';
 import newPaginationStatus from './pagination';
 
 /**
  * Document recovery response format
  */
-export function newDocument(obj: any): Document {
+export function newDocumentWithType(obj: any): DocumentWithType {
     return {
         expiry: new Date(obj.expiry),
         content_type: obj.content_type,
@@ -20,24 +28,62 @@ export function newDocument(obj: any): Document {
     };
 }
 
+export function newDocument(obj: any): Document {
+    return {
+        expiry: new Date(obj.expiry),
+        url: obj.url,
+    };
+}
+
+export function newDocumentsWithType(obj: any): DocumentWithType[] {
+    if (!Array.isArray(obj)) {
+        return [];
+    }
+    return obj.map((elem: any) => newDocumentWithType(elem));
+}
+
+export function newDocuments(obj: any): Document[] {
+    if (!Array.isArray(obj)) {
+        return [];
+    }
+    return obj.map((elem: any) => newDocument(elem));
+}
+
 /**
- * Job
+ * Source document information
  */
-export function newJob(obj: any): Job {
+export function newSourceDocument(obj: any): SourceDocument {
+    return {
+        content_type: obj.content_type,
+        name: obj.name,
+        size: parseInt(obj.size, 10),
+    };
+}
+
+/**
+ * Extraction
+ */
+
+/**
+ * Extraction job
+ */
+export function newExtractionJob(obj: any): ExtractionJob {
     return {
         id: parseInt(obj.id, 10),
+        user_id: obj.user_id,
         document_id: parseInt(obj.document_id, 10),
         status: obj.status,
         tags: obj.tags,
+        source_document: newSourceDocument(obj.source_document),
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
     };
 }
 
 /**
- * Jobs
+ * Extraction jobs
  */
-export function newJobs(obj: any): PaginatedJobs {
+export function newExtractionJobs(obj: any): PaginatedExtractionJobs {
     if (!Array.isArray(obj.jobs) || typeof obj.pagination_status !== 'object') {
         return {
             jobs: [],
@@ -45,7 +91,7 @@ export function newJobs(obj: any): PaginatedJobs {
         };
     }
     return {
-        jobs: obj.jobs.map((elem: any) => newJob(elem)),
+        jobs: obj.jobs.map((elem: any) => newExtractionJob(elem)),
         pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
@@ -61,10 +107,10 @@ export function newDatatypeMatch(obj: any): DatatypeMatch {
     };
 }
 
-export function newDatatypeMatches(obj: any): {[index: number]: DatatypeMatch} {
-    const resp: {[index: number]: DatatypeMatch} = {};
+export function newDatatypeMatches(obj: any): {[index: string]: DatatypeMatch} {
+    const resp: {[index: string]: DatatypeMatch} = {};
     Object.entries(obj).forEach(([k, v]: [string, any]) => {
-        resp[parseInt(k, 10)] = newDatatypeMatch(v);
+        resp[k] = newDatatypeMatch(v);
     });
     return resp;
 }
@@ -92,6 +138,7 @@ export function newCreatedJob(obj: any): CreatedJob {
     return {
         id: parseInt(obj.id, 10),
         expiry: new Date(obj.expiry),
+        document_name: obj.document_name,
         content_type: obj.content_type,
         url: obj.url,
     };
@@ -179,5 +226,39 @@ export function newExtractionBatchCSV(obj: any): ExtractionBatchCSV {
         job_error_count: parseInt(obj.job_error_count, 10),
         job_pending_count: parseInt(obj.job_pending_count, 10),
         job_success_count: parseInt(obj.job_success_count, 10),
+    };
+}
+
+/**
+ * Rendering
+ */
+
+/**
+ * Rendering job
+ */
+export function newRenderingJob(obj: any): RenderingJob {
+    return {
+        id: parseInt(obj.id, 10),
+        user_id: obj.user_id,
+        document_id: parseInt(obj.document_id, 10),
+        status: obj.status,
+        created_at: new Date(obj.created_at),
+        updated_at: new Date(obj.updated_at),
+    };
+}
+
+/**
+ * Rendering jobs
+ */
+export function newRenderingJobs(obj: any): PaginatedRenderingJobs {
+    if (!Array.isArray(obj.jobs) || typeof obj.pagination_status !== 'object') {
+        return {
+            jobs: [],
+            pagination_status: newPaginationStatus(),
+        };
+    }
+    return {
+        jobs: obj.jobs.map((elem: any) => newRenderingJob(elem)),
+        pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
