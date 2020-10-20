@@ -52,7 +52,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           version=`npm run env | grep npm_package_version= | sed -e "s/npm_package_version=//g"`
-          branch=`echo ${GITHUB_REF#refs/heads/}`
+          branch=`echo ${GITHUB_REF#refs/heads/} | tr '/' '-'`
           short_sha=`echo $GITHUB_SHA | cut -c-8`
           npm version --no-git-tag-version --allow-same-version "$version-$short_sha"
           npm publish --tag="$branch"
