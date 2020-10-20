@@ -19,6 +19,14 @@ export enum JobStatus {
 }
 
 /**
+ * Job extraction input type
+ */
+export enum InputType {
+    SOURCE = 'SOURCE',
+    CONVERTED = 'CONVERTED',
+}
+
+/**
  * Document recovery response format
  */
 export interface DocumentWithType {

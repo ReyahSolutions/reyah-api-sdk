@@ -1,25 +1,25 @@
 import * as Job from '../types/job';
+import { CSVExtractionBatchRequest, InputType, InternalCSVExtractionBatchRequest } from '../types/job';
 import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
 import { dispatchError } from '../types/errors';
-import { CSVExtractionBatchRequest, InternalCSVExtractionBatchRequest } from '../types/job';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
-    newCreatedJob,
-    newCSVExtractionUrl,
-    newExtractionJob,
-    newJobFields,
-    newExtractionJobs,
-    newCreatedBatch,
     newBatch,
     newBatches,
     newBatchOutput,
+    newCreatedBatch,
+    newCreatedJob,
+    newCSVExtractionUrl,
+    newDocument,
+    newDocuments,
     newExtractionBatchCSV,
+    newExtractionJob,
+    newExtractionJobs,
+    newJobFields,
     newRenderingJob,
     newRenderingJobs,
-    newDocuments,
-    newDocument,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -84,12 +84,13 @@ export class JobService implements Service {
     /**
      * Retrieves input of an extraction job of an user
      * @param id Extraction job id
+     * @param inputType Input type required
      * @return A promise of the result of the extraction job input retrieving transaction
      */
-    public async retrieveExtractionJobInput(id: number): Promise<Job.Document[]> {
+    public async retrieveExtractionJobInput(id: number, inputType: InputType = InputType.SOURCE): Promise<Job.Document[]> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/input`;
         try {
-            const resp = await reyahServiceRequest.get(subpath, true);
+            const resp = await reyahServiceRequest.get(subpath, true, { type: inputType });
             return newDocuments(resp.data.documents);
         } catch (err) {
             throw dispatchError(err);
