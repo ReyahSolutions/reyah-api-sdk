@@ -2,7 +2,7 @@ import * as Job from '../types/job';
 import { CSVExtractionBatchRequest, InputType, InternalCSVExtractionBatchRequest } from '../types/job';
 import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
-import { dispatchError } from '../types/errors';
+import { dispatchError } from '../core/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {

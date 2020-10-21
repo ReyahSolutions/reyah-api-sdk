@@ -1,8 +1,8 @@
 /**
  * ReyahError implementations
  */
-import { ReyahRequestError } from './core';
-import { ReyahError } from './reyah';
+import { ReyahRequestError } from '../core';
+import { ReyahError } from '../reyah';
 
 export class ServiceUnavailable extends ReyahError {
     name: string;
@@ -95,31 +95,5 @@ export class ForbiddenException extends ReyahError {
         super(err);
         this.name = 'ForbiddenException';
         Object.setPrototypeOf(this, ForbiddenException.prototype);
-    }
-}
-
-export function dispatchError(err: any): Error {
-    if (err.isReyahRequestError) {
-        switch (err.code) {
-            case 400:
-                return new InvalidRequestException(err);
-            case 401:
-                return new UnauthorizedException(err);
-            case 403:
-                return new ForbiddenException(err);
-            case 404:
-                return new NotFoundException(err);
-            case 429:
-                return new TooManyRequestsException(err);
-            case 500:
-                return new UnknownException(err);
-            case 502:
-            case 503:
-                return new ServiceUnavailable(err);
-            default:
-                return new ReyahError(err);
-        }
-    } else {
-        return err;
     }
 }

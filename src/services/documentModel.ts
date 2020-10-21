@@ -1,11 +1,11 @@
 import {
-    dispatchError,
     Filter,
     ReyahRequestResponse,
     Service,
 } from '..';
 import * as DocumentModel from '../types/documentModel';
 import { reyahServiceRequest } from '../core/core';
+import { dispatchError } from '../core/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import { newDocumentModel, newDocumentModels, newPreviewUrl } from '../constructor/documentModel';

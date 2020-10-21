@@ -1,10 +1,10 @@
 import {
-    dispatchError,
     ReyahError,
     Service,
     Filter,
 } from '..';
 import { reyahServiceRequest } from '../core/core';
+import { dispatchError } from '../core/errors';
 import * as DataType from '../types/dataType';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
