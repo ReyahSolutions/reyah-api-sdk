@@ -153,11 +153,13 @@ export interface CSVExtractionUrl {
 /**
  * Create extraction batch request
  */
+export interface JobDocument {
+    name?: string;
+    content_type: string;
+}
 export interface CreateExtractionBatchRequest {
-    size: number;
     document_id: number;
-    content_type?: string;
-    content_types?: string[];
+    job_documents: JobDocument[];
 }
 
 /**
