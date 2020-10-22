@@ -80,7 +80,6 @@ export interface UpdateDocumentModelFieldWithModelRequest {
 }
 export interface UpdateDocumentModelRequest {
     id: number;
-    datamodel_id: string;
     name: string;
     description?: string;
     fields: UpdateDocumentModelFieldWithModelRequest[];
