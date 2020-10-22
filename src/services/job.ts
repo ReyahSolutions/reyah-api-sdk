@@ -117,7 +117,7 @@ export class JobService implements Service {
      * @param job Extraction job to create
      * @return A promise of the result of the extraction job creation transaction
      */
-    public async createExtractionJob(job: Job.CreateJobRequest): Promise<Job.CreatedJob> {
+    public async createExtractionJob(job: Job.CreateExtractionJobRequest): Promise<Job.CreatedJob> {
         const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
@@ -200,7 +200,7 @@ export class JobService implements Service {
      * @param job Rendering job to create
      * @return A promise of the result of the rendering job creation transaction
      */
-    public async createRenderJob(job: Job.CreateJobRequest): Promise<Job.CreatedJob> {
+    public async createRenderJob(job: Job.CreateRenderingJobRequest): Promise<Job.CreatedJob> {
         const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);

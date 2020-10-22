@@ -92,10 +92,16 @@ export interface JobField {
 /**
  * Job creation request
  */
-export interface CreateJobRequest {
+export interface CreateRenderingJobRequest {
     document_id: number;
     content_type: string;
-    fields?: JobField[];
+    document_name?: string;
+    fields: JobField[];
+}
+export interface CreateExtractionJobRequest {
+    document_id: number;
+    content_type: string;
+    document_name?: string;
 }
 
 /**
