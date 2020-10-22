@@ -13,7 +13,9 @@ import {
     BatchOutput,
     JobOutputFromBatch,
     ExtractionBatchCSV,
-    SourceDocument, RenderingJob, PaginatedRenderingJobs,
+    SourceDocument,
+    RenderingJob,
+    PaginatedRenderingJobs,
 } from '..';
 import newPaginationStatus from './pagination';
 
@@ -71,7 +73,7 @@ export function newExtractionJob(obj: any): ExtractionJob {
     return {
         id: parseInt(obj.id, 10),
         user_id: obj.user_id,
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         status: obj.status,
         tags: obj.tags,
         source_document: newSourceDocument(obj.source_document),
@@ -117,7 +119,7 @@ export function newDatatypeMatches(obj: any): {[index: string]: DatatypeMatch} {
 
 export function newJobField(obj: any): JobField {
     return {
-        field_id: parseInt(obj.field_id, 10),
+        field_id: obj.field_id,
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
         name: obj.name,
         values: obj.values || [],
@@ -163,7 +165,7 @@ export function newCSVExtractionUrl(obj: any): CSVExtractionUrl {
 export function newCreatedBatch(obj: any): CreatedBatch {
     return {
         batch_id: parseInt(obj.batch_id, 10),
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         jobs: obj.jobs?.map((elem: any) => newCreatedJob(elem)) || [],
         size: parseInt(obj.size, 10),
     };
@@ -175,7 +177,7 @@ export function newCreatedBatch(obj: any): CreatedBatch {
 export function newBatch(obj: any): Batch {
     return {
         batch_id: parseInt(obj.batch_id, 10),
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         created_at: new Date(obj.created_at),
         job_error_count: parseInt(obj.job_error_count, 10),
         job_pending_count: parseInt(obj.job_pending_count, 10),
@@ -240,7 +242,7 @@ export function newRenderingJob(obj: any): RenderingJob {
     return {
         id: parseInt(obj.id, 10),
         user_id: obj.user_id,
-        document_id: parseInt(obj.document_id, 10),
+        document_id: obj.document_id,
         status: obj.status,
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),

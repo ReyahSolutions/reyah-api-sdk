@@ -12,7 +12,7 @@ import newPaginationStatus from './pagination';
  */
 export function newDocumentModelField(obj: any): DocumentModelField {
     return {
-        id: parseInt(obj.id, 10),
+        id: obj.id,
         name: obj.name,
         datamodel_field_id: obj.datamodel_field_id,
         description: obj.description,
@@ -37,7 +37,7 @@ export function newDocumentModelFields(obj: any[]): DocumentModelField[] {
  */
 export function newDocumentModel(obj: any): DocumentModel {
     return {
-        id: parseInt(obj.id, 10),
+        id: obj.id,
         user_id: obj.user_id,
         attached_preview: obj.attached_preview,
         datamodel_id: obj.datamodel_id,
