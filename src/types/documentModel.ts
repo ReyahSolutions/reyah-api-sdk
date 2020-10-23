@@ -68,11 +68,21 @@ export interface CreateDocumentModelRequest {
     fields: DocumentModelField[];
 }
 
+export interface UpdateDocumentModelFieldWithModelRequest {
+    id?: string;
+    name: string;
+    datamodel_field_id: string;
+    description?: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
 export interface UpdateDocumentModelRequest {
     id: string;
     name: string;
     description?: string;
-    fields: DocumentModelField[];
+    fields: UpdateDocumentModelFieldWithModelRequest[];
 }
 
 /**

@@ -1,5 +1,6 @@
-import { dispatchError, Service } from '..';
+import { Service } from '..';
 import { reyahServiceRequest } from '../core/core';
+import { dispatchError } from '../core/errors';
 import * as Status from '../types/status';
 import * as Profile from '../types/profile';
 import newServiceStatus from '../constructor/status';

@@ -10,6 +10,8 @@ import { PaginationStatus } from './pagination';
 export enum JobStatus {
     NONE = 'NONE',
     WAITING_FOR_RECEIVING = 'WAITING_FOR_RECEIVING',
+    WAITING_FOR_CONVERSION = 'WAITING_FOR_CONVERSION',
+    CONVERTING = 'CONVERTING',
     WAITING_FOR_PROCESSING = 'WAITING_FOR_PROCESSING',
     PROCESSING = 'PROCESSING',
     SUCCEEDED = 'SUCCEEDED',
@@ -17,30 +19,54 @@ export enum JobStatus {
 }
 
 /**
+ * Job extraction input type
+ */
+export enum InputType {
+    SOURCE = 'SOURCE',
+    CONVERTED = 'CONVERTED',
+}
+
+/**
  * Document recovery response format
  */
-export interface Document {
+export interface DocumentWithType {
     url: string;
     content_type: string;
     expiry: Date;
 }
 
+export interface Document {
+    url: string;
+    expiry: Date;
+}
+
 /**
- * Job
+ * Source document information
  */
-export interface Job {
+export interface SourceDocument {
+    name: string;
+    content_type: string;
+    size: number;
+}
+
+/**
+ * Extraction job
+ */
+export interface ExtractionJob {
     id: number;
+    user_id: string;
     document_id: string;
     status: JobStatus;
     tags: {
         [index: string]: string
     };
+    source_document: SourceDocument;
     created_at: Date;
     updated_at: Date;
 }
 
-export interface PaginatedJobs {
-    jobs: Job[],
+export interface PaginatedExtractionJobs {
+    jobs: ExtractionJob[],
     pagination_status: PaginationStatus,
 }
 
@@ -60,23 +86,30 @@ export interface JobField {
     field_id: string;
     name: string;
     values: string[];
-    datatypes_matches: {[index: number]: DatatypeMatch};
+    datatypes_matches: {[index: string]: DatatypeMatch};
 }
 
 /**
  * Job creation request
  */
-export interface CreateJobRequest {
+export interface CreateRenderingJobRequest {
     document_id: string;
     content_type: string;
-    fields?: JobField[];
+    document_name?: string;
+    fields: JobField[];
+}
+export interface CreateExtractionJobRequest {
+    document_id: string;
+    content_type: string;
+    document_name?: string;
 }
 
 /**
  * Job creation response
  */
-export interface CreatedJob extends Document {
+export interface CreatedJob extends DocumentWithType {
     id: number;
+    document_name: number;
 }
 
 /**
@@ -120,11 +153,13 @@ export interface CSVExtractionUrl {
 /**
  * Create extraction batch request
  */
+export interface JobDocument {
+    name?: string;
+    content_type: string;
+}
 export interface CreateExtractionBatchRequest {
-    size: number;
     document_id: string;
-    content_type?: string;
-    content_types?: string[];
+    job_documents: JobDocument[];
 }
 
 /**
@@ -188,4 +223,26 @@ export interface BatchOutput {
     job_pending_count: number;
     results: JobOutputFromBatch[];
     pagination_status: PaginationStatus;
+}
+
+/**
+ * Rendering
+ */
+
+/**
+ * Rendering job
+ */
+
+export interface RenderingJob {
+    id: number;
+    user_id: string;
+    document_id: string;
+    status: JobStatus;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface PaginatedRenderingJobs {
+    jobs: RenderingJob[],
+    pagination_status: PaginationStatus,
 }

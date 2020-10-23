@@ -1,7 +1,8 @@
-import { dispatchError, Service, PatchOAuthClientRequest } from '..';
+import { Service, PatchOAuthClientRequest } from '..';
 import * as OAuth from '../types/oauth';
 import * as Status from '../types/status';
 import { reyahServiceRequest } from '../core/core';
+import { dispatchError } from '../core/errors';
 import newServiceStatus from '../constructor/status';
 import {
     newOAuthClient,

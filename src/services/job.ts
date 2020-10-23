@@ -1,21 +1,25 @@
 import * as Job from '../types/job';
+import { CSVExtractionBatchRequest, InputType, InternalCSVExtractionBatchRequest } from '../types/job';
 import { Service } from '../types/reyah';
 import { reyahServiceRequest } from '../core/core';
-import { dispatchError } from '../types/errors';
-import { CSVExtractionBatchRequest, InternalCSVExtractionBatchRequest } from '../types/job';
+import { dispatchError } from '../core/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
+    newBatch,
+    newBatches,
+    newBatchOutput,
+    newCreatedBatch,
     newCreatedJob,
     newCSVExtractionUrl,
     newDocument,
-    newJob,
+    newDocuments,
+    newExtractionBatchCSV,
+    newExtractionJob,
+    newExtractionJobs,
     newJobFields,
-    newJobs,
-    newCreatedBatch,
-    newBatch,
-    newBatches,
-    newBatchOutput, newExtractionBatchCSV,
+    newRenderingJob,
+    newRenderingJobs,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -44,11 +48,11 @@ export class JobService implements Service {
      * @param id Extraction job id
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveExtractionJob(id: number): Promise<Job.Job> {
+    public async retrieveExtractionJob(id: number): Promise<Job.ExtractionJob> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJob(resp.data);
+            return newExtractionJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -58,7 +62,7 @@ export class JobService implements Service {
      * Retrieves all extraction jobs of an user
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveAllExtractionJob(pagination?: Pagination): Promise<Job.PaginatedJobs> {
+    public async retrieveAllExtractionJob(pagination?: Pagination): Promise<Job.PaginatedExtractionJobs> {
         let subpath: string = `${this.subpath}/extraction/jobs`;
         const qs = new URLSearchParams();
         if (pagination) {
@@ -71,7 +75,7 @@ export class JobService implements Service {
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobs(resp.data);
+            return newExtractionJobs(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -80,13 +84,14 @@ export class JobService implements Service {
     /**
      * Retrieves input of an extraction job of an user
      * @param id Extraction job id
+     * @param inputType Input type required
      * @return A promise of the result of the extraction job input retrieving transaction
      */
-    public async retrieveExtractionJobInput(id: number): Promise<Job.Document> {
+    public async retrieveExtractionJobInput(id: number, inputType: InputType = InputType.SOURCE): Promise<Job.Document[]> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/input`;
         try {
-            const resp = await reyahServiceRequest.get(subpath, true);
-            return newDocument(resp.data);
+            const resp = await reyahServiceRequest.get(subpath, true, { type: inputType });
+            return newDocuments(resp.data.documents);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -112,7 +117,7 @@ export class JobService implements Service {
      * @param job Extraction job to create
      * @return A promise of the result of the extraction job creation transaction
      */
-    public async createExtractionJob(job: Job.CreateJobRequest): Promise<Job.CreatedJob> {
+    public async createExtractionJob(job: Job.CreateExtractionJobRequest): Promise<Job.CreatedJob> {
         const subpath: string = `${this.subpath}/extraction/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
@@ -127,11 +132,11 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job retrieving transaction
      */
-    public async retrieveRenderJob(id: number): Promise<Job.Job> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${id}`;
+    public async retrieveRenderJob(id: number): Promise<Job.RenderingJob> {
+        const subpath: string = `${this.subpath}/rendering/jobs/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJob(resp.data);
+            return newRenderingJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -141,7 +146,7 @@ export class JobService implements Service {
      * Retrieves all rendering jobs of an user
      * @return A promise of the result of the rendering job retrieving transaction
      */
-    public async retrieveAllRenderJob(pagination?: Pagination): Promise<Job.PaginatedJobs> {
+    public async retrieveAllRenderJob(pagination?: Pagination): Promise<Job.PaginatedRenderingJobs> {
         let subpath: string = `${this.subpath}/rendering/jobs`;
         const qs = new URLSearchParams();
         if (pagination) {
@@ -154,7 +159,7 @@ export class JobService implements Service {
         }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobs(resp.data);
+            return newRenderingJobs(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -195,7 +200,7 @@ export class JobService implements Service {
      * @param job Rendering job to create
      * @return A promise of the result of the rendering job creation transaction
      */
-    public async createRenderJob(job: Job.CreateJobRequest): Promise<Job.CreatedJob> {
+    public async createRenderJob(job: Job.CreateRenderingJobRequest): Promise<Job.CreatedJob> {
         const subpath: string = `${this.subpath}/rendering/jobs`;
         try {
             const resp = await reyahServiceRequest.post(subpath, job, true);
