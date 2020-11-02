@@ -48,7 +48,7 @@ export class JobService implements Service {
      * @param id Extraction job id
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveExtractionJob(id: number): Promise<Job.ExtractionJob> {
+    public async retrieveExtractionJob(id: string): Promise<Job.ExtractionJob> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -87,7 +87,7 @@ export class JobService implements Service {
      * @param inputType Input type required
      * @return A promise of the result of the extraction job input retrieving transaction
      */
-    public async retrieveExtractionJobInput(id: number, inputType: InputType = InputType.SOURCE): Promise<Job.Document[]> {
+    public async retrieveExtractionJobInput(id: string, inputType: InputType = InputType.SOURCE): Promise<Job.Document[]> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/input`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true, { type: inputType });
@@ -102,7 +102,7 @@ export class JobService implements Service {
      * @param id Extraction job id
      * @return A promise of the result of the extraction job output retrieving transaction
      */
-    public async retrieveExtractionJobOutput(id: number): Promise<Job.JobField[]> {
+    public async retrieveExtractionJobOutput(id: string): Promise<Job.JobField[]> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -132,7 +132,7 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job retrieving transaction
      */
-    public async retrieveRenderJob(id: number): Promise<Job.RenderingJob> {
+    public async retrieveRenderJob(id: string): Promise<Job.RenderingJob> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -170,7 +170,7 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job input retrieving transaction
      */
-    public async retrieveRenderJobInput(id: number): Promise<Job.Document> {
+    public async retrieveRenderJobInput(id: string): Promise<Job.Document> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}/input`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -185,7 +185,7 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job output retrieving transaction
      */
-    public async retrieveRenderJobOutput(id: number): Promise<Job.Document> {
+    public async retrieveRenderJobOutput(id: string): Promise<Job.Document> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -258,7 +258,7 @@ export class JobService implements Service {
      * @param batchId The id of the extraction batch
      * @return A promise of the result of the extraction batch retrieving transaction
      */
-    public async retrieveExtractionBatch(batchId: number): Promise<Job.Batch> {
+    public async retrieveExtractionBatch(batchId: string): Promise<Job.Batch> {
         const subpath: string = `${this.subpath}/extraction/batch/${batchId}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -288,7 +288,7 @@ export class JobService implements Service {
      * @param pagination The pagination status
      * @return A promise of the result of the extraction batch output retrieving transaction
      */
-    public async retrieveExtractionBatchOutput(batchId: number, pagination?: Pagination): Promise<Job.BatchOutput> {
+    public async retrieveExtractionBatchOutput(batchId: string, pagination?: Pagination): Promise<Job.BatchOutput> {
         const subpath: string = `${this.subpath}/extraction/batch/${batchId}/outputs`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true, pagination);
