@@ -1,5 +1,5 @@
 import {
-    DocumentModelField, DocumentModel, PaginatedDocumentModels, PreviewURL,
+    DocumentModelField, DocumentModel, PaginatedDocumentModels, PreviewURL, PreviewURLs,
 } from '..';
 import newPaginationStatus from './pagination';
 
@@ -39,7 +39,7 @@ export function newDocumentModel(obj: any): DocumentModel {
     return {
         id: obj.id,
         user_id: obj.user_id,
-        attached_preview: obj.attached_preview,
+        preview_status: obj.preview_status,
         datamodel_id: obj.datamodel_id,
         description: obj.description,
         fields: newDocumentModelFields(obj.fields),
@@ -68,5 +68,16 @@ export function newDocumentModels(obj: any): PaginatedDocumentModels {
 export function newPreviewUrl(obj: any): PreviewURL {
     return {
         url: obj.url,
+        expiry: new Date(obj.expiry),
+    };
+}
+export function newPreviewUrls(obj: any): PreviewURLs {
+    if (!Array.isArray(obj.preview_urls)) {
+        return {
+            preview_urls: [],
+        };
+    }
+    return {
+        preview_urls: obj.preview_urls.map((elem: any) => newPreviewUrl(elem)),
     };
 }

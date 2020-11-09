@@ -4,6 +4,13 @@
 
 import { PaginationStatus } from './pagination';
 
+export enum PreviewStatus {
+    UNSET = 0,
+    PENDING = 1,
+    SET = 2,
+    ERRORED = 3,
+}
+
 /**
  * Represents a single field of a document model.
  */
@@ -51,7 +58,7 @@ export interface DocumentModel {
     name: string;
     description: string;
     fields: DocumentModelField[];
-    attached_preview: boolean;
+    preview_status: PreviewStatus;
     created_at: Date;
     updated_at: Date;
 }
@@ -78,6 +85,7 @@ export interface UpdateDocumentModelFieldWithModelRequest {
     width: number;
     height: number;
 }
+
 export interface UpdateDocumentModelRequest {
     id: string;
     name: string;
@@ -98,4 +106,8 @@ export interface IdWithContentTypeRequest {
  */
 export interface PreviewURL {
     url: string;
+    expiry: Date;
+}
+export interface PreviewURLs {
+    preview_urls: PreviewURL[];
 }
