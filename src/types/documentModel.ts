@@ -5,10 +5,10 @@
 import { PaginationStatus } from './pagination';
 
 export enum PreviewStatus {
-    UNSET = 0,
-    PENDING = 1,
-    SET = 2,
-    ERRORED = 3,
+    UNSET = 'UNSET',
+    PENDING = 'PENDING',
+    SET = 'SET',
+    ERRORED = 'ERRORED',
 }
 
 /**
