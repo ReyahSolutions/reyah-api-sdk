@@ -1,5 +1,9 @@
 import {
-    DocumentModelField, DocumentModel, PaginatedDocumentModels, PreviewURL, PreviewURLs,
+    DocumentModelField,
+    DocumentModel,
+    PaginatedDocumentModels,
+    PreviewURL,
+    PreviewURLs,
 } from '..';
 import newPaginationStatus from './pagination';
 
