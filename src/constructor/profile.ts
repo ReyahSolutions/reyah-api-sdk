@@ -19,6 +19,7 @@ export function newProfile(obj: any): Profile {
         post_code: obj.post_code,
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
+        tawk_to_hash: obj.tawk_to_hash,
     };
 }
 
