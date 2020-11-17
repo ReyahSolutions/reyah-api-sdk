@@ -7,34 +7,23 @@ import {
     FieldLink,
     PaginatedDataModels,
     PaginatedFields,
-    Property,
-} from '..';
+} from '../types/dataModel';
 import newPaginationStatus from './pagination';
-
-/**
- * Data model field property
- */
-export function newProperty(obj: any): Property {
-    return {
-        key: obj.key,
-        value: obj.value,
-    };
-}
 
 /**
  * Data model field
  */
 export function newField(obj: any): Field {
     return {
-        created_at: new Date(obj.created_at),
-        datatypes: obj.datatypes || [],
-        description: obj.description,
         field_id: obj.field_id,
+        user_id: obj.user_id,
         kind: obj.kind,
         name: obj.name,
-        properties: obj.properties?.map((elem: any) => newProperty(elem)) || [],
+        description: obj.description,
+        datatypes: obj.datatypes ?? [],
+        columns: obj.columns ?? [],
+        created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
-        user_id: obj.user_id,
     };
 }
 
@@ -58,7 +47,7 @@ export function newDataModel(obj: any): DataModel {
     return {
         created_at: new Date(obj.created_at),
         description: obj.description,
-        fields: obj.fields?.map((elem: any) => newField(elem)) || [],
+        fields: obj.fields?.map(newField) || [],
         model_id: obj.model_id,
         name: obj.name,
         updated_at: new Date(obj.updated_at),

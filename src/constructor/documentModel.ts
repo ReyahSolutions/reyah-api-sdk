@@ -1,15 +1,91 @@
 import {
+    Anchor,
+    BoundingBox,
+    Column,
+    DocumentModelTableField,
+    Extent,
+    GatherBox,
+    Padding,
     DocumentModelField,
     DocumentModel,
     PaginatedDocumentModels,
     PreviewURL,
     PreviewURLs,
+    DocumentModelElementField,
+    Interval,
 } from '..';
 import newPaginationStatus from './pagination';
+
+
+export function newExtent(obj: any): Extent {
+    return {
+        fst: (typeof obj.fst === 'number') ? parseFloat(obj.fst) : undefined,
+        snd: (typeof obj.snd === 'number') ? parseFloat(obj.snd) : undefined,
+        trd: (typeof obj.trd === 'number') ? parseFloat(obj.trd) : undefined,
+    };
+}
+
+export function newPadding(obj: any): Padding {
+    return {
+        top: parseFloat(obj.top),
+        right: parseFloat(obj.right),
+        bottom: parseFloat(obj.bottom),
+        left: parseFloat(obj.left),
+    };
+}
+
+export function newInterval(obj: any): Interval {
+    return {
+        lo: parseFloat(obj.lo),
+        hi: parseFloat(obj.hi),
+    };
+}
+
+export function newBoundingBox(obj: any): BoundingBox {
+    return {
+        x: newInterval(obj.x),
+        y: newInterval(obj.y),
+    };
+}
+
+
+export function newColumn(obj: any): Column {
+    return {
+        label: obj.label,
+        width: parseFloat(obj.width),
+    };
+}
+
+export function newAnchor(obj: any): Anchor {
+    return {
+        orientation: obj.orientation,
+        box: newBoundingBox(obj.box),
+        label: obj.label,
+        padding: obj.padding && newPadding(obj.padding),
+    };
+}
+
+export function newGatherBox(obj: any): GatherBox {
+    return {
+        direction: obj.direction,
+        extent: newExtent(obj.extent),
+    };
+}
 
 /**
  * Document model service type definitions.
  */
+
+export function newDocumentModelElementField(/* obj: any */): DocumentModelElementField {
+    return {
+    };
+}
+
+export function newDocumentModelTableField(obj: any): DocumentModelTableField {
+    return {
+        columns: obj.columns?.map(newColumn) ?? [],
+    };
+}
 
 /**
  * Represents a single field of a document model.
@@ -20,12 +96,10 @@ export function newDocumentModelField(obj: any): DocumentModelField {
         name: obj.name,
         datamodel_field_id: obj.datamodel_field_id,
         description: obj.description,
-        height: parseFloat(obj.height),
-        width: parseFloat(obj.width),
-        x: parseFloat(obj.x),
-        y: parseFloat(obj.y),
-        created_at: new Date(obj.created_at),
-        updated_at: new Date(obj.updated_at),
+        anchor: newAnchor(obj.anchor),
+        gatherBox: newGatherBox(obj.gatherBox),
+        element: obj.element && newDocumentModelElementField(/* obj.element */),
+        table: obj.table && newDocumentModelTableField(obj.table),
     };
 }
 
@@ -42,12 +116,14 @@ export function newDocumentModelFields(obj: any[]): DocumentModelField[] {
 export function newDocumentModel(obj: any): DocumentModel {
     return {
         id: obj.id,
+        version: obj.version,
         user_id: obj.user_id,
-        preview_status: obj.preview_status,
+        name: obj.name,
         datamodel_id: obj.datamodel_id,
         description: obj.description,
         fields: newDocumentModelFields(obj.fields),
-        name: obj.name,
+        stoppers: obj.stoppers?.map(newAnchor) ?? [],
+        preview_status: obj.preview_status,
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
     };

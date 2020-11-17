@@ -1,4 +1,9 @@
-node_modules
-dist
-docs
-.idea*
+/.idea*/
+/.nova/
+/.vscode/
+
+/node_modules/
+/dist/
+/docs/
+
+.DS_Store

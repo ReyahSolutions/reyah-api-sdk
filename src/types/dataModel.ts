@@ -4,17 +4,9 @@
 
 import { PaginationStatus } from './pagination';
 
-/**
- * Data model field property
- */
-export interface Property {
-    key: string;
-    value: string;
-}
-
-export interface PropertyRequest {
-    key: string;
-    value?: string;
+export enum FieldKind {
+    Element = 'ELEMENT',
+    Table = 'TABLE',
 }
 
 /**
@@ -23,13 +15,13 @@ export interface PropertyRequest {
 export interface Field {
     field_id: string;
     user_id: string;
-    kind: string;
+    kind: FieldKind;
     name: string;
     description: string;
-    properties: Property[];
     datatypes: string[];
     created_at: Date;
     updated_at: Date;
+    columns: string[],
 }
 
 export interface PaginatedFields {
@@ -38,20 +30,20 @@ export interface PaginatedFields {
 }
 
 export interface CreateFieldRequest {
-    kind: string;
+    kind: FieldKind;
     name: string;
     description?: string;
-    properties?: PropertyRequest[];
     datatypes: string[];
+    columns: string[],
 }
 
 export interface UpdateFieldRequest {
     field_id: string;
-    kind: string;
+    kind: FieldKind;
     name: string;
     description?: string;
-    properties?: PropertyRequest[];
     datatypes: string[];
+    columns: string[],
 }
 
 /**
