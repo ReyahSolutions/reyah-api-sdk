@@ -20,6 +20,7 @@ export interface Profile {
     city: string;
     country: string;
     phone: string;
+    tawk_to_hash: string;
 }
 
 /**
