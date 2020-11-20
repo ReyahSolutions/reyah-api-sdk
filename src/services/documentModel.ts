@@ -2,14 +2,19 @@ import {
     Filter,
     ReyahRequestResponse,
     Service,
+    Pagination,
 } from '..';
 import * as DocumentModel from '../types/documentModel';
 import { reyahServiceRequest } from '../core/core';
 import { dispatchError } from '../core/errors';
 import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
-import { newDocumentModel, newDocumentModels, newPreviewUrl } from '../constructor/documentModel';
-import { Pagination } from '../types/pagination';
+import {
+    newDocumentModel,
+    newDocumentModels,
+    newPreviewUrl,
+    newPreviewUrls,
+} from '../constructor/documentModel';
 
 /**
  * Document model service controller
@@ -122,11 +127,11 @@ export class DocumentModelService implements Service {
      * @param id The document model id
      * @return A promise of the result of the preview file retrieving transaction
      */
-    public async previewUrl(id: string): Promise<DocumentModel.PreviewURL> {
+    public async previewUrl(id: string): Promise<DocumentModel.PreviewURLs> {
         const subpath: string = `${this.subpath}/models/${id}/preview`;
         try {
             const resp: ReyahRequestResponse = await reyahServiceRequest.get(subpath, true);
-            return newPreviewUrl(resp.data);
+            return newPreviewUrls(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
