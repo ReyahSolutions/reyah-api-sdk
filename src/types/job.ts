@@ -53,7 +53,7 @@ export interface SourceDocument {
  * Extraction job
  */
 export interface ExtractionJob {
-    id: number;
+    id: string;
     user_id: string;
     document_id: string;
     status: JobStatus;
@@ -108,8 +108,8 @@ export interface CreateExtractionJobRequest {
  * Job creation response
  */
 export interface CreatedJob extends DocumentWithType {
-    id: number;
-    document_name: number;
+    id: string;
+    document_name: string;
 }
 
 /**
@@ -125,7 +125,7 @@ export enum ExtractionType {
  */
 export interface CSVExtractionRequest {
     extraction_type: ExtractionType;
-    ids?: number[];
+    ids?: string[];
     start_date?: Date;
     end_date?: Date;
     include_datatype: boolean;
@@ -166,7 +166,7 @@ export interface CreateExtractionBatchRequest {
  * Get extraction batch in CSV
  */
 export interface CSVExtractionBatchRequest {
-    batch_id: number;
+    batch_id: string;
     include_datatype: boolean;
 }
 export interface InternalCSVExtractionBatchRequest {
@@ -184,13 +184,13 @@ export interface ExtractionBatchCSV {
  * Extraction batch(es)
  */
 export interface Batch {
-    batch_id: number;
+    batch_id: string;
     size: number;
     job_success_count: number;
     job_error_count: number;
     job_pending_count: number;
     document_id: string;
-    jobs: number[];
+    jobs: string[];
     created_at: Date;
 }
 export interface Batches {
@@ -202,7 +202,7 @@ export interface Batches {
  * Extraction batch creation result
  */
 export interface CreatedBatch {
-    batch_id: number;
+    batch_id: string;
     size: number;
     document_id: string;
     jobs: CreatedJob[];
@@ -212,12 +212,12 @@ export interface CreatedBatch {
  * Extraction batch result
  */
 export interface JobOutputFromBatch {
-    job_id: number;
+    job_id: string;
     status: JobStatus;
     fields: JobField[];
 }
 export interface BatchOutput {
-    batch_id: number;
+    batch_id: string;
     job_success_count: number;
     job_error_count: number;
     job_pending_count: number;
@@ -234,7 +234,7 @@ export interface BatchOutput {
  */
 
 export interface RenderingJob {
-    id: number;
+    id: string;
     user_id: string;
     document_id: string;
     status: JobStatus;

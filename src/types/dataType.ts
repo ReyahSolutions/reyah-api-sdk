@@ -36,5 +36,5 @@ export interface UpdateDataTypeRequest {
 }
 
 export interface DataTypeLinks {
-    data_fields: number[],
+    data_fields: string[],
 }
