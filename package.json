@@ -22,7 +22,6 @@
   "private": false,
   "license": "ISC",
   "dependencies": {
-    "@reyah/api-sdk": "^1.0.23-671966c9",
     "axios": "^0.19.0"
   },
   "devDependencies": {

@@ -23,13 +23,6 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@reyah/api-sdk@^1.0.23-671966c9":
-  version "1.0.23-671966c9"
-  resolved "https://registry.npmjs.org/@reyah/api-sdk/-/api-sdk-1.0.23-671966c9.tgz#f70430ff714d1653c796b0c8d7298dd230d87ff1"
-  integrity sha512-QvBu6wOsYJC9Xgh+GWXi2LjMKinG6mtU9evmwjGAudMDoO36uYsiSZ5suNlv/iCSLpUFN/9kOh9rtQ3RM4jhYw==
-  dependencies:
-    axios "^0.19.0"
-
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
