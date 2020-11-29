@@ -16,7 +16,6 @@ import {
 } from '..';
 import newPaginationStatus from './pagination';
 
-
 export function newExtent(obj: any): Extent {
     return {
         fst: (typeof obj.fst === 'number') ? parseFloat(obj.fst) : undefined,
@@ -47,7 +46,6 @@ export function newBoundingBox(obj: any): BoundingBox {
         y: newInterval(obj.y),
     };
 }
-
 
 export function newColumn(obj: any): Column {
     return {
