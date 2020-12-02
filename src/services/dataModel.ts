@@ -21,6 +21,11 @@ import { Pagination } from '../types/pagination';
 export class DataModelService implements Service {
     readonly subpath = '/datamodel';
 
+    readonly fieldKinds = [
+        DataModel.FieldKind.Element,
+        DataModel.FieldKind.Table,
+    ];
+
     /**
      * Remote service status
      * @return whether the service is alive or not
@@ -30,20 +35,6 @@ export class DataModelService implements Service {
         try {
             const resp = await reyahServiceRequest.get(subpath, false);
             return newServiceStatus(resp.data);
-        } catch (err) {
-            throw new ReyahError(err);
-        }
-    }
-
-    /**
-     * Available data model kinds
-     * @return Available kinds in data fields
-     */
-    public async availableKinds(): Promise<string[]> {
-        const subpath: string = `${this.subpath}/kinds`;
-        try {
-            const resp = await reyahServiceRequest.get(subpath, true);
-            return resp.data.kinds as string[];
         } catch (err) {
             throw new ReyahError(err);
         }
