@@ -32,7 +32,7 @@ export interface DocumentModelField {
     datamodel_field_id: string;
     description: string;
     anchor: Anchor;
-    gatherBox: GatherBox;
+    gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
 }
@@ -89,7 +89,7 @@ export interface CreateDocumentModelFieldRequest {
     datamodel_field_id: string;
     description?: string;
     anchor: Anchor;
-    gatherBox: GatherBox;
+    gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
 }
@@ -100,7 +100,7 @@ export interface UpdateDocumentModelFieldRequest {
     datamodel_field_id: string;
     description?: string;
     anchor: Anchor;
-    gatherBox: GatherBox;
+    gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
 }
@@ -141,7 +141,7 @@ export interface UpdateDocumentModelFieldWithModelRequest {
     datamodel_field_id: string;
     description?: string;
     anchor: Anchor;
-    gatherBox: GatherBox;
+    gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
 }

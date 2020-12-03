@@ -95,7 +95,7 @@ export function newDocumentModelField(obj: any): DocumentModelField {
         datamodel_field_id: obj.datamodel_field_id,
         description: obj.description,
         anchor: newAnchor(obj.anchor),
-        gatherBox: newGatherBox(obj.gatherBox),
+        gather_box: newGatherBox(obj.gather_box),
         element: obj.element && newDocumentModelElementField(/* obj.element */),
         table: obj.table && newDocumentModelTableField(obj.table),
     };
