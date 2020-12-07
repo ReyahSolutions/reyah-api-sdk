@@ -186,11 +186,11 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job output retrieving transaction
      */
-    public async retrieveRenderJobOutput(id: string): Promise<Job.Document[]> {
+    public async retrieveRenderJobOutput(id: string): Promise<Job.DocumentWithType[]> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newDocuments(resp.data.documents);
+            return newDocumentsWithType(resp.data.documents);
         } catch (err) {
             throw dispatchError(err);
         }
