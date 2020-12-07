@@ -35,11 +35,6 @@ export interface DocumentWithType {
     expiry: Date;
 }
 
-export interface Document {
-    url: string;
-    expiry: Date;
-}
-
 /**
  * Source document information
  */
@@ -82,11 +77,15 @@ export interface DatatypeMatch {
 /**
  * Job jobField
  */
-export interface JobField {
+export interface ExtractionJobField {
     field_id: string;
     name: string;
     values: string[];
     datatypes_matches: {[index: string]: DatatypeMatch};
+}
+export interface RenderingJobField {
+    field_id: string;
+    values: string[];
 }
 
 /**
@@ -95,8 +94,9 @@ export interface JobField {
 export interface CreateRenderingJobRequest {
     document_id: string;
     content_type: string;
-    document_name?: string;
-    fields: JobField[];
+    ignore_datatypes?: boolean;
+    font_size: number;
+    fields: RenderingJobField[];
 }
 export interface CreateExtractionJobRequest {
     document_id: string;
@@ -214,7 +214,7 @@ export interface CreatedBatch {
 export interface JobOutputFromBatch {
     job_id: string;
     status: JobStatus;
-    fields: JobField[];
+    fields: ExtractionJobField[];
 }
 export interface BatchOutput {
     batch_id: string;
