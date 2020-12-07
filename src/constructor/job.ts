@@ -6,7 +6,8 @@ import {
     Document,
     ExtractionJob,
     PaginatedExtractionJobs,
-    JobField,
+    ExtractionJobField,
+    RenderingJobField,
     CreatedBatch,
     Batch,
     Batches,
@@ -117,7 +118,7 @@ export function newDatatypeMatches(obj: any): {[index: string]: DatatypeMatch} {
     return resp;
 }
 
-export function newJobField(obj: any): JobField {
+export function newExtractionJobField(obj: any): ExtractionJobField {
     return {
         field_id: obj.field_id,
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
@@ -126,11 +127,25 @@ export function newJobField(obj: any): JobField {
     };
 }
 
-export function newJobFields(obj: any[]): JobField[] {
+export function newExtractionJobFields(obj: any[]): ExtractionJobField[] {
     if (!Array.isArray(obj)) {
         return [];
     }
-    return obj.map((elem: any) => newJobField(elem));
+    return obj.map((elem: any) => newExtractionJobField(elem));
+}
+
+export function newRenderingJobField(obj: any): RenderingJobField {
+    return {
+        field_id: obj.field_id,
+        values: obj.values || [],
+    };
+}
+
+export function newRenderingJobFields(obj: any[]): RenderingJobField[] {
+    if (!Array.isArray(obj)) {
+        return [];
+    }
+    return obj.map((elem: any) => newRenderingJobField(elem));
 }
 
 /**
@@ -204,7 +219,7 @@ function newJobOutputFromBatch(obj: any): JobOutputFromBatch {
     return {
         job_id: obj.job_id,
         status: obj.status,
-        fields: obj.fields?.map((elem: any) => newJobField(elem)) || [],
+        fields: obj.fields?.map((elem: any) => newExtractionJobField(elem)) || [],
     };
 }
 export function newBatchOutput(obj: any): BatchOutput {

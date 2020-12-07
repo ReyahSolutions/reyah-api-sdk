@@ -12,13 +12,13 @@ import {
     newCreatedBatch,
     newCreatedJob,
     newCSVExtractionUrl,
-    newDocument,
     newDocuments,
     newExtractionBatchCSV,
     newExtractionJob,
+    newExtractionJobFields,
     newExtractionJobs,
-    newJobFields,
     newRenderingJob,
+    newRenderingJobFields,
     newRenderingJobs,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
@@ -102,11 +102,11 @@ export class JobService implements Service {
      * @param id Extraction job id
      * @return A promise of the result of the extraction job output retrieving transaction
      */
-    public async retrieveExtractionJobOutput(id: string): Promise<Job.JobField[]> {
+    public async retrieveExtractionJobOutput(id: string): Promise<Job.ExtractionJobField[]> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newJobFields(resp.data.fields);
+            return newExtractionJobFields(resp.data.fields);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -170,11 +170,11 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job input retrieving transaction
      */
-    public async retrieveRenderJobInput(id: string): Promise<Job.Document> {
+    public async retrieveRenderJobInput(id: string): Promise<Job.RenderingJobField[]> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}/input`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newDocument(resp.data);
+            return newRenderingJobFields(resp.data.fields);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -185,11 +185,11 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job output retrieving transaction
      */
-    public async retrieveRenderJobOutput(id: string): Promise<Job.Document> {
+    public async retrieveRenderJobOutput(id: string): Promise<Job.Document[]> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newDocument(resp.data);
+            return newDocuments(resp.data.documents);
         } catch (err) {
             throw dispatchError(err);
         }
