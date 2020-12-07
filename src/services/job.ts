@@ -13,6 +13,7 @@ import {
     newCreatedJob,
     newCSVExtractionUrl,
     newDocuments,
+    newDocumentsWithType,
     newExtractionBatchCSV,
     newExtractionJob,
     newExtractionJobFields,
@@ -87,11 +88,11 @@ export class JobService implements Service {
      * @param inputType Input type required
      * @return A promise of the result of the extraction job input retrieving transaction
      */
-    public async retrieveExtractionJobInput(id: string, inputType: InputType = InputType.SOURCE): Promise<Job.Document[]> {
+    public async retrieveExtractionJobInput(id: string, inputType: InputType = InputType.SOURCE): Promise<Job.DocumentWithType[]> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/input`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true, { type: inputType });
-            return newDocuments(resp.data.documents);
+            return newDocumentsWithType(resp.data.documents);
         } catch (err) {
             throw dispatchError(err);
         }

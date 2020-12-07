@@ -100,6 +100,7 @@ export interface CreateRenderingJobRequest {
     document_id: string;
     content_type: string;
     ignore_datatypes?: boolean;
+    font_size: number;
     fields: RenderingJobField[];
 }
 export interface CreateExtractionJobRequest {
