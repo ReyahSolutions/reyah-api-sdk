@@ -35,11 +35,6 @@ export interface DocumentWithType {
     expiry: Date;
 }
 
-export interface Document {
-    url: string;
-    expiry: Date;
-}
-
 /**
  * Source document information
  */

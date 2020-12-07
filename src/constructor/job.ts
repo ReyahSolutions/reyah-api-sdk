@@ -3,7 +3,6 @@ import {
     CSVExtractionUrl,
     DatatypeMatch,
     DocumentWithType,
-    Document,
     ExtractionJob,
     PaginatedExtractionJobs,
     ExtractionJobField,
@@ -31,25 +30,11 @@ export function newDocumentWithType(obj: any): DocumentWithType {
     };
 }
 
-export function newDocument(obj: any): Document {
-    return {
-        expiry: new Date(obj.expiry),
-        url: obj.url,
-    };
-}
-
 export function newDocumentsWithType(obj: any): DocumentWithType[] {
     if (!Array.isArray(obj)) {
         return [];
     }
     return obj.map((elem: any) => newDocumentWithType(elem));
-}
-
-export function newDocuments(obj: any): Document[] {
-    if (!Array.isArray(obj)) {
-        return [];
-    }
-    return obj.map((elem: any) => newDocument(elem));
 }
 
 /**

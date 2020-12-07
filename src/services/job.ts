@@ -12,7 +12,6 @@ import {
     newCreatedBatch,
     newCreatedJob,
     newCSVExtractionUrl,
-    newDocuments,
     newDocumentsWithType,
     newExtractionBatchCSV,
     newExtractionJob,
