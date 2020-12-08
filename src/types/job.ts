@@ -19,6 +19,15 @@ export enum JobStatus {
 }
 
 /**
+ * ContentType
+ */
+export enum ContentType {
+    PDF = 'appplication/pdf',
+    PNG = 'image/png',
+    JPEG = 'image/jpeg',
+}
+
+/**
  * Job extraction input type
  */
 export enum InputType {
@@ -31,7 +40,7 @@ export enum InputType {
  */
 export interface DocumentWithType {
     url: string;
-    content_type: string;
+    content_type: ContentType;
     expiry: Date;
 }
 
@@ -40,7 +49,7 @@ export interface DocumentWithType {
  */
 export interface SourceDocument {
     name: string;
-    content_type: string;
+    content_type: ContentType;
     size: number;
 }
 
@@ -93,14 +102,14 @@ export interface RenderingJobField {
  */
 export interface CreateRenderingJobRequest {
     document_id: string;
-    content_type: string;
+    content_type: ContentType;
     ignore_datatypes?: boolean;
     font_size: number;
     fields: RenderingJobField[];
 }
 export interface CreateExtractionJobRequest {
     document_id: string;
-    content_type: string;
+    content_type: ContentType;
     document_name?: string;
 }
 
@@ -155,7 +164,7 @@ export interface CSVExtractionUrl {
  */
 export interface JobDocument {
     name?: string;
-    content_type: string;
+    content_type: ContentType;
 }
 export interface CreateExtractionBatchRequest {
     document_id: string;
