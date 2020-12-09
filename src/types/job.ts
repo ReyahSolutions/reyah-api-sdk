@@ -22,7 +22,7 @@ export enum JobStatus {
  * ContentType
  */
 export enum ContentType {
-    PDF = 'appplication/pdf',
+    PDF = 'application/pdf',
     PNG = 'image/png',
     JPEG = 'image/jpeg',
 }
