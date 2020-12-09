@@ -13,7 +13,7 @@ export enum GrantTypes {
  * OAuth client
  */
 export interface OAuthClientWithSecret {
-    client_id: number;
+    client_id: string;
     client_secret: string;
     name: string;
     description: string;
@@ -28,7 +28,7 @@ export interface OAuthClientWithSecret {
 }
 
 export interface OAuthClient {
-    client_id: number;
+    client_id: string;
     name: string;
     description: string;
     banned: boolean;
@@ -51,7 +51,7 @@ export interface CreateOAuthClient {
 }
 
 export interface PatchOAuthClientRequest {
-    client_id: number;
+    client_id: string;
     name: string;
     description?: string;
     redirect_uris?: string[];

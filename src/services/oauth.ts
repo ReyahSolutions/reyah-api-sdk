@@ -51,7 +51,7 @@ export class OAuthService implements Service {
      * @param clientId The id of the client to retrieve
      * @return A promise of the result of the oauth client retrieving transaction
      */
-    public async retrieveOAuthClient(clientId: number): Promise<OAuth.OAuthClient> {
+    public async retrieveOAuthClient(clientId: string): Promise<OAuth.OAuthClient> {
         const subpath: string = `${this.subpath}/clients/${clientId}`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -95,7 +95,7 @@ export class OAuthService implements Service {
      * @param clientId The id of the client to delete
      * @return A promise of the result of the OAuth client deletion transaction
      */
-    public async deleteOAuthClient(clientId: number): Promise<boolean> {
+    public async deleteOAuthClient(clientId: string): Promise<boolean> {
         const subpath: string = `${this.subpath}/clients/${clientId}`;
         try {
             await reyahServiceRequest.delete(subpath, true);
@@ -110,7 +110,7 @@ export class OAuthService implements Service {
      * @param clientId The id of the client to regenerate
      * @return A promise of the result of the OAuth client secret regeneration transaction
      */
-    public async regenSecret(clientId: number): Promise<OAuth.OAuthClientWithSecret> {
+    public async regenSecret(clientId: string): Promise<OAuth.OAuthClientWithSecret> {
         const subpath: string = `${this.subpath}/clients/${clientId}/secret`;
         try {
             const resp = await reyahServiceRequest.post(subpath, undefined, true);
