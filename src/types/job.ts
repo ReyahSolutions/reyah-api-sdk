@@ -2,6 +2,7 @@
  * Job service types
  */
 
+import { BoundingBox } from './documentModel';
 import { PaginationStatus } from './pagination';
 
 /**
@@ -70,8 +71,8 @@ export interface ExtractionJob {
 }
 
 export interface PaginatedExtractionJobs {
-    jobs: ExtractionJob[],
-    pagination_status: PaginationStatus,
+    jobs: ExtractionJob[];
+    pagination_status: PaginationStatus;
 }
 
 /**
@@ -89,6 +90,8 @@ export interface DatatypeMatch {
 export interface ExtractionJobField {
     field_id: string;
     name: string;
+    anchor: BoundingBox;
+    gather_box: BoundingBox;
     element?: ExtractionJobElementField,
     table?: ExtractionJobTableField,
 }
@@ -97,8 +100,8 @@ export interface ExtractionJobElementField {
     datatypes_matches: { [index: string]: DatatypeMatch };
 }
 export interface ExtractionJobTableField {
-    column_ids: string[],
-    rows: ExtractionJobTableRowField[]
+    column_ids: string[];
+    rows: ExtractionJobTableRowField[];
 }
 export interface ExtractionJobTableRowField {
     values: string[];
