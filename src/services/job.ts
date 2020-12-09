@@ -15,7 +15,7 @@ import {
     newDocumentsWithType,
     newExtractionBatchCSV,
     newExtractionJob,
-    newExtractionJobFields,
+    newExtractionJobOuput,
     newExtractionJobs,
     newRenderingJob,
     newRenderingJobFields,
@@ -102,11 +102,11 @@ export class JobService implements Service {
      * @param id Extraction job id
      * @return A promise of the result of the extraction job output retrieving transaction
      */
-    public async retrieveExtractionJobOutput(id: string): Promise<Job.ExtractionJobField[]> {
+    public async retrieveExtractionJobOutput(id: string): Promise<Job.ExtractionJobOuput> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/output`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newExtractionJobFields(resp.data.fields);
+            return newExtractionJobOuput(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

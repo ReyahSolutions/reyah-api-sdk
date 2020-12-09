@@ -15,9 +15,9 @@ import {
     ExtractionBatchCSV,
     SourceDocument,
     RenderingJob,
-    PaginatedRenderingJobs,
+    PaginatedRenderingJobs, ExtractionJobOuput,
 } from '..';
-import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableRowField } from '../types/job';
+import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
 
@@ -87,7 +87,7 @@ export function newExtractionJobs(obj: any): PaginatedExtractionJobs {
 }
 
 /**
- * Job jobFields
+ * Job extraction output
  */
 export function newDatatypeMatch(obj: any): DatatypeMatch {
     return {
@@ -109,8 +109,10 @@ export function newExtractionJobElementField(obj: any): ExtractionJobElementFiel
     };
 }
 
-export function newExtractionJobTableRowField(obj: any): ExtractionJobTableRowField {
+export function newExtractionJobTableColumnField(obj: any): ExtractionJobTableColumnField {
     return {
+        id: obj.id,
+        datafield_id: obj.datafield_id,
         values: obj.values || [],
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
     };
@@ -118,8 +120,7 @@ export function newExtractionJobTableRowField(obj: any): ExtractionJobTableRowFi
 
 export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
-        column_ids: obj.column_ids || [],
-        rows: obj.rows && obj.rows.map(newExtractionJobTableRowField),
+        columns: obj.rows && obj.rows.map(newExtractionJobTableColumnField),
     };
 }
 
@@ -153,6 +154,12 @@ export function newRenderingJobFields(obj: any[]): RenderingJobField[] {
         return [];
     }
     return obj.map(newRenderingJobField);
+}
+export function newExtractionJobOuput(obj: any): ExtractionJobOuput {
+    return {
+        fields: newExtractionJobFields(obj.fields),
+        stoppers: obj.stoppers.map((elem: any) => newBoundingBox(elem)),
+    };
 }
 
 /**
