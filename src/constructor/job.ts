@@ -17,6 +17,7 @@ import {
     RenderingJob,
     PaginatedRenderingJobs,
 } from '..';
+import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableRowField } from '../types/job';
 import newPaginationStatus from './pagination';
 
 /**
@@ -34,7 +35,7 @@ export function newDocumentsWithType(obj: any): DocumentWithType[] {
     if (!Array.isArray(obj)) {
         return [];
     }
-    return obj.map((elem: any) => newDocumentWithType(elem));
+    return obj.map(newDocumentWithType);
 }
 
 /**
@@ -96,19 +97,37 @@ export function newDatatypeMatch(obj: any): DatatypeMatch {
 }
 
 export function newDatatypeMatches(obj: any): {[index: string]: DatatypeMatch} {
-    const resp: {[index: string]: DatatypeMatch} = {};
-    Object.entries(obj).forEach(([k, v]: [string, any]) => {
-        resp[k] = newDatatypeMatch(v);
-    });
-    return resp;
+    return Object.entries(obj)
+        .reduce((acc, [k, v]) => ({ ...acc, [k]: newDatatypeMatch(v) }), {});
+}
+
+export function newExtractionJobElementField(obj: any): ExtractionJobElementField {
+    return {
+        values: obj.values || [],
+        datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
+    };
+}
+
+export function newExtractionJobTableRowField(obj: any): ExtractionJobTableRowField {
+    return {
+        values: obj.values || [],
+        datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
+    };
+}
+
+export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
+    return {
+        column_ids: obj.column_ids || [],
+        rows: obj.rows && obj.rows.map(newExtractionJobTableRowField),
+    };
 }
 
 export function newExtractionJobField(obj: any): ExtractionJobField {
     return {
         field_id: obj.field_id,
-        datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
         name: obj.name,
-        values: obj.values || [],
+        table: obj.table && newExtractionJobTableField(obj.table),
+        element: obj.element && newExtractionJobElementField(obj.element),
     };
 }
 
@@ -116,7 +135,7 @@ export function newExtractionJobFields(obj: any[]): ExtractionJobField[] {
     if (!Array.isArray(obj)) {
         return [];
     }
-    return obj.map((elem: any) => newExtractionJobField(elem));
+    return obj.map(newExtractionJobField);
 }
 
 export function newRenderingJobField(obj: any): RenderingJobField {
@@ -130,7 +149,7 @@ export function newRenderingJobFields(obj: any[]): RenderingJobField[] {
     if (!Array.isArray(obj)) {
         return [];
     }
-    return obj.map((elem: any) => newRenderingJobField(elem));
+    return obj.map(newRenderingJobField);
 }
 
 /**
@@ -166,7 +185,7 @@ export function newCreatedBatch(obj: any): CreatedBatch {
     return {
         batch_id: obj.batch_id,
         document_id: obj.document_id,
-        jobs: obj.jobs?.map((elem: any) => newCreatedJob(elem)) || [],
+        jobs: obj.jobs?.map(newCreatedJob) || [],
         size: parseInt(obj.size, 10),
     };
 }
@@ -192,7 +211,7 @@ export function newBatch(obj: any): Batch {
  */
 export function newBatches(obj: any): Batches {
     return {
-        batches: obj.batches?.map((elem: any) => newBatch(elem)) || [],
+        batches: obj.batches?.map(newBatch) || [],
         pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
@@ -204,7 +223,7 @@ function newJobOutputFromBatch(obj: any): JobOutputFromBatch {
     return {
         job_id: obj.job_id,
         status: obj.status,
-        fields: obj.fields?.map((elem: any) => newExtractionJobField(elem)) || [],
+        fields: obj.fields?.map(newExtractionJobField) || [],
     };
 }
 export function newBatchOutput(obj: any): BatchOutput {
@@ -214,7 +233,7 @@ export function newBatchOutput(obj: any): BatchOutput {
         job_pending_count: parseInt(obj.job_pending_count, 10),
         job_success_count: parseInt(obj.job_success_count, 10),
         pagination_status: newPaginationStatus(obj.pagination_status),
-        results: obj.results?.map((elem: any) => newJobOutputFromBatch(elem)) || [],
+        results: obj.results?.map(newJobOutputFromBatch) || [],
     };
 }
 
@@ -260,7 +279,7 @@ export function newRenderingJobs(obj: any): PaginatedRenderingJobs {
         };
     }
     return {
-        jobs: obj.jobs.map((elem: any) => newRenderingJob(elem)),
+        jobs: obj.jobs.map(newRenderingJob),
         pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }

@@ -89,8 +89,20 @@ export interface DatatypeMatch {
 export interface ExtractionJobField {
     field_id: string;
     name: string;
+    element?: ExtractionJobElementField,
+    table?: ExtractionJobTableField,
+}
+export interface ExtractionJobElementField {
     values: string[];
-    datatypes_matches: {[index: string]: DatatypeMatch};
+    datatypes_matches: { [index: string]: DatatypeMatch };
+}
+export interface ExtractionJobTableField {
+    column_ids: string[],
+    rows: ExtractionJobTableRowField[]
+}
+export interface ExtractionJobTableRowField {
+    values: string[];
+    datatypes_matches: { [index: string]: DatatypeMatch };
 }
 export interface RenderingJobField {
     field_id: string;
