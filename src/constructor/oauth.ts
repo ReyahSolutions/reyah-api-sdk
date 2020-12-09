@@ -9,7 +9,7 @@ import { OAuthClient, OAuthClientWithSecret, Scope } from '../types/oauth';
  */
 export function newOAuthClient(obj: any): OAuthClient {
     return {
-        client_id: parseInt(obj.client_id, 10),
+        client_id: obj.client_id,
         name: obj.name,
         banned: obj.banned,
         description: obj.description,
