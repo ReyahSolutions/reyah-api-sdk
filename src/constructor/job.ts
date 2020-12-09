@@ -15,7 +15,8 @@ import {
     ExtractionBatchCSV,
     SourceDocument,
     RenderingJob,
-    PaginatedRenderingJobs, ExtractionJobOuput,
+    PaginatedRenderingJobs,
+    ExtractionJobOuput,
 } from '..';
 import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
