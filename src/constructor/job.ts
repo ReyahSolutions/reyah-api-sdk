@@ -18,6 +18,7 @@ import {
     PaginatedRenderingJobs,
 } from '..';
 import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableRowField } from '../types/job';
+import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
 
 /**
@@ -126,6 +127,8 @@ export function newExtractionJobField(obj: any): ExtractionJobField {
     return {
         field_id: obj.field_id,
         name: obj.name,
+        anchor: newBoundingBox(obj.anchor),
+        gather_box: newBoundingBox(obj.gather_box),
         table: obj.table && newExtractionJobTableField(obj.table),
         element: obj.element && newExtractionJobElementField(obj.element),
     };
