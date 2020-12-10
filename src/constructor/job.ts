@@ -121,7 +121,7 @@ export function newExtractionJobTableColumnField(obj: any): ExtractionJobTableCo
 
 export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
-        columns: obj.rows && obj.rows.map(newExtractionJobTableColumnField),
+        columns: obj.columns && obj.columns.map(newExtractionJobTableColumnField),
     };
 }
 
