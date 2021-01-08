@@ -17,7 +17,7 @@ export enum JobStatus {
     PROCESSING = 'PROCESSING',
     SUCCEEDED = 'SUCCEEDED',
     FAILED = 'FAILED',
-    INVALID = 'INVALID'
+    INVALID = 'INVALID',
 }
 
 /**
