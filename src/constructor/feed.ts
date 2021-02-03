@@ -2,8 +2,26 @@
  * Feed
  */
 
-import {FeedElement, InvalidFeedElement, PaginatedFeedElements, UnsupportedElement} from "../types/feed";
-import newPaginationStatus from "./pagination";
+import {
+    FeedElement, InvalidFeedElement, PaginatedFeedElements, UnsupportedElement,
+} from '../types/feed';
+import newPaginationStatus from './pagination';
+
+/**
+ * Invalid Feed Element
+ */
+export function newInvalidFeedElement(obj: any): InvalidFeedElement {
+    return {
+        job_id: obj.job_id,
+    };
+}
+
+/**
+ * Unsupported Feed Element
+ */
+export function newUnsupportedElement(): UnsupportedElement {
+    return {};
+}
 
 /**
  * Feed Element
@@ -11,10 +29,10 @@ import newPaginationStatus from "./pagination";
 export function newFeedElement(obj: any): FeedElement {
     return {
         id: obj.id,
-        type : obj.type,
+        type: obj.type,
         created_at: new Date(obj.created_at),
-        invalid_feed_element : obj.invalid_feed_element && newInvalidFeedElement(obj.invalid_feed_element),
-        unsupported_element : obj.unsupported_element && newUnsupportedElement(),
+        invalid_feed_element: obj.invalid_feed_element && newInvalidFeedElement(obj.invalid_feed_element),
+        unsupported_element: obj.unsupported_element && newUnsupportedElement(),
     };
 }
 
@@ -32,20 +50,4 @@ export function newFeedElements(obj: any): PaginatedFeedElements {
         elements: obj.jobs.map((elem: any) => newFeedElement(elem)),
         pagination_status: newPaginationStatus(obj.pagination_status),
     };
-}
-
-/**
- * Invalid Feed Element
- */
-export function newInvalidFeedElement(obj : any): InvalidFeedElement{
-    return {
-        job_id : obj.job_id
-    }
-}
-
-/**
- * Unsupported Feed Element
- */
-export function newUnsupportedElement(): UnsupportedElement{
-    return {}
 }

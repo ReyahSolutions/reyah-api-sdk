@@ -5,8 +5,7 @@
 /**
  * Type of a feed element
  */
-import {PaginationStatus} from "./pagination";
-import {ExtractionJob} from "./job";
+import { PaginationStatus } from './pagination';
 
 export enum FeedElementType{
     INVALID = 'INVALID_FEED_ELEMENT',

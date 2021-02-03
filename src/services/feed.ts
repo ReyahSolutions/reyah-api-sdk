@@ -1,12 +1,11 @@
 import * as Feed from '../types/feed';
-import {Service} from "../types/reyah";
-import * as Status from "../types/status";
-import {reyahServiceRequest} from "../core/core";
-import newServiceStatus from "../constructor/status";
-import {dispatchError} from "../core/errors";
-import {Pagination} from "../types/pagination";
-import {newExtractionJobs} from "../constructor/job";
-import {newFeedElements} from "../constructor/feed";
+import { Service } from '../types/reyah';
+import * as Status from '../types/status';
+import { reyahServiceRequest } from '../core/core';
+import newServiceStatus from '../constructor/status';
+import { dispatchError } from '../core/errors';
+import { Pagination } from '../types/pagination';
+import { newFeedElements } from '../constructor/feed';
 
 export class FeedService implements Service {
     readonly subpath = '/feed';
@@ -29,14 +28,14 @@ export class FeedService implements Service {
      * Retrieves the feeds elements of a user
      * @return A promise of the result of the feed elements retrieving transaction
      */
-    public async retrieveAllFeedElements(start_at: Date, pagination?: Pagination): Promise<Feed.PaginatedFeedElements> {
+    public async retrieveAllFeedElements(startAt: Date, pagination?: Pagination): Promise<Feed.PaginatedFeedElements> {
         let subpath: string = `${this.subpath}/elements`;
         const qs = new URLSearchParams();
         if (pagination) {
             qs.append('page', pagination.page.toString());
             qs.append('size', pagination.size.toString());
         }
-        qs.append('start_at', start_at.toISOString());
+        qs.append('start_at', startAt.toISOString());
         const queryParams = qs.toString();
         if (queryParams) {
             subpath += `?${queryParams}`;
@@ -49,9 +48,6 @@ export class FeedService implements Service {
         }
     }
 }
-
-
-
 
 export const feed = new FeedService();
 export default feed;
