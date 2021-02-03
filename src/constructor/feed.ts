@@ -31,7 +31,7 @@ export function newFeedElement(obj: any): FeedElement {
         id: obj.id,
         type: obj.type,
         created_at: new Date(obj.created_at),
-        invalid_feed_element: obj.invalid_feed_element && newInvalidFeedElement(obj.invalid_feed_element),
+        invalid_feed_element: obj.invalid_job && newInvalidFeedElement(obj.invalid_job),
         unsupported_element: obj.unsupported_element && newUnsupportedElement(),
     };
 }
@@ -40,14 +40,14 @@ export function newFeedElement(obj: any): FeedElement {
  * Feed Elements
  */
 export function newFeedElements(obj: any): PaginatedFeedElements {
-    if (!Array.isArray(obj.jobs) || typeof obj.pagination_status !== 'object') {
+    if (!Array.isArray(obj.feed_elements) || typeof obj.pagination_status !== 'object') {
         return {
             elements: [],
             pagination_status: newPaginationStatus(),
         };
     }
     return {
-        elements: obj.jobs.map((elem: any) => newFeedElement(elem)),
+        elements: obj.feed_elements.map((elem: any) => newFeedElement(elem)),
         pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
