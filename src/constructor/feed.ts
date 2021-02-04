@@ -3,14 +3,14 @@
  */
 
 import {
-    FeedElement, InvalidFeedElement, PaginatedFeedElements, UnsupportedElement,
+    FeedElement, InvalidJobFeedElement, PaginatedFeedElements, UnsupportedFeedElement,
 } from '../types/feed';
 import newPaginationStatus from './pagination';
 
 /**
  * Invalid Feed Element
  */
-export function newInvalidFeedElement(obj: any): InvalidFeedElement {
+export function newInvalidFeedElement(obj: any): InvalidJobFeedElement {
     return {
         job_id: obj.job_id,
     };
@@ -19,7 +19,7 @@ export function newInvalidFeedElement(obj: any): InvalidFeedElement {
 /**
  * Unsupported Feed Element
  */
-export function newUnsupportedElement(): UnsupportedElement {
+export function newUnsupportedElement(): UnsupportedFeedElement {
     return {};
 }
 
@@ -31,7 +31,7 @@ export function newFeedElement(obj: any): FeedElement {
         id: obj.id,
         type: obj.type,
         created_at: new Date(obj.created_at),
-        invalid_feed_element: obj.invalid_job && newInvalidFeedElement(obj.invalid_job),
+        invalid_job: obj.invalid_job && newInvalidFeedElement(obj.invalid_job),
         unsupported_element: obj.unsupported_element && newUnsupportedElement(),
     };
 }

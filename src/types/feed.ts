@@ -8,7 +8,7 @@
 import { PaginationStatus } from './pagination';
 
 export enum FeedElementType{
-    INVALID = 'INVALID_FEED_ELEMENT',
+    INVALID_JOB = 'invalid_job',
 }
 
 /**
@@ -18,15 +18,15 @@ export interface FeedElement{
     id: string;
     created_at : Date;
     type : FeedElementType;
-    invalid_feed_element? : InvalidFeedElement;
-    unsupported_element? : UnsupportedElement;
+    invalid_job? : InvalidJobFeedElement;
+    unsupported_element? : UnsupportedFeedElement;
 }
 
-export interface InvalidFeedElement{
+export interface InvalidJobFeedElement {
     job_id : string;
 }
 
-export interface UnsupportedElement {
+export interface UnsupportedFeedElement {
 }
 
 export interface PaginatedFeedElements {
