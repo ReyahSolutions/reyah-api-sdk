@@ -29,7 +29,7 @@ export function newDataTypes(obj: any): PaginatedDataTypes {
     }
     return {
         data_types: obj.data_types.map((elem: any) => newDataType(elem)),
-        pagination_status: (obj.pagination_status === null) ? undefined : newPaginationStatus(obj.pagination_status),
+        pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
 
