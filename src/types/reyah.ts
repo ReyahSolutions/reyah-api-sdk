@@ -19,12 +19,19 @@ export interface IConfig {
  */
 export class ReyahError extends Error {
     name: string;
+
     message: string;
+
     stack?: string;
+
     reyaherr: string;
+
     code?: number;
+
     body?: ReyahErrorResponse;
+
     request?: Core.ReyahRequestConfiguration;
+
     response?: Core.ReyahRequestResponse;
 
     constructor(e: ReyahRequestError) {

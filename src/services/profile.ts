@@ -11,6 +11,7 @@ import { newInvitation, newInvitations, newProfile } from '../constructor/profil
  */
 export class ProfileService implements Service {
     readonly public_subpath = '/profile';
+
     readonly private_subpath = '/me';
 
     /**

@@ -117,10 +117,15 @@ export function newReyahErrorResponse(obj: any): ReyahErrorResponse {
 
 export class ReyahRequestError extends Error {
     name: string;
+
     code: number;
+
     request: ReyahRequestConfiguration;
+
     response?: ReyahRequestResponse;
+
     body?: ReyahErrorResponse;
+
     isReyahRequestError: boolean;
 
     constructor(code: number, request: ReyahRequestConfiguration, response?: ReyahRequestResponse, body?: ReyahErrorResponse, message?: string) {

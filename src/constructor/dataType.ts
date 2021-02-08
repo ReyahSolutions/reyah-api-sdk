@@ -35,6 +35,6 @@ export function newDataTypes(obj: any): PaginatedDataTypes {
 
 export function newDataTypeLinks(obj: any): DataTypeLinks {
     return {
-        data_fields: obj.data_fields?.map((elem: string) => parseInt(elem, 0)) || [],
+        data_fields: obj.data_fields?.map((elem: string) => parseInt(elem, 10)) || [],
     };
 }
