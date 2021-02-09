@@ -6,7 +6,7 @@ export enum GrantTypes {
     Implicit = 'implicit',
     AuthorizationCode = 'authorization_code',
     RefreshToken = 'refresh_token',
-    ClientCredentials = 'client_credentials'
+    ClientCredentials = 'client_credentials',
 }
 
 /**

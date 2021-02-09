@@ -13,6 +13,7 @@ import { AuthenticationException, Context, NoAuthProvidedException } from '..';
  */
 class ReyahServiceRequestor implements Core.ReyahServiceRequest {
     private readonly retryCount: number;
+
     private readonly Requester: Core.ReyahRequestConstructor;
 
     constructor(requester: Core.ReyahRequestConstructor, retryCount: number) {

@@ -98,7 +98,7 @@ export function newDatatypeMatch(obj: any): DatatypeMatch {
     };
 }
 
-export function newDatatypeMatches(obj: any): {[index: string]: DatatypeMatch} {
+export function newDatatypeMatches(obj: any): { [index: string]: DatatypeMatch } {
     return Object.entries(obj)
         .reduce((acc, [k, v]) => ({ ...acc, [k]: newDatatypeMatch(v) }), {});
 }

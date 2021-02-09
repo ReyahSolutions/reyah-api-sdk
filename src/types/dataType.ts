@@ -19,7 +19,7 @@ export interface DataType {
 
 export interface PaginatedDataTypes {
     data_types: DataType[],
-    pagination_status?: PaginationStatus,
+    pagination_status: PaginationStatus,
 }
 
 export interface CreateDataTypeRequest {
