@@ -26,19 +26,18 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
             tryCount: 0,
             lastError: undefined,
         };
-        // Build ReyahRequest
-        const request = new this.Requester(Core.getUrl(subpath), method, data);
-        if (qs) {
-            Object.entries(qs).forEach(([k, v]: [string, any]) => {
-                if (typeof v === 'string') {
-                    request.setQueryString(k, v);
-                } else {
-                    request.setQueryString(k, v.toString());
-                }
-            });
-        }
         while (ctx.tryCount < this.retryCount) {
             try {
+                const request = new this.Requester(Core.getUrl(subpath), method, data);
+                if (qs) {
+                    Object.entries(qs).forEach(([k, v]: [string, any]) => {
+                        if (typeof v === 'string') {
+                            request.setQueryString(k, v);
+                        } else {
+                            request.setQueryString(k, v.toString());
+                        }
+                    });
+                }
                 if (useAuth) {
                     await AuthHandler.getInstance().getAuthProvider().applyAuth(request, ctx);
                 }
