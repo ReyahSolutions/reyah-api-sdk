@@ -50,7 +50,7 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
                 }
                 // Do not retry the request if the error is located client side, however we still want to retry in case of token error
                 if (e.isReyahRequestError && e.code >= 300 && e.code < 500) {
-                    if (e.code !== 401 && e.code !== 403 && ctx.tryCount === 0) {
+                    if (!((e.code === 401 || e.code === 403) && ctx.tryCount === 0)) {
                         throw e;
                     }
                 }
