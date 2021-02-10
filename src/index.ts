@@ -1,4 +1,4 @@
-import Event from './core/events';
+import EventEmitter from './core/events';
 import Job from './services/job';
 import OAuth from './services/oauth';
 import DocumentModel from './services/documentModel';
@@ -13,6 +13,7 @@ export * from './types/core';
 export * from './types/dataModel';
 export * from './types/dataType';
 export * from './types/documentModel';
+export * from './types/event';
 export * from './types/errors';
 export * from './types/filter';
 export * from './types/job';
@@ -23,7 +24,7 @@ export * from './types/reyah';
 export * from './types/status';
 
 export const Reyah = {
-    Event,
+    EventEmitter,
     Job,
     OAuth,
     DocumentModel,
