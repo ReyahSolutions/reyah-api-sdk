@@ -1,14 +1,6 @@
 import axios, { AxiosRequestConfig, Method } from 'axios';
-import { EventEmitter } from 'events';
 import * as Core from '../../types/core';
 import { newReyahErrorResponse, ReyahRequestConfiguration, ReyahRequestError } from '../../types/core';
-
-/**
- * AxiosEmitter is an internal event emitter conceived to transmit axios event to Events
- */
-class AxiosEmitter extends EventEmitter {
-}
-export const axiosEmitter = new AxiosEmitter();
 
 /**
  * Low-level controller for HTTP requests from the SDK implementing Axios as controller
@@ -47,10 +39,8 @@ export class Axios implements Core.ReyahRequest {
 
     public async execute(): Promise<Core.ReyahRequestResponse> {
         try {
-            axiosEmitter.emit('request', this.config);
             return await axios.request(this.config) as Core.ReyahRequestResponse;
         } catch (e) {
-            axiosEmitter.emit('error', e);
             if (e.isAxiosError) {
                 const code = e.response?.status || 0;
                 const data = e.response?.data;

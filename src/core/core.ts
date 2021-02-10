@@ -1,16 +1,8 @@
 import { Method } from 'axios';
-import { EventEmitter } from 'events';
 import { Axios } from './implementation/axios';
 import * as Core from '../types/core';
 import AuthHandler from '../authentication/authentication';
 import { AuthenticationException, Context, NoAuthProvidedException } from '..';
-
-/**
- * CoreEmitter is an internal event emitter conceived to transmit core event to Events
- */
-class CoreEmitter extends EventEmitter {
-}
-export const coreEmitter = new CoreEmitter();
 
 /**
  * Implementation of [[ReyahServiceRequest]] interface
@@ -45,7 +37,6 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
                 }
             });
         }
-        coreEmitter.emit('request', request);
         while (ctx.tryCount < this.retryCount) {
             try {
                 if (useAuth) {
@@ -55,25 +46,22 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
             } catch (e) {
                 // Do not retry the request if the error is caused by a NoAuthProvider error
                 if (e instanceof NoAuthProvidedException) {
-                    coreEmitter.emit('error', e);
                     throw e;
                 }
-                // Do not retry the request if the error is located client side
+                // Do not retry the request if the error is located client side, however we still want to retry in case of token error
                 if (e.isReyahRequestError && e.code >= 300 && e.code < 500) {
-                    coreEmitter.emit('error', e);
-                    throw e;
+                    if (e.code !== 401 && e.code !== 403 && ctx.tryCount === 0) {
+                        throw e;
+                    }
                 }
                 ctx.lastError = e;
                 ctx.tryCount += 1;
             }
         }
         if (ctx.lastError) {
-            coreEmitter.emit('error', ctx.lastError);
             throw ctx.lastError;
         } else {
-            const err = new AuthenticationException('Could not request API, too much try');
-            coreEmitter.emit('error', err);
-            throw err;
+            throw new AuthenticationException('Could not request API, too much try');
         }
     }
 
