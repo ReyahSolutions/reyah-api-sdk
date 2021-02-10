@@ -17,6 +17,7 @@ export enum FeedElementType{
 export interface FeedElement{
     id: string;
     created_at : Date;
+    seen : boolean;
     type : FeedElementType;
     invalid_job? : InvalidJobFeedElement;
     unsupported_element? : UnsupportedFeedElement;

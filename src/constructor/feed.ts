@@ -30,6 +30,7 @@ export function newFeedElement(obj: any): FeedElement {
     return {
         id: obj.id,
         type: obj.type,
+        seen: obj.seen,
         created_at: new Date(obj.created_at),
         invalid_job: obj.invalid_job && newInvalidFeedElement(obj.invalid_job),
         unsupported_element: obj.unsupported_element && newUnsupportedElement(),
