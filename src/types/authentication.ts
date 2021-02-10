@@ -22,6 +22,7 @@ export interface Context {
 
 export class AuthenticationException extends Error {
     name: string;
+
     isAuthError: boolean;
 
     constructor(message: string) {

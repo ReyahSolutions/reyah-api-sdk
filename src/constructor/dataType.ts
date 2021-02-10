@@ -29,12 +29,12 @@ export function newDataTypes(obj: any): PaginatedDataTypes {
     }
     return {
         data_types: obj.data_types.map((elem: any) => newDataType(elem)),
-        pagination_status: (obj.pagination_status === null) ? undefined : newPaginationStatus(obj.pagination_status),
+        pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
 
 export function newDataTypeLinks(obj: any): DataTypeLinks {
     return {
-        data_fields: obj.data_fields?.map((elem: string) => parseInt(elem, 0)) || [],
+        data_fields: obj.data_fields?.map((elem: string) => parseInt(elem, 10)) || [],
     };
 }

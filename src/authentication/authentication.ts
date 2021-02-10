@@ -3,6 +3,7 @@ import { NoAuthProvidedException } from '..';
 
 export default class AuthManager {
     private static instance: AuthManager;
+
     private provider?: AuthProvider;
 
     public useAuthProvider(provider: AuthProvider) {

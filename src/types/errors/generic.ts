@@ -6,6 +6,7 @@ import { ReyahError } from '../reyah';
 
 export class ServiceUnavailable extends ReyahError {
     name: string;
+
     public static error: string = 'Service Unavailable';
 
     constructor(err: ReyahRequestError) {
@@ -33,6 +34,7 @@ export class UnknownException extends ReyahError {
  */
 export class InvalidRequestException extends ReyahError {
     name: string;
+
     public static error: string = 'Invalid request';
 
     constructor(err: ReyahRequestError) {
@@ -47,6 +49,7 @@ export class InvalidRequestException extends ReyahError {
  */
 export class NotFoundException extends ReyahError {
     name: string;
+
     public static error: string = 'Not Found';
 
     constructor(err: ReyahRequestError) {
@@ -61,6 +64,7 @@ export class NotFoundException extends ReyahError {
  */
 export class TooManyRequestsException extends ReyahError {
     name: string;
+
     public static error: string = 'Too Many Requests';
 
     constructor(err: ReyahRequestError) {
@@ -75,6 +79,7 @@ export class TooManyRequestsException extends ReyahError {
  */
 export class UnauthorizedException extends ReyahError {
     name: string;
+
     public static error: string = 'Unauthorized';
 
     constructor(err: ReyahRequestError) {
@@ -89,6 +94,7 @@ export class UnauthorizedException extends ReyahError {
  */
 export class ForbiddenException extends ReyahError {
     name: string;
+
     public static error: string = 'Forbidden';
 
     constructor(err: ReyahRequestError) {

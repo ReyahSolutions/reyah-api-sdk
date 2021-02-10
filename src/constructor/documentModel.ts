@@ -136,7 +136,7 @@ export function newDocumentModels(obj: any): PaginatedDocumentModels {
     }
     return {
         models: obj.models.map((elem: any) => newDocumentModel(elem)),
-        pagination_status: (obj.pagination_status === null) ? undefined : newPaginationStatus(obj.pagination_status),
+        pagination_status: newPaginationStatus(obj.pagination_status),
     };
 }
 
