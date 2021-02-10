@@ -1,5 +1,5 @@
 import { Method } from 'axios';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { Axios } from './implementation/axios';
 import * as Core from '../types/core';
 import AuthHandler from '../authentication/authentication';

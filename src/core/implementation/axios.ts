@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, Method } from 'axios';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import * as Core from '../../types/core';
 import { newReyahErrorResponse, ReyahRequestConfiguration, ReyahRequestError } from '../../types/core';
 

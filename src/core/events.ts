@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { axiosEmitter } from './implementation/axios';
 import { coreEmitter } from './core';
 
