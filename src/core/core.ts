@@ -69,7 +69,9 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
             coreEmitter.emit('error', ctx.lastError);
             throw ctx.lastError;
         } else {
-            throw new AuthenticationException('Could not request API, too much try');
+            const err = new AuthenticationException('Could not request API, too much try');
+            coreEmitter.emit('error', err);
+            throw err;
         }
     }
 
