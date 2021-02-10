@@ -1,8 +1,16 @@
 import { Method } from 'axios';
+import EventEmitter from 'events';
 import { Axios } from './implementation/axios';
 import * as Core from '../types/core';
 import AuthHandler from '../authentication/authentication';
 import { AuthenticationException, Context, NoAuthProvidedException } from '..';
+
+/**
+ * CoreEmitter is an internal event emitter conceived to transmit core event to Events
+ */
+class CoreEmitter extends EventEmitter {
+}
+export const coreEmitter = new CoreEmitter();
 
 /**
  * Implementation of [[ReyahServiceRequest]] interface
@@ -26,18 +34,20 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
             tryCount: 0,
             lastError: undefined,
         };
+        // Build ReyahRequest
+        const request = new this.Requester(Core.getUrl(subpath), method, data);
+        if (qs) {
+            Object.entries(qs).forEach(([k, v]: [string, any]) => {
+                if (typeof v === 'string') {
+                    request.setQueryString(k, v);
+                } else {
+                    request.setQueryString(k, v.toString());
+                }
+            });
+        }
+        coreEmitter.emit('request', request);
         while (ctx.tryCount < this.retryCount) {
             try {
-                const request = new this.Requester(Core.getUrl(subpath), method, data);
-                if (qs) {
-                    Object.entries(qs).forEach(([k, v]: [string, any]) => {
-                        if (typeof v === 'string') {
-                            request.setQueryString(k, v);
-                        } else {
-                            request.setQueryString(k, v.toString());
-                        }
-                    });
-                }
                 if (useAuth) {
                     await AuthHandler.getInstance().getAuthProvider().applyAuth(request, ctx);
                 }
@@ -56,6 +66,7 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
             }
         }
         if (ctx.lastError) {
+            coreEmitter.emit('error', ctx.lastError);
             throw ctx.lastError;
         } else {
             throw new AuthenticationException('Could not request API, too much try');
