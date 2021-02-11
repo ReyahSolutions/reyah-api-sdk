@@ -52,13 +52,7 @@ export class FeedService implements Service {
      * Set an element as seen
      */
     public async setSeenElement(elementID: string) {
-        let subpath: string = `${this.subpath}/element/${elementID}`;
-        const qs = new URLSearchParams();
-        qs.append('element_id', elementID);
-        const queryParams = qs.toString();
-        if (queryParams) {
-            subpath += `?${queryParams}`;
-        }
+        const subpath: string = `${this.subpath}/element/${elementID}`;
         try {
             await reyahServiceRequest.put(subpath, undefined, true);
         } catch (err) {
