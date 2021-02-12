@@ -28,12 +28,18 @@ export class FeedService implements Service {
      * Retrieves the feeds elements of a user
      * @return A promise of the result of the feed elements retrieving transaction
      */
-    public async retrieveAllFeedElements(startAt: Date, pagination?: Pagination): Promise<Feed.PaginatedFeedElements> {
+    public async retrieveAllFeedElements(startAt: Date, seen?: boolean, type?: string, pagination?: Pagination): Promise<Feed.PaginatedFeedElements> {
         let subpath: string = `${this.subpath}/elements`;
         const qs = new URLSearchParams();
         if (pagination) {
             qs.append('page', pagination.page.toString());
             qs.append('size', pagination.size.toString());
+        }
+        if (seen) {
+            qs.append('seen', String(seen));
+        }
+        if (type) {
+            qs.append('type', type);
         }
         qs.append('start_at', startAt.toISOString());
         const queryParams = qs.toString();
