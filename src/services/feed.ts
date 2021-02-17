@@ -35,10 +35,10 @@ export class FeedService implements Service {
             qs.append('page', pagination.page.toString());
             qs.append('size', pagination.size.toString());
         }
-        if (seen) {
+        if (seen !== undefined) {
             qs.append('seen', String(seen));
         }
-        if (type) {
+        if (type !== undefined) {
             qs.append('type', type);
         }
         qs.append('start_at', startAt.toISOString());
