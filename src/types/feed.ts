@@ -8,7 +8,9 @@
 import { PaginationStatus } from './pagination';
 
 export enum FeedElementType{
-    INVALID_JOB = 'invalid_job',
+    NONE = 0,
+    INVALID_JOB = 1,
+    UNSUPPORTED = 2,
 }
 
 /**

@@ -6,6 +6,7 @@ import newServiceStatus from '../constructor/status';
 import { dispatchError } from '../core/errors';
 import { Pagination } from '../types/pagination';
 import { newFeedElements } from '../constructor/feed';
+import { FeedElementType } from '../types/feed';
 
 export class FeedService implements Service {
     readonly subpath = '/feed';
@@ -28,7 +29,7 @@ export class FeedService implements Service {
      * Retrieves the feeds elements of a user
      * @return A promise of the result of the feed elements retrieving transaction
      */
-    public async retrieveAllFeedElements(startAt: Date, seen?: boolean, type?: string, pagination?: Pagination): Promise<Feed.PaginatedFeedElements> {
+    public async retrieveAllFeedElements(startAt?: Date, seen?: boolean, type?: FeedElementType, pagination?: Pagination): Promise<Feed.PaginatedFeedElements> {
         let subpath: string = `${this.subpath}/elements`;
         const qs = new URLSearchParams();
         if (pagination) {
@@ -39,9 +40,13 @@ export class FeedService implements Service {
             qs.append('seen', String(seen));
         }
         if (type !== undefined) {
-            qs.append('type', type);
+            qs.append('type', String(type));
+        } else {
+            qs.append('type', String(FeedElementType.NONE));
         }
-        qs.append('start_at', startAt.toISOString());
+        if (startAt !== undefined) {
+            qs.append('start_at', startAt.toISOString());
+        }
         const queryParams = qs.toString();
         if (queryParams) {
             subpath += `?${queryParams}`;
