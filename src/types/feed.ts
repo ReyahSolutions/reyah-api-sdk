@@ -8,9 +8,9 @@
 import { PaginationStatus } from './pagination';
 
 export enum FeedElementType{
-    NONE = 0,
-    INVALID_JOB = 1,
-    UNSUPPORTED = 2,
+    NONE = 'NONE',
+    INVALID_JOB = 'INVALID_JOB',
+    UNSUPPORTED = 'UNSUPPORTED',
 }
 
 /**
