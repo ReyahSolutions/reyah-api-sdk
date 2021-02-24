@@ -4,6 +4,7 @@ import DocumentModel from './services/documentModel';
 import DataModel from './services/dataModel';
 import DataType from './services/dataType';
 import Profile from './services/profile';
+import Feed from './services/feed';
 import AuthHandler from './authentication/authentication';
 import { Config } from './core/config';
 
@@ -20,6 +21,7 @@ export * from './types/pagination';
 export * from './types/profile';
 export * from './types/reyah';
 export * from './types/status';
+export * from './types/feed';
 
 export const Reyah = {
     Job,
@@ -28,6 +30,7 @@ export const Reyah = {
     DataModel,
     DataType,
     Profile,
+    Feed,
     Config,
     Auth: AuthHandler,
 };
