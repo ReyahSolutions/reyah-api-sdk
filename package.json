@@ -1,6 +1,6 @@
 {
   "name": "@reyah/api-sdk",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Reyah API software development kit for developers written in TypeScript",
   "main": "dist/reyah.sdk.js",
   "types": "dist",
