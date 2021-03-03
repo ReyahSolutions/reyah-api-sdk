@@ -71,6 +71,15 @@ export interface ExtractionJob {
     updated_at: Date;
 }
 
+export interface SimpleExtractionJob {
+    id: string;
+    user_id: string;
+    status: JobStatus;
+    extraction_result : {[key:string]:SimpleExtractionJobField};
+    created_at: Date;
+    updated_at: Date;
+}
+
 export interface PaginatedExtractionJobs {
     jobs: ExtractionJob[];
     pagination_status: PaginationStatus;
@@ -100,18 +109,35 @@ export interface ExtractionJobField {
     element?: ExtractionJobElementField,
     table?: ExtractionJobTableField,
 }
+export interface SimpleExtractionJobField{
+    name: string;
+    element?: SimpleExtractionJobElementField,
+    table?: SimpleExtractionJobTableField,
+}
 export interface ExtractionJobElementField {
     values: string[];
-    datatypes_matches: { [index: string]: DatatypeMatch };
+}
+export interface SimpleExtractionJobElementField{
+    values: SimpleValue[];
 }
 export interface ExtractionJobTableField {
     columns: ExtractionJobTableColumnField[];
+}
+export interface SimpleExtractionJobTableField{
+    columns: SimpleExtractionJobTableColumnField[];
+}
+export interface SimpleExtractionJobTableColumnField{
+    id: string;
+    values :SimpleValue[];
 }
 export interface ExtractionJobTableColumnField {
     id: string;
     datafield_id: string;
     values: string[];
     datatypes_matches: { [index: string]: DatatypeMatch };
+}
+export interface SimpleValue{
+    value : string;
 }
 export interface RenderingJobField {
     field_id: string;

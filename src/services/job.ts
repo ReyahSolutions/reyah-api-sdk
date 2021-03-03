@@ -59,6 +59,21 @@ export class JobService implements Service {
     }
 
     /**
+     * Retrieves an extraction job of an user in simple form
+     * @param id Extraction job id
+     * @return A promise of the result of the extraction job retrieving transaction
+     */
+    public async retrieveSimpleExtractionJob(id: string): Promise<Job.SimpleExtractionJob> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/simple`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newExtractionJob(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
      * Retrieves all extraction jobs of an user
      * @return A promise of the result of the extraction job retrieving transaction
      */

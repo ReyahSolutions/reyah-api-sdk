@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
     CreatedJob,
     CSVExtractionUrl,
@@ -16,7 +17,7 @@ import {
     SourceDocument,
     RenderingJob,
     PaginatedRenderingJobs,
-    ExtractionJobOuput,
+    ExtractionJobOuput, SimpleExtractionJob,
 } from '..';
 import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
@@ -68,6 +69,26 @@ export function newExtractionJob(obj: any): ExtractionJob {
         source_document: newSourceDocument(obj.source_document),
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
+    };
+}
+
+/**
+ * SimpleExtractionJob
+ */
+export function newSimpleExtractionJob(obj: any): SimpleExtractionJob {
+    const extraction_result = {};
+    const fieldIter = obj.extraction_result.entries();
+    const field = fieldIter.next();
+    while (!field.done) {
+
+    }
+    return {
+        id: obj.id,
+        user_id: obj.user_id,
+        status: obj.status,
+        created_at: new Date(obj.created_at),
+        updated_at: new Date(obj.updated_at),
+        extraction_result: {},
     };
 }
 
