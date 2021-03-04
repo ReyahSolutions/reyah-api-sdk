@@ -90,6 +90,7 @@ export function newDataModelLinks(obj: any): DataModelLinks {
 
 export function newDataFieldLinks(obj: any): DataFieldLinks {
     return {
-        model_ids: obj.model_ids?.map((elem: string) => parseInt(elem, 10)) || [],
+        model_ids: obj.model_ids || [],
+        field_ids: obj.field_ids || [],
     };
 }
