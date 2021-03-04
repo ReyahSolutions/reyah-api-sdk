@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
     CreatedJob,
     CSVExtractionUrl,
@@ -17,7 +16,12 @@ import {
     SourceDocument,
     RenderingJob,
     PaginatedRenderingJobs,
-    ExtractionJobOuput, SimpleExtractionJob,
+    ExtractionJobOuput,
+    SimpleExtractionJob,
+    SimpleExtractionJobField,
+    SimpleExtractionJobElementField,
+    SimpleExtractionJobTableField,
+    SimpleValue, SimpleExtractionJobTableColumnField,
 } from '..';
 import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
@@ -75,20 +79,58 @@ export function newExtractionJob(obj: any): ExtractionJob {
 /**
  * SimpleExtractionJob
  */
-export function newSimpleExtractionJob(obj: any): SimpleExtractionJob {
-    const extraction_result = {};
-    const fieldIter = obj.extraction_result.entries();
-    const field = fieldIter.next();
-    while (!field.done) {
 
-    }
+export function newSimpleValue(obj: any): SimpleValue {
+    return { value: obj.value };
+}
+
+export function newSimpleExtractionJobTableColumnField(obj: any): SimpleExtractionJobTableColumnField {
     return {
         id: obj.id,
+        values: obj.values.map((value: any) => newSimpleValue(value)),
+    };
+}
+
+export function newSimpleExtractionJobElementField(obj: any): SimpleExtractionJobElementField {
+    return { values: obj.values.map((value: any) => newSimpleValue(value)) };
+}
+
+export function newSimpleExtractionJobTableField(obj: any): SimpleExtractionJobTableField {
+    const columns:SimpleExtractionJobTableColumnField[] = obj.columns.map((column: any) => newSimpleExtractionJobTableColumnField(column));
+    return { columns };
+}
+
+export function newSimpleExtractionJobField(obj: any): SimpleExtractionJobField {
+    const extractionJobField:SimpleExtractionJobField = {
+        name: obj.name,
+        element: undefined,
+        table: undefined,
+    };
+
+    if (obj.element !== undefined) {
+        extractionJobField.element = newSimpleExtractionJobElementField(obj.element);
+    }
+
+    if (obj.table !== undefined) {
+        extractionJobField.table = newSimpleExtractionJobTableField(obj.table);
+    }
+    return (extractionJobField);
+}
+
+export function newSimpleExtractionJob(obj: any): SimpleExtractionJob {
+    const extractionResult = {};
+    const entries = Object.entries(obj.extraction_result);
+    entries.forEach((entry) => {
+        // @ts-ignore
+        extractionResult[entry[0]] = newSimpleExtractionJobField(entry[1]);
+    });
+    return {
+        id: obj.job_id,
         user_id: obj.user_id,
         status: obj.status,
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
-        extraction_result: {},
+        extraction_result: extractionResult,
     };
 }
 

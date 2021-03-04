@@ -75,7 +75,7 @@ export interface SimpleExtractionJob {
     id: string;
     user_id: string;
     status: JobStatus;
-    extraction_result : {[key:string]:SimpleExtractionJobField};
+    extraction_result : { [key:string]:SimpleExtractionJobField };
     created_at: Date;
     updated_at: Date;
 }
@@ -116,6 +116,7 @@ export interface SimpleExtractionJobField{
 }
 export interface ExtractionJobElementField {
     values: string[];
+    datatypes_matches: { [index: string]: DatatypeMatch };
 }
 export interface SimpleExtractionJobElementField{
     values: SimpleValue[];

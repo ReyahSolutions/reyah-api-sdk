@@ -20,6 +20,7 @@ import {
     newRenderingJob,
     newRenderingJobFields,
     newRenderingJobs,
+    newSimpleExtractionJob,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -67,7 +68,7 @@ export class JobService implements Service {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/simple`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
-            return newExtractionJob(resp.data);
+            return newSimpleExtractionJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
