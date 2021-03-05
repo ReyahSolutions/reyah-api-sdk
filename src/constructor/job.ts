@@ -21,7 +21,8 @@ import {
     SimpleExtractionJobField,
     SimpleExtractionJobElementField,
     SimpleExtractionJobTableField,
-    SimpleValue, SimpleExtractionJobTableColumnField,
+    SimpleValue,
+    SimpleExtractionJobTableColumnField,
 } from '..';
 import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
@@ -118,10 +119,8 @@ export function newSimpleExtractionJobField(obj: any): SimpleExtractionJobField 
 }
 
 export function newSimpleExtractionJob(obj: any): SimpleExtractionJob {
-    const extractionResult = {};
-    const entries = Object.entries(obj.extraction_result);
-    entries.forEach((entry) => {
-        // @ts-ignore
+    const extractionResult:{ [key:string]:SimpleExtractionJobField } = {};
+    Object.entries(obj.extraction_result).forEach((entry) => {
         extractionResult[entry[0]] = newSimpleExtractionJobField(entry[1]);
     });
     return {
