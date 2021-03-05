@@ -65,7 +65,7 @@ export class JobService implements Service {
      * @return A promise of the result of the extraction job retrieving transaction
      */
     public async retrieveSimpleExtractionJob(id: string): Promise<Job.SimpleExtractionJob> {
-        const subpath: string = `${this.subpath}/extraction/jobs/${id}/simple`;
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/output/simple`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newSimpleExtractionJob(resp.data);
