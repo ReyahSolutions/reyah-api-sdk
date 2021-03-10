@@ -89,11 +89,15 @@ export function newSimpleExtractionJobTableColumnField(obj: any): SimpleExtracti
     return {
         id: obj.id,
         values: obj.values.map((value: any) => newSimpleValue(value)),
+        datatypeMatch: obj.datatypeMatch,
     };
 }
 
 export function newSimpleExtractionJobElementField(obj: any): SimpleExtractionJobElementField {
-    return { values: obj.values.map((value: any) => newSimpleValue(value)) };
+    return {
+        values: obj.values.map((value: any) => newSimpleValue(value)),
+        datatypeMatch: obj.datatypeMatch,
+    };
 }
 
 export function newSimpleExtractionJobTableField(obj: any): SimpleExtractionJobTableField {

@@ -120,6 +120,7 @@ export interface ExtractionJobElementField {
 }
 export interface SimpleExtractionJobElementField{
     values: SimpleValue[];
+    datatypeMatch: boolean;
 }
 export interface ExtractionJobTableField {
     columns: ExtractionJobTableColumnField[];
@@ -130,6 +131,7 @@ export interface SimpleExtractionJobTableField{
 export interface SimpleExtractionJobTableColumnField{
     id: string;
     values :SimpleValue[];
+    datatypeMatch: boolean;
 }
 export interface ExtractionJobTableColumnField {
     id: string;
