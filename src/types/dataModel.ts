@@ -93,4 +93,5 @@ export interface DataModelLinks {
 
 export interface DataFieldLinks {
     model_ids: string[],
+    field_ids: string[],
 }
