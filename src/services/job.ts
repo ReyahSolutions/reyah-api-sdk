@@ -20,6 +20,7 @@ import {
     newRenderingJob,
     newRenderingJobFields,
     newRenderingJobs,
+    newSimpleExtractionJob,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -53,6 +54,21 @@ export class JobService implements Service {
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newExtractionJob(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieves an extraction job of an user in simple form
+     * @param id Extraction job id
+     * @return A promise of the result of the extraction job retrieving transaction
+     */
+    public async retrieveSimpleExtractionJob(id: string): Promise<Job.SimpleExtractionJob> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/output/simple`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newSimpleExtractionJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
