@@ -180,14 +180,14 @@ export class DocumentModelService implements Service {
     /**
      * Creates a new field to a document model
      * @param id The document model id
-     * @param field The document model field to create
+     * @param fields The document model fields to create
      * @return A promise of the result of the document model field creation transaction
      */
-    public async createField(id: string, field: DocumentModel.CreateDocumentModelFieldRequest): Promise<DocumentModel.DocumentModelField> {
+    public async createFields(id: string, fields: DocumentModel.CreateDocumentModelFieldRequest[]): Promise<DocumentModel.DocumentModelField[]> {
         const subpath: string = `${this.subpath}/models/${id}/fields`;
         try {
-            const resp = await reyahServiceRequest.post(subpath, field, true);
-            return newDocumentModelField(resp.data);
+            const resp = await reyahServiceRequest.post(subpath, { fields }, true);
+            return newDocumentModelFields(resp.data.fields);
         } catch (err) {
             throw dispatchError(err);
         }
