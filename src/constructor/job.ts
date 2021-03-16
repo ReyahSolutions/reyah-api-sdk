@@ -17,6 +17,12 @@ import {
     RenderingJob,
     PaginatedRenderingJobs,
     ExtractionJobOuput,
+    SimpleExtractionJob,
+    SimpleExtractionJobField,
+    SimpleExtractionJobElementField,
+    SimpleExtractionJobTableField,
+    SimpleValue,
+    SimpleExtractionJobTableColumnField,
 } from '..';
 import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
@@ -68,6 +74,66 @@ export function newExtractionJob(obj: any): ExtractionJob {
         source_document: newSourceDocument(obj.source_document),
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
+    };
+}
+
+/**
+ * SimpleExtractionJob
+ */
+
+export function newSimpleValue(obj: any): SimpleValue {
+    return { value: obj.value };
+}
+
+export function newSimpleExtractionJobTableColumnField(obj: any): SimpleExtractionJobTableColumnField {
+    return {
+        id: obj.id,
+        values: obj.values.map((value: any) => newSimpleValue(value)),
+        datatypeMatch: obj.datatypeMatch,
+    };
+}
+
+export function newSimpleExtractionJobElementField(obj: any): SimpleExtractionJobElementField {
+    return {
+        values: obj.values.map((value: any) => newSimpleValue(value)),
+        datatypeMatch: obj.datatypeMatch,
+    };
+}
+
+export function newSimpleExtractionJobTableField(obj: any): SimpleExtractionJobTableField {
+    const columns:SimpleExtractionJobTableColumnField[] = obj.columns.map((column: any) => newSimpleExtractionJobTableColumnField(column));
+    return { columns };
+}
+
+export function newSimpleExtractionJobField(obj: any): SimpleExtractionJobField {
+    const extractionJobField:SimpleExtractionJobField = {
+        name: obj.name,
+        element: undefined,
+        table: undefined,
+    };
+
+    if (obj.element !== undefined) {
+        extractionJobField.element = newSimpleExtractionJobElementField(obj.element);
+    }
+
+    if (obj.table !== undefined) {
+        extractionJobField.table = newSimpleExtractionJobTableField(obj.table);
+    }
+    return (extractionJobField);
+}
+
+export function newSimpleExtractionJob(obj: any): SimpleExtractionJob {
+    const extractionResult:{ [key:string]:SimpleExtractionJobField } = {};
+    Object.entries(obj.extraction_result).forEach((entry) => {
+        extractionResult[entry[0]] = newSimpleExtractionJobField(entry[1]);
+    });
+    return {
+        id: obj.job_id,
+        user_id: obj.user_id,
+        status: obj.status,
+        created_at: new Date(obj.created_at),
+        updated_at: new Date(obj.updated_at),
+        extraction_result: extractionResult,
     };
 }
 
