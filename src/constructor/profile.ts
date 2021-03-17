@@ -8,6 +8,7 @@ export function newProfile(obj: any): Profile {
         user_id: obj.user_id,
         first_name: obj.first_name,
         last_name: obj.last_name,
+        company_name: obj.company_name,
         address1: obj.address1,
         address2: obj.address2,
         city: obj.city,
