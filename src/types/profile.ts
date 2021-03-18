@@ -14,6 +14,7 @@ export interface Profile {
     email_confirmed: boolean;
     created_at: Date;
     updated_at: Date;
+    company_name: string;
     address1: string;
     address2: string;
     post_code: string;
@@ -27,12 +28,13 @@ export interface Profile {
  * Register request interface
  */
 export interface Register {
-    address1: string;
-    address2: string;
-    post_code: string;
-    city: string;
-    country: string;
-    phone: string;
+    company_name?: string;
+    address1?: string;
+    address2?: string;
+    post_code?: string;
+    city?: string;
+    country?: string;
+    phone?: string;
 }
 
 /**
