@@ -250,6 +250,7 @@ export interface Batch {
     job_error_count: number;
     job_pending_count: number;
     document_id: string;
+    document_version: number;
     jobs: string[];
     created_at: Date;
 }
@@ -265,6 +266,7 @@ export interface CreatedBatch {
     batch_id: string;
     size: number;
     document_id: string;
+    document_version: number;
     jobs: CreatedJob[];
 }
 
