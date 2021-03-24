@@ -263,6 +263,7 @@ export function newCreatedBatch(obj: any): CreatedBatch {
     return {
         batch_id: obj.batch_id,
         document_id: obj.document_id,
+        document_version: obj.document_version,
         jobs: obj.jobs?.map(newCreatedJob) || [],
         size: parseInt(obj.size, 10),
     };
@@ -275,6 +276,7 @@ export function newBatch(obj: any): Batch {
     return {
         batch_id: obj.batch_id,
         document_id: obj.document_id,
+        document_version: obj.document_version,
         created_at: new Date(obj.created_at),
         job_error_count: parseInt(obj.job_error_count, 10),
         job_pending_count: parseInt(obj.job_pending_count, 10),
