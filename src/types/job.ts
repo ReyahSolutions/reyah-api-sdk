@@ -62,7 +62,7 @@ export interface ExtractionJob {
     id: string;
     user_id: string;
     document_id: string;
-    document_version: string;
+    document_version: number;
     status: JobStatus;
     tags: {
         [index: string]: string
@@ -299,7 +299,7 @@ export interface RenderingJob {
     id: string;
     user_id: string;
     document_id: string;
-    document_version: string;
+    document_version: number;
     status: JobStatus;
     created_at: Date;
     updated_at: Date;
