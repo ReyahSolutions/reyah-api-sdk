@@ -13,7 +13,7 @@
     "build": "webpack --progress --config ./webpack.common.config.js --mode production",
     "lint": "eslint `find src -type f -name \"*.ts\"`",
     "lint:fix": "eslint `find src -type f -name \"*.ts\"` --fix",
-    "gendoc": "typedoc src"
+    "gendoc": "typedoc --out docs src/index.ts"
   },
   "author": "bastien@reyah.eu",
   "publishConfig": {
@@ -28,14 +28,13 @@
     "@types/graphql": "^14.2.0",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
-    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.20.1",
     "handlebars": "^4.1.2",
     "ts-loader": "^8.0.16",
-    "typedoc": "^0.20.23",
+    "typedoc": "^0.20.32",
     "typescript": "^4.1.3",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",

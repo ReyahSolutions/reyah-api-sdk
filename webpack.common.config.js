@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
@@ -13,6 +12,7 @@ module.exports = (env, options) => ({
         path: path.resolve(__dirname, 'dist'),
         library: '@reyah/api-sdk',
         libraryTarget: 'umd',
+        clean: true,
     },
     target: 'node',
     externals: [nodeExternals()],
@@ -32,7 +32,6 @@ module.exports = (env, options) => ({
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(), // Cleans the output folder first
         new webpack.EnvironmentPlugin({
             LOGGER_LEVEL: options.mode === 'production' ? 'OFF' : 'DEBUG',
         }),

@@ -7,7 +7,7 @@
  */
 import { PaginationStatus } from './pagination';
 
-export enum FeedElementType{
+export enum FeedElementType {
     NONE = 'NONE',
     INVALID_JOB = 'INVALID_JOB',
     UNSUPPORTED = 'UNSUPPORTED',
@@ -16,7 +16,7 @@ export enum FeedElementType{
 /**
  * Feed element
  */
-export interface FeedElement{
+export interface FeedElement {
     id: string;
     created_at : Date;
     seen : boolean;
