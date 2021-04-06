@@ -217,7 +217,7 @@ export class JobService implements Service {
      * @param id Rendering job id
      * @return A promise of the result of the rendering job resources retrieving transaction
      */
-     public async retrieveRenderJobResources(id: string): Promise<Job.Resources> {
+    public async retrieveRenderJobResources(id: string): Promise<Job.Resources> {
         const subpath: string = `${this.subpath}/rendering/jobs/${id}/resources`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -353,7 +353,7 @@ export class JobService implements Service {
      * @param id Extraction job id
      * @return A promise of the result of the rendering job resources retrieving transaction
      */
-     public async retrieveExtractionJobResources(id: string): Promise<Job.Resources> {
+    public async retrieveExtractionJobResources(id: string): Promise<Job.Resources> {
         const subpath: string = `${this.subpath}/extraction/jobs/${id}/resources`;
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
@@ -362,7 +362,6 @@ export class JobService implements Service {
             throw dispatchError(err);
         }
     }
-
 }
 
 export const job = new JobService();
