@@ -309,3 +309,23 @@ export interface PaginatedRenderingJobs {
     jobs: RenderingJob[],
     pagination_status: PaginationStatus,
 }
+
+/**
+ * Ressources
+ */
+
+/**
+ * Ressources
+ */
+
+export interface Reference {
+    id: string;
+    version: number;
+}
+
+export interface Resources {
+    document: Reference;
+    datamodel: Reference;
+    fields: Reference[];
+    datatypes: Reference[];
+}

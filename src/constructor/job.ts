@@ -23,8 +23,12 @@ import {
     SimpleExtractionJobTableField,
     SimpleValue,
     SimpleExtractionJobTableColumnField,
+    Reference,
+    Resources,
+    ExtractionJobElementField,
+    ExtractionJobTableField,
+    ExtractionJobTableColumnField,
 } from '..';
-import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
 
@@ -362,5 +366,41 @@ export function newRenderingJobs(obj: any): PaginatedRenderingJobs {
     return {
         jobs: obj.jobs.map(newRenderingJob),
         pagination_status: newPaginationStatus(obj.pagination_status),
+    };
+}
+
+/**
+ * Ressources
+ */
+
+/**
+ * Creates a new Reference from any object
+ */
+export function newReference(obj: any): Reference {
+    return {
+        id: obj.id,
+        version: parseInt(obj.version, 10) || 0,
+    };
+}
+
+/**
+ * Creates a new Reference array from any object
+ */
+export function newReferences(obj: any): Reference[] {
+    if (!Array.isArray(obj)) {
+        return [];
+    }
+    return obj.map(newReference);
+}
+
+/**
+ * Creates a new Resources from any object
+ */
+export function newResources(obj: any): Resources {
+    return {
+        document: newReference(obj.document),
+        datamodel: newReference(obj.datamodel),
+        fields: newReferences(obj.fields),
+        datatypes: newReferences(obj.datatypes),
     };
 }

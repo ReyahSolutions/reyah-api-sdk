@@ -20,6 +20,7 @@ import {
     newRenderingJob,
     newRenderingJobFields,
     newRenderingJobs,
+    newResources,
     newSimpleExtractionJob,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
@@ -212,6 +213,21 @@ export class JobService implements Service {
     }
 
     /**
+     * Retrieves resources of a rendering job
+     * @param id Rendering job id
+     * @return A promise of the result of the rendering job resources retrieving transaction
+     */
+     public async retrieveRenderJobResources(id: string): Promise<Job.Resources> {
+        const subpath: string = `${this.subpath}/rendering/jobs/${id}/resources`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newResources(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
      * Creates a new rendering job associated with an user
      * @param job Rendering job to create
      * @return A promise of the result of the rendering job creation transaction
@@ -331,6 +347,22 @@ export class JobService implements Service {
             throw dispatchError(err);
         }
     }
+
+    /**
+     * Retrieves resources of an extraction job
+     * @param id Extraction job id
+     * @return A promise of the result of the rendering job resources retrieving transaction
+     */
+     public async retrieveExtractionJobResources(id: string): Promise<Job.Resources> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/resources`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newResources(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
 }
 
 export const job = new JobService();
