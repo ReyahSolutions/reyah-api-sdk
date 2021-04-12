@@ -319,7 +319,7 @@ export interface PaginatedRenderingJobs {
  */
 
 export interface Reference {
-    id: string;
+    key: string;
     version: number;
 }
 
