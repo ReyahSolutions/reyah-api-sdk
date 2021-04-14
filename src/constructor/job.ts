@@ -378,7 +378,7 @@ export function newRenderingJobs(obj: any): PaginatedRenderingJobs {
  */
 export function newReference(obj: any): Reference {
     return {
-        id: obj.id,
+        key: obj.key,
         version: parseInt(obj.version, 10) || 0,
     };
 }
