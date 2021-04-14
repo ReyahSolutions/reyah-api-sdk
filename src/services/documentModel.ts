@@ -207,8 +207,16 @@ export class DocumentModelService implements Service {
      * @param fieldId The document model field id to retrieve
      * @return A promise of the result of the document model field retrieval transaction
      */
-    public async retrieveField(id: string, fieldId: string, documentVersion: number?): Promise<DocumentModel.DocumentModelField> {
-        const subpath: string = `${this.subpath}/models/${id}/fields/${fieldId}`;
+    public async retrieveField(id: string, fieldId: string, documentVersion?: number): Promise<DocumentModel.DocumentModelField> {
+        let subpath: string = `${this.subpath}/models/${id}/fields/${fieldId}`;
+        const qs = new URLSearchParams();
+        if (documentVersion) {
+            qs.append('version', String(documentVersion));
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newDocumentModelField(resp.data);
