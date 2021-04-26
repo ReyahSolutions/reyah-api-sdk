@@ -9,6 +9,7 @@ import { PaginationStatus } from './pagination';
  */
 export interface DataType {
     id: string;
+    version: number;
     user_id: string;
     name: string;
     description: string;

@@ -23,8 +23,12 @@ import {
     SimpleExtractionJobTableField,
     SimpleValue,
     SimpleExtractionJobTableColumnField,
+    Reference,
+    Resources,
+    ExtractionJobElementField,
+    ExtractionJobTableField,
+    ExtractionJobTableColumnField,
 } from '..';
-import { ExtractionJobElementField, ExtractionJobTableField, ExtractionJobTableColumnField } from '../types/job';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
 
@@ -69,6 +73,7 @@ export function newExtractionJob(obj: any): ExtractionJob {
         id: obj.id,
         user_id: obj.user_id,
         document_id: obj.document_id,
+        document_version: obj.document_version,
         status: obj.status,
         tags: obj.tags,
         source_document: newSourceDocument(obj.source_document),
@@ -262,6 +267,7 @@ export function newCreatedBatch(obj: any): CreatedBatch {
     return {
         batch_id: obj.batch_id,
         document_id: obj.document_id,
+        document_version: obj.document_version,
         jobs: obj.jobs?.map(newCreatedJob) || [],
         size: parseInt(obj.size, 10),
     };
@@ -274,6 +280,7 @@ export function newBatch(obj: any): Batch {
     return {
         batch_id: obj.batch_id,
         document_id: obj.document_id,
+        document_version: obj.document_version,
         created_at: new Date(obj.created_at),
         job_error_count: parseInt(obj.job_error_count, 10),
         job_pending_count: parseInt(obj.job_pending_count, 10),
@@ -339,6 +346,7 @@ export function newRenderingJob(obj: any): RenderingJob {
         id: obj.id,
         user_id: obj.user_id,
         document_id: obj.document_id,
+        document_version: obj.document_version,
         status: obj.status,
         created_at: new Date(obj.created_at),
         updated_at: new Date(obj.updated_at),
@@ -358,5 +366,41 @@ export function newRenderingJobs(obj: any): PaginatedRenderingJobs {
     return {
         jobs: obj.jobs.map(newRenderingJob),
         pagination_status: newPaginationStatus(obj.pagination_status),
+    };
+}
+
+/**
+ * Ressources
+ */
+
+/**
+ * Creates a new Reference from any object
+ */
+export function newReference(obj: any): Reference {
+    return {
+        key: obj.key,
+        version: parseInt(obj.version, 10) || 0,
+    };
+}
+
+/**
+ * Creates a new Reference array from any object
+ */
+export function newReferences(obj: any): Reference[] {
+    if (!Array.isArray(obj)) {
+        return [];
+    }
+    return obj.map(newReference);
+}
+
+/**
+ * Creates a new Resources from any object
+ */
+export function newResources(obj: any): Resources {
+    return {
+        document: newReference(obj.document),
+        datamodel: newReference(obj.datamodel),
+        fields: newReferences(obj.fields),
+        datatypes: newReferences(obj.datatypes),
     };
 }

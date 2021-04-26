@@ -129,7 +129,7 @@ export function newDocumentModelFields(obj: any[]): DocumentModelField[] {
 export function newDocumentModel(obj: any): DocumentModel {
     return {
         id: obj.id,
-        version: obj.version,
+        version: parseInt(obj.version, 10),
         user_id: obj.user_id,
         name: obj.name,
         datamodel_id: obj.datamodel_id,
