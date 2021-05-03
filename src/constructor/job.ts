@@ -190,17 +190,17 @@ export function newExtractionJobTableColumnField(obj: any): ExtractionJobTableCo
     };
 }
 
-export function newExtractionJobTableLineField(obj: any): ExtractionJobTableLineField {
-    return {
-        columns: obj.columns && obj.columns.map(newExtractionJobTableLineColumnField),
-    };
-}
-
 export function newExtractionJobTableLineColumnField(obj: any): ExtractionJobTableLineColumnField {
     return {
         values: obj.values || [],
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
         box: newBoundingBox(obj.box),
+    };
+}
+
+export function newExtractionJobTableLineField(obj: any): ExtractionJobTableLineField {
+    return {
+        columns: obj.columns && obj.columns.map(newExtractionJobTableLineColumnField),
     };
 }
 
