@@ -41,6 +41,7 @@ export interface DocumentModelElementField {
 }
 
 export interface DocumentModelTableField {
+    main_column: number;
     columns: Column[];
 }
 

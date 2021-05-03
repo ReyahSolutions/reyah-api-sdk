@@ -28,6 +28,8 @@ import {
     ExtractionJobElementField,
     ExtractionJobTableField,
     ExtractionJobTableColumnField,
+    ExtractionJobTableLineColumnField,
+    ExtractionJobTableLineField,
 } from '..';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
@@ -185,14 +187,28 @@ export function newExtractionJobTableColumnField(obj: any): ExtractionJobTableCo
     return {
         id: obj.id,
         datafield_id: obj.datafield_id,
+    };
+}
+
+export function newExtractionJobTableLineField(obj: any): ExtractionJobTableLineField {
+    return {
+        columns: obj.columns && obj.columns.map(newExtractionJobTableLineColumnField),
+    };
+}
+
+export function newExtractionJobTableLineColumnField(obj: any): ExtractionJobTableLineColumnField {
+    return {
         values: obj.values || [],
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
+        box: newBoundingBox(obj.box),
     };
 }
 
 export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
+        main_column: parseInt(obj.main_column, 10),
         columns: obj.columns && obj.columns.map(newExtractionJobTableColumnField),
+        lines: obj.lines && obj.lines.map(),
     };
 }
 
