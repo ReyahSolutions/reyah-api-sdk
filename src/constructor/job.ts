@@ -208,7 +208,7 @@ export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
         main_column: parseInt(obj.main_column, 10),
         columns: obj.columns && obj.columns.map(newExtractionJobTableColumnField),
-        lines: obj.lines && obj.lines.map(),
+        lines: obj.lines && obj.lines.map(newExtractionJobTableLineField),
     };
 }
 
