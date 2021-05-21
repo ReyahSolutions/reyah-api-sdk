@@ -11,6 +11,8 @@ import * as Status from '../types/status';
 import newServiceStatus from '../constructor/status';
 import {
     newDocumentModel,
+    newDocumentModelField,
+    newDocumentModelFields,
     newDocumentModels,
     newPreviewUrl,
     newPreviewUrls,
@@ -37,12 +39,24 @@ export class DocumentModelService implements Service {
     }
 
     /**
+     * Document models
+     */
+
+    /**
      * Retrieves a document model of an user
      * @param id Document model id
      * @return A promise of the result of the document model retrieving transaction
      */
-    public async retrieve(id: string): Promise<DocumentModel.DocumentModel> {
-        const subpath: string = `${this.subpath}/models/${id}`;
+    public async retrieve(id: string, version?: number): Promise<DocumentModel.DocumentModel> {
+        let subpath: string = `${this.subpath}/models/${id}`;
+        const qs = new URLSearchParams();
+        if (version) {
+            qs.append('version', String(version));
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newDocumentModel(resp.data);
@@ -159,6 +173,97 @@ export class DocumentModelService implements Service {
      */
     public async deletePreview(id: string): Promise<boolean> {
         const subpath: string = `${this.subpath}/models/${id}/preview`;
+        try {
+            await reyahServiceRequest.delete(subpath, true);
+            return true;
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Document model fields
+     */
+
+    /**
+     * Creates a new field to a document model
+     * @param id The document model id
+     * @param fields The document model fields to create
+     * @return A promise of the result of the document model field creation transaction
+     */
+    public async createFields(id: string, fields: DocumentModel.CreateDocumentModelFieldRequest[]): Promise<DocumentModel.DocumentModelField[]> {
+        const subpath: string = `${this.subpath}/models/${id}/fields`;
+        try {
+            const resp = await reyahServiceRequest.post(subpath, { fields }, true);
+            return newDocumentModelFields(resp.data.fields);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieves a new document model field specified by its id
+     * @param id The document model id
+     * @param fieldId The document model field id to retrieve
+     * @return A promise of the result of the document model field retrieval transaction
+     */
+    public async retrieveField(id: string, fieldId: string, documentVersion?: number): Promise<DocumentModel.DocumentModelField> {
+        let subpath: string = `${this.subpath}/models/${id}/fields/${fieldId}`;
+        const qs = new URLSearchParams();
+        if (documentVersion) {
+            qs.append('version', String(documentVersion));
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newDocumentModelField(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieve all the document model field of a document model
+     * @param id The document model id
+     * @return A promise of the result of the document model fields retrieval transaction
+     */
+    public async retrieveAllFields(id: string): Promise<DocumentModel.DocumentModelField[]> {
+        const subpath: string = `${this.subpath}/models/${id}/fields`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newDocumentModelFields(resp.data.fields);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Updates a field from a document model
+     * @param id The document model id
+     * @param field The document model field to update
+     * @return A promise of the result of the document model field update transaction
+     */
+    public async updateField(id: string, field: DocumentModel.UpdateDocumentModelFieldRequest): Promise<DocumentModel.DocumentModelField> {
+        const subpath: string = `${this.subpath}/models/${id}/fields/${field.id}`;
+        try {
+            const resp = await reyahServiceRequest.patch(subpath, field, true);
+            return newDocumentModelField(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Deletes a field from a document model
+     * @param id The document model id
+     * @param fieldId The document model field id to delete
+     * @return A promise of the result of the document model field removal transaction
+     */
+    public async deleteField(id: string, fieldId: string): Promise<boolean> {
+        const subpath: string = `${this.subpath}/models/${id}/fields/${fieldId}`;
         try {
             await reyahServiceRequest.delete(subpath, true);
             return true;

@@ -13,6 +13,7 @@ import {
     PreviewURLs,
     DocumentModelElementField,
     Interval,
+    MaskElement,
 } from '..';
 import newPaginationStatus from './pagination';
 
@@ -54,11 +55,25 @@ export function newColumn(obj: any): Column {
     };
 }
 
+export function newMaskElement(obj: any): MaskElement {
+    return {
+        label: obj.label,
+        box: newBoundingBox(obj.box),
+    };
+}
+
+export function newMask(obj: any): MaskElement[] {
+    if (!Array.isArray(obj)) {
+        return [];
+    }
+    return obj.map((elem: any) => newMaskElement(elem));
+}
+
 export function newAnchor(obj: any): Anchor {
     return {
         orientation: obj.orientation,
         box: newBoundingBox(obj.box),
-        label: obj.label,
+        mask: newMask(obj.mask),
         padding: obj.padding && newPadding(obj.padding),
     };
 }
@@ -114,7 +129,7 @@ export function newDocumentModelFields(obj: any[]): DocumentModelField[] {
 export function newDocumentModel(obj: any): DocumentModel {
     return {
         id: obj.id,
-        version: obj.version,
+        version: parseInt(obj.version, 10),
         user_id: obj.user_id,
         name: obj.name,
         datamodel_id: obj.datamodel_id,

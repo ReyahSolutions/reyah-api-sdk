@@ -17,6 +17,7 @@ export function newField(obj: any): Field {
     return {
         field_id: obj.field_id,
         user_id: obj.user_id,
+        version: parseInt(obj.version, 10),
         kind: obj.kind,
         name: obj.name,
         description: obj.description,
@@ -49,6 +50,7 @@ export function newDataModel(obj: any): DataModel {
         description: obj.description,
         fields: obj.fields?.map(newField) || [],
         model_id: obj.model_id,
+        version: parseInt(obj.version, 10),
         name: obj.name,
         updated_at: new Date(obj.updated_at),
         user_id: obj.user_id,
@@ -90,6 +92,7 @@ export function newDataModelLinks(obj: any): DataModelLinks {
 
 export function newDataFieldLinks(obj: any): DataFieldLinks {
     return {
-        model_ids: obj.model_ids?.map((elem: string) => parseInt(elem, 10)) || [],
+        model_ids: obj.model_ids || [],
+        field_ids: obj.field_ids || [],
     };
 }

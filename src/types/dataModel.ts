@@ -14,6 +14,7 @@ export enum FieldKind {
  */
 export interface Field {
     field_id: string;
+    version: number;
     user_id: string;
     kind: FieldKind;
     name: string;
@@ -51,6 +52,7 @@ export interface UpdateFieldRequest {
  */
 export interface DataModel {
     model_id: string;
+    version: number;
     user_id: string;
     name: string;
     description: string;
@@ -93,4 +95,5 @@ export interface DataModelLinks {
 
 export interface DataFieldLinks {
     model_ids: string[],
+    field_ids: string[],
 }

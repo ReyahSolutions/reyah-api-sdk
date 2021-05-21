@@ -44,12 +44,14 @@ class ReyahServiceRequestor implements Core.ReyahServiceRequest {
                 return await request.execute();
             } catch (e) {
                 // Do not retry the request if the error is caused by a NoAuthProvider error
-                if (e instanceof NoAuthProvidedException) {
+                if (e instanceof NoAuthProvidedException || e instanceof AuthenticationException) {
                     throw e;
                 }
-                // Do not retry the request if the error is located client side
+                // Do not retry the request if the error is located client side, however we still want to retry in case of token error
                 if (e.isReyahRequestError && e.code >= 300 && e.code < 500) {
-                    throw e;
+                    if (!((e.code === 401 || e.code === 403) && ctx.tryCount === 0)) {
+                        throw e;
+                    }
                 }
                 ctx.lastError = e;
                 ctx.tryCount += 1;

@@ -45,8 +45,16 @@ export class DataModelService implements Service {
      * @param modelId The data model id
      * @return A promise of the result of the data model retrieving transaction
      */
-    public async retrieve(modelId: string): Promise<DataModel.DataModel> {
-        const subpath: string = `${this.subpath}/models/${modelId}`;
+    public async retrieve(modelId: string, version?: number): Promise<DataModel.DataModel> {
+        let subpath: string = `${this.subpath}/models/${modelId}`;
+        const qs = new URLSearchParams();
+        if (version) {
+            qs.append('version', String(version));
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newDataModel(resp.data);
@@ -146,8 +154,16 @@ export class DataModelService implements Service {
      * @param fieldId The ID of the field to retrieve
      * @return A promise of the result of the retrieving transaction
      */
-    public async retrieveField(fieldId: string): Promise<DataModel.Field> {
-        const subpath: string = `${this.subpath}/fields/${fieldId}`;
+    public async retrieveField(fieldId: string, version?: number): Promise<DataModel.Field> {
+        let subpath: string = `${this.subpath}/fields/${fieldId}`;
+        const qs = new URLSearchParams();
+        if (version) {
+            qs.append('version', String(version));
+        }
+        const queryParams = qs.toString();
+        if (queryParams) {
+            subpath += `?${queryParams}`;
+        }
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newField(resp.data);

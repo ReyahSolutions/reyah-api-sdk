@@ -20,6 +20,8 @@ import {
     newRenderingJob,
     newRenderingJobFields,
     newRenderingJobs,
+    newResources,
+    newSimpleExtractionJob,
 } from '../constructor/job';
 import { Pagination } from '../types/pagination';
 
@@ -53,6 +55,21 @@ export class JobService implements Service {
         try {
             const resp = await reyahServiceRequest.get(subpath, true);
             return newExtractionJob(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieves an extraction job of an user in simple form
+     * @param id Extraction job id
+     * @return A promise of the result of the extraction job retrieving transaction
+     */
+    public async retrieveSimpleExtractionJob(id: string): Promise<Job.SimpleExtractionJob> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/output/simple`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newSimpleExtractionJob(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }
@@ -196,6 +213,21 @@ export class JobService implements Service {
     }
 
     /**
+     * Retrieves resources of a rendering job
+     * @param id Rendering job id
+     * @return A promise of the result of the rendering job resources retrieving transaction
+     */
+    public async retrieveRenderJobResources(id: string): Promise<Job.Resources> {
+        const subpath: string = `${this.subpath}/rendering/jobs/${id}/resources`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newResources(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
      * Creates a new rendering job associated with an user
      * @param job Rendering job to create
      * @return A promise of the result of the rendering job creation transaction
@@ -311,6 +343,21 @@ export class JobService implements Service {
             };
             const resp = await reyahServiceRequest.get(subpath, true, request);
             return newExtractionBatchCSV(resp.data);
+        } catch (err) {
+            throw dispatchError(err);
+        }
+    }
+
+    /**
+     * Retrieves resources of an extraction job
+     * @param id Extraction job id
+     * @return A promise of the result of the rendering job resources retrieving transaction
+     */
+    public async retrieveExtractionJobResources(id: string): Promise<Job.Resources> {
+        const subpath: string = `${this.subpath}/extraction/jobs/${id}/resources`;
+        try {
+            const resp = await reyahServiceRequest.get(subpath, true);
+            return newResources(resp.data);
         } catch (err) {
             throw dispatchError(err);
         }

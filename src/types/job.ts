@@ -64,11 +64,21 @@ export interface ExtractionJob {
     id: string;
     user_id: string;
     document_id: string;
+    document_version: number;
     status: JobStatus;
     tags: {
         [index: string]: string
     };
     source_document: SourceDocument;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface SimpleExtractionJob {
+    id: string;
+    user_id: string;
+    status: JobStatus;
+    extraction_result : { [key:string]:SimpleExtractionJobField };
     created_at: Date;
     updated_at: Date;
 }
@@ -102,18 +112,38 @@ export interface ExtractionJobField {
     element?: ExtractionJobElementField,
     table?: ExtractionJobTableField,
 }
+export interface SimpleExtractionJobField{
+    name: string;
+    element?: SimpleExtractionJobElementField,
+    table?: SimpleExtractionJobTableField,
+}
 export interface ExtractionJobElementField {
     values: string[];
     datatypes_matches: { [index: string]: DatatypeMatch };
 }
+export interface SimpleExtractionJobElementField{
+    values: SimpleValue[];
+    datatypeMatch: boolean;
+}
 export interface ExtractionJobTableField {
     columns: ExtractionJobTableColumnField[];
+}
+export interface SimpleExtractionJobTableField{
+    columns: SimpleExtractionJobTableColumnField[];
+}
+export interface SimpleExtractionJobTableColumnField{
+    id: string;
+    values :SimpleValue[];
+    datatypeMatch: boolean;
 }
 export interface ExtractionJobTableColumnField {
     id: string;
     datafield_id: string;
     values: string[];
     datatypes_matches: { [index: string]: DatatypeMatch };
+}
+export interface SimpleValue{
+    value : string;
 }
 export interface RenderingJobField {
     field_id: string;
@@ -222,6 +252,7 @@ export interface Batch {
     job_error_count: number;
     job_pending_count: number;
     document_id: string;
+    document_version: number;
     jobs: string[];
     created_at: Date;
 }
@@ -237,6 +268,7 @@ export interface CreatedBatch {
     batch_id: string;
     size: number;
     document_id: string;
+    document_version: number;
     jobs: CreatedJob[];
 }
 
@@ -269,6 +301,7 @@ export interface RenderingJob {
     id: string;
     user_id: string;
     document_id: string;
+    document_version: number;
     status: JobStatus;
     created_at: Date;
     updated_at: Date;
@@ -277,4 +310,24 @@ export interface RenderingJob {
 export interface PaginatedRenderingJobs {
     jobs: RenderingJob[],
     pagination_status: PaginationStatus,
+}
+
+/**
+ * Ressources
+ */
+
+/**
+ * Ressources
+ */
+
+export interface Reference {
+    key: string;
+    version: number;
+}
+
+export interface Resources {
+    document: Reference;
+    datamodel: Reference;
+    fields: Reference[];
+    datatypes: Reference[];
 }

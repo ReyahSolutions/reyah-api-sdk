@@ -49,11 +49,20 @@ export interface Column {
     width: number;
 }
 
+export interface MaskElement {
+    label: string;
+    box: BoundingBox;
+}
+
+export interface AnchorRequest {
+    box: BoundingBox;
+    orientation: AnchorOrientation;
+}
 export interface Anchor {
     box: BoundingBox;
     orientation: AnchorOrientation;
-    label?: string;
-    padding?: Padding;
+    padding: Padding;
+    mask: MaskElement[];
 }
 
 export interface GatherBox {
@@ -88,7 +97,7 @@ export interface CreateDocumentModelFieldRequest {
     name: string;
     datamodel_field_id: string;
     description?: string;
-    anchor: Anchor;
+    anchor: AnchorRequest;
     gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
@@ -99,7 +108,7 @@ export interface UpdateDocumentModelFieldRequest {
     name: string;
     datamodel_field_id: string;
     description?: string;
-    anchor: Anchor;
+    anchor: AnchorRequest;
     gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
@@ -131,8 +140,8 @@ export interface CreateDocumentModelRequest {
     datamodel_id: string;
     name: string;
     description?: string;
-    fields: DocumentModelField[];
-    stoppers: Anchor[];
+    fields: CreateDocumentModelFieldRequest[];
+    stoppers: AnchorRequest[];
 }
 
 export interface UpdateDocumentModelFieldWithModelRequest {
@@ -140,7 +149,7 @@ export interface UpdateDocumentModelFieldWithModelRequest {
     name: string;
     datamodel_field_id: string;
     description?: string;
-    anchor: Anchor;
+    anchor: AnchorRequest;
     gather_box: GatherBox;
     element?: DocumentModelElementField;
     table?: DocumentModelTableField;
@@ -151,7 +160,7 @@ export interface UpdateDocumentModelRequest {
     name: string;
     description?: string;
     fields: UpdateDocumentModelFieldWithModelRequest[];
-    stoppers: Anchor[];
+    stoppers: AnchorRequest[];
 }
 
 /**
