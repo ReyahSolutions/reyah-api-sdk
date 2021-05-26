@@ -206,7 +206,7 @@ export function newExtractionJobTableRowField(obj: any): ExtractionJobTableRowFi
 
 export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
-        main_column: parseInt(obj.main_column, 10),
+        main_column_datafield_id: obj.main_column_datafield_id,
         columns: obj.columns && obj.columns.map(newExtractionJobTableColumnField),
         rows: obj.rows && obj.rows.map(newExtractionJobTableRowField),
     };
