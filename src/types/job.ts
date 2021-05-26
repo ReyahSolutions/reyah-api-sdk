@@ -124,9 +124,9 @@ export interface SimpleExtractionJobElementField{
     datatypeMatch: boolean;
 }
 export interface ExtractionJobTableField {
-    main_column: number;
+    main_column_datafield_id: string;
     columns: ExtractionJobTableColumnField[];
-    lines: ExtractionJobTableLineField[];
+    rows: ExtractionJobTableRowField[];
 }
 export interface SimpleExtractionJobTableField{
     columns: SimpleExtractionJobTableColumnField[];
@@ -140,10 +140,10 @@ export interface ExtractionJobTableColumnField {
     id: string;
     datafield_id: string;
 }
-export interface ExtractionJobTableLineField {
-    columns: ExtractionJobTableLineColumnField[];
+export interface ExtractionJobTableRowField {
+    columns: ExtractionJobTableRowColumnField[];
 }
-export interface ExtractionJobTableLineColumnField {
+export interface ExtractionJobTableRowColumnField {
     values: string[];
     datatypes_matches: { [index: string]: DatatypeMatch };
     box: BoundingBox;

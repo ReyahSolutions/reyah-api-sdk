@@ -41,7 +41,7 @@ export interface DocumentModelElementField {
 }
 
 export interface DocumentModelTableField {
-    main_column: number;
+    main_column_datafield_id: string;
     columns: Column[];
 }
 

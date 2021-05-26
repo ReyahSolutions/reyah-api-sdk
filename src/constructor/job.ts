@@ -28,8 +28,8 @@ import {
     ExtractionJobElementField,
     ExtractionJobTableField,
     ExtractionJobTableColumnField,
-    ExtractionJobTableLineColumnField,
-    ExtractionJobTableLineField,
+    ExtractionJobTableRowColumnField,
+    ExtractionJobTableRowField,
 } from '..';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
@@ -190,7 +190,7 @@ export function newExtractionJobTableColumnField(obj: any): ExtractionJobTableCo
     };
 }
 
-export function newExtractionJobTableLineColumnField(obj: any): ExtractionJobTableLineColumnField {
+export function newExtractionJobTableRowColumnField(obj: any): ExtractionJobTableRowColumnField {
     return {
         values: obj.values || [],
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
@@ -198,9 +198,9 @@ export function newExtractionJobTableLineColumnField(obj: any): ExtractionJobTab
     };
 }
 
-export function newExtractionJobTableLineField(obj: any): ExtractionJobTableLineField {
+export function newExtractionJobTableRowField(obj: any): ExtractionJobTableRowField {
     return {
-        columns: obj.columns && obj.columns.map(newExtractionJobTableLineColumnField),
+        columns: obj.columns && obj.columns.map(newExtractionJobTableRowColumnField),
     };
 }
 
@@ -208,7 +208,7 @@ export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
         main_column: parseInt(obj.main_column, 10),
         columns: obj.columns && obj.columns.map(newExtractionJobTableColumnField),
-        lines: obj.lines && obj.lines.map(newExtractionJobTableLineField),
+        rows: obj.rows && obj.rows.map(newExtractionJobTableRowField),
     };
 }
 
