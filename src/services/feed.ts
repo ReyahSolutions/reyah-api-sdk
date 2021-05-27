@@ -63,9 +63,9 @@ export class FeedService implements Service {
      * Set an element as seen
      */
     public async setSeenElement(elementID: string) {
-        const subpath: string = `${this.subpath}/element/${elementID}`;
+        const subpath: string = `${this.subpath}/elements/${elementID}`;
         try {
-            await reyahServiceRequest.put(subpath, undefined, true);
+            await reyahServiceRequest.patch(subpath, undefined, true);
         } catch (err) {
             throw dispatchError(err);
         }
