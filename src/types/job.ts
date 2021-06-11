@@ -72,15 +72,6 @@ export interface ExtractionJob {
     updated_at: Date;
 }
 
-export interface SimpleExtractionJob {
-    id: string;
-    user_id: string;
-    status: JobStatus;
-    extraction_result : { [key:string]:SimpleExtractionJobField };
-    created_at: Date;
-    updated_at: Date;
-}
-
 export interface PaginatedExtractionJobs {
     jobs: ExtractionJob[];
     pagination_status: PaginationStatus;
@@ -110,31 +101,14 @@ export interface ExtractionJobField {
     element?: ExtractionJobElementField,
     table?: ExtractionJobTableField,
 }
-export interface SimpleExtractionJobField{
-    name: string;
-    element?: SimpleExtractionJobElementField,
-    table?: SimpleExtractionJobTableField,
-}
 export interface ExtractionJobElementField {
     values: string[];
     datatypes_matches: { [index: string]: DatatypeMatch };
-}
-export interface SimpleExtractionJobElementField{
-    values: SimpleValue[];
-    datatypeMatch: boolean;
 }
 export interface ExtractionJobTableField {
     main_column_datafield_id: string;
     columns: ExtractionJobTableColumnField[];
     rows: ExtractionJobTableRowField[];
-}
-export interface SimpleExtractionJobTableField{
-    columns: SimpleExtractionJobTableColumnField[];
-}
-export interface SimpleExtractionJobTableColumnField{
-    id: string;
-    values :SimpleValue[];
-    datatypeMatch: boolean;
 }
 export interface ExtractionJobTableColumnField {
     id: string;
@@ -148,17 +122,51 @@ export interface ExtractionJobTableRowColumnField {
     datatypes_matches: { [index: string]: DatatypeMatch };
     box: BoundingBox;
 }
-export interface SimpleValue{
+
+export interface SimpleValue {
     value : string;
 }
-export interface RenderingJobField {
-    field_id: string;
-    values: string[];
+export interface SimpleExtractionJobElementField {
+    values: SimpleValue[];
+    datatypeMatch: boolean;
+}
+export interface SimpleExtractionJobTableRowColumnField {
+    values: SimpleValue[];
+    datatypeMatch: boolean;
+}
+export interface SimpleExtractionJobTableRowField {
+    columns: SimpleExtractionJobTableRowColumnField[];
+}
+export interface SimpleExtractionJobTableColumnField {
+    values: SimpleValue[];
+    datatypeMatch: boolean;
+}
+export interface SimpleExtractionJobTableField {
+    columns: SimpleExtractionJobTableColumnField[];
+    rows: SimpleExtractionJobTableRowField[];
+}
+export interface SimpleExtractionJobField {
+    name: string;
+    element?: SimpleExtractionJobElementField,
+    table?: SimpleExtractionJobTableField,
+}
+export interface SimpleExtractionJob {
+    id: string;
+    user_id: string;
+    status: JobStatus;
+    extraction_result : { [key:string]:SimpleExtractionJobField };
+    created_at: Date;
+    updated_at: Date;
 }
 
 /**
  * Job creation request
  */
+
+export interface RenderingJobField {
+    field_id: string;
+    values: string[];
+}
 export interface CreateRenderingJobRequest {
     document_id: string;
     content_type: ContentType;

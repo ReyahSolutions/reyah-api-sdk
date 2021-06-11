@@ -29,7 +29,7 @@ import {
     ExtractionJobTableField,
     ExtractionJobTableColumnField,
     ExtractionJobTableRowColumnField,
-    ExtractionJobTableRowField,
+    ExtractionJobTableRowField, SimpleExtractionJobTableRowColumnField, SimpleExtractionJobTableRowField,
 } from '..';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
@@ -94,7 +94,13 @@ export function newSimpleValue(obj: any): SimpleValue {
 
 export function newSimpleExtractionJobTableColumnField(obj: any): SimpleExtractionJobTableColumnField {
     return {
-        id: obj.id,
+        values: obj.values.map((value: any) => newSimpleValue(value)),
+        datatypeMatch: obj.datatypeMatch,
+    };
+}
+
+export function newSimpleExtractionJobTableRowColumnField(obj: any): SimpleExtractionJobTableRowColumnField {
+    return {
         values: obj.values.map((value: any) => newSimpleValue(value)),
         datatypeMatch: obj.datatypeMatch,
     };
@@ -108,8 +114,9 @@ export function newSimpleExtractionJobElementField(obj: any): SimpleExtractionJo
 }
 
 export function newSimpleExtractionJobTableField(obj: any): SimpleExtractionJobTableField {
-    const columns:SimpleExtractionJobTableColumnField[] = obj.columns.map((column: any) => newSimpleExtractionJobTableColumnField(column));
-    return { columns };
+    const columns: SimpleExtractionJobTableColumnField[] = obj.columns.map((column: any) => newSimpleExtractionJobTableColumnField(column));
+    const rows: SimpleExtractionJobTableRowField[] = obj.rows.map((column: any) => newSimpleExtractionJobTableRowColumnField(column));
+    return { columns, rows };
 }
 
 export function newSimpleExtractionJobField(obj: any): SimpleExtractionJobField {
