@@ -140,8 +140,7 @@ export interface SimpleExtractionJobTableRowField {
     columns: SimpleExtractionJobTableRowColumnField[];
 }
 export interface SimpleExtractionJobTableColumnField {
-    values: SimpleValue[];
-    datatypeMatch: boolean;
+    id: string;
 }
 export interface SimpleExtractionJobTableField {
     columns: SimpleExtractionJobTableColumnField[];
