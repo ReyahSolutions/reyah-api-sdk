@@ -79,12 +79,15 @@ export class JobService implements Service {
      * Retrieves all extraction jobs of an user
      * @return A promise of the result of the extraction job retrieving transaction
      */
-    public async retrieveAllExtractionJob(pagination?: Pagination): Promise<Job.PaginatedExtractionJobs> {
+    public async retrieveAllExtractionJob(pagination?: Pagination, start_date?: Date): Promise<Job.PaginatedExtractionJobs> {
         let subpath: string = `${this.subpath}/extraction/jobs`;
         const qs = new URLSearchParams();
         if (pagination) {
             qs.append('page', pagination.page.toString());
             qs.append('size', pagination.size.toString());
+        }
+        if (start_date) {
+            qs.append('start_date', start_date.toISOString());
         }
         const queryParams = qs.toString();
         if (queryParams) {
