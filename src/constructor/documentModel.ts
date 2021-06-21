@@ -96,6 +96,7 @@ export function newDocumentModelElementField(/* obj: any */): DocumentModelEleme
 
 export function newDocumentModelTableField(obj: any): DocumentModelTableField {
     return {
+        main_column_datafield_id: obj.main_column_datafield_id,
         columns: obj.columns?.map(newColumn) ?? [],
     };
 }

@@ -28,6 +28,10 @@ import {
     ExtractionJobElementField,
     ExtractionJobTableField,
     ExtractionJobTableColumnField,
+    ExtractionJobTableRowColumnField,
+    ExtractionJobTableRowField,
+    SimpleExtractionJobTableRowColumnField,
+    SimpleExtractionJobTableRowField,
 } from '..';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
@@ -93,8 +97,19 @@ export function newSimpleValue(obj: any): SimpleValue {
 export function newSimpleExtractionJobTableColumnField(obj: any): SimpleExtractionJobTableColumnField {
     return {
         id: obj.id,
+    };
+}
+
+export function newSimpleExtractionJobTableRowColumnField(obj: any): SimpleExtractionJobTableRowColumnField {
+    return {
         values: obj.values.map((value: any) => newSimpleValue(value)),
         datatypeMatch: obj.datatypeMatch,
+    };
+}
+
+export function newSimpleExtractionJobTableRowField(obj: any): SimpleExtractionJobTableRowField {
+    return {
+        columns: obj.columns.map((column: any) => newSimpleExtractionJobTableRowColumnField(column)),
     };
 }
 
@@ -106,8 +121,10 @@ export function newSimpleExtractionJobElementField(obj: any): SimpleExtractionJo
 }
 
 export function newSimpleExtractionJobTableField(obj: any): SimpleExtractionJobTableField {
-    const columns:SimpleExtractionJobTableColumnField[] = obj.columns.map((column: any) => newSimpleExtractionJobTableColumnField(column));
-    return { columns };
+    return {
+        columns: obj.columns.map((column: any) => newSimpleExtractionJobTableColumnField(column)),
+        rows: obj.rows.map((row: any) => newSimpleExtractionJobTableRowField(row)),
+    };
 }
 
 export function newSimpleExtractionJobField(obj: any): SimpleExtractionJobField {
@@ -185,14 +202,28 @@ export function newExtractionJobTableColumnField(obj: any): ExtractionJobTableCo
     return {
         id: obj.id,
         datafield_id: obj.datafield_id,
+    };
+}
+
+export function newExtractionJobTableRowColumnField(obj: any): ExtractionJobTableRowColumnField {
+    return {
         values: obj.values || [],
         datatypes_matches: newDatatypeMatches(obj.datatypes_matches),
+        box: newBoundingBox(obj.box),
+    };
+}
+
+export function newExtractionJobTableRowField(obj: any): ExtractionJobTableRowField {
+    return {
+        columns: obj.columns && obj.columns.map(newExtractionJobTableRowColumnField),
     };
 }
 
 export function newExtractionJobTableField(obj: any): ExtractionJobTableField {
     return {
+        main_column_datafield_id: obj.main_column_datafield_id,
         columns: obj.columns && obj.columns.map(newExtractionJobTableColumnField),
+        rows: obj.rows && obj.rows.map(newExtractionJobTableRowField),
     };
 }
 
