@@ -29,7 +29,9 @@ import {
     ExtractionJobTableField,
     ExtractionJobTableColumnField,
     ExtractionJobTableRowColumnField,
-    ExtractionJobTableRowField, SimpleExtractionJobTableRowColumnField, SimpleExtractionJobTableRowField,
+    ExtractionJobTableRowField,
+    SimpleExtractionJobTableRowColumnField,
+    SimpleExtractionJobTableRowField,
 } from '..';
 import { newBoundingBox } from './documentModel';
 import newPaginationStatus from './pagination';
